@@ -144,3 +144,14 @@ The paper fixes 70% of the pretraining corpus as general Python and varies the r
 - 14 of the 27 tasks show loss that responds to the task's own training budget: 10 of 12 curated tasks and 4 of 15 literature tasks.
 - The best observed HumanEval pass@20 after fine-tuning is 22.6, when the 30% slice is 75% OpenCodeInstruct and 25% curated tasks. A slice of only curated tasks scores 15.9, below the 16.5 of a baseline with no synthetic data.
 - ADO, a scheduler that reweights data by predicted loss reduction, cuts OpenCodeInstruct to 1.2–1.4% of the slice when allowed to move weight between sources, and scores 2.4 to 11.0 points below the matching fixed mixtures.
+
+## Citation
+
+```bibtex
+@misc{rubin2026conditional,
+  title        = {Conditional Transfer from Controlled Pretraining Mixtures to Code},
+  author       = {Rubin, Ohad},
+  year         = {2026},
+  howpublished = {\url{https://github.com/OhadRubin/synth_tasks}}
+}
+```
