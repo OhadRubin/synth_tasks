@@ -1,0 +1,147 @@
+axis: generator_mechanism
+factor: structural_controls
+axis_frame: Generator mechanism describes how benchmark inputs and labels are produced. The
+  axis is about source process, controllable structure, sampling, validity constraints, label
+  oracle, variation scope, and perturbation model.
+factor_description: The latent size, difficulty, and complexity parameters the generator can
+  tune. Controls may govern alphabet size, context length, nesting, proof depth, graph branching,
+  clause density, path length, document count, query count, output length, or related structural
+  pressures.
+tasks:
+- task_id: associative_recall
+  value: the number of pairs, which also sets prompt length and key width
+  summary: The number of pairs is the only setting that varies. Raising it past 26 forces
+    two-letter keys, so it moves listing length and key confusability together.
+- task_id: babi_counting
+  value: the story length, which also sets how many sentences contribute; the amount per sentence
+    stays at one to three
+  summary: Story length is the only setting that varies, and it drags the number of contributions
+    with it - two or three at five sentences, three to six at twenty. The per-sentence amount
+    and the vocabularies are the same at both.
+- task_id: babi_multi_hop
+  value: the number of sentences; the chain length is fixed at two and the vocabularies are
+    fixed
+  summary: Story length is the only setting that varies. The number of supporting sentences
+    is fixed at two at both settings, so the difficulty added is distraction rather than depth.
+- task_id: babi_single_hop
+  value: the number of sentences; the cast of four people and five rooms is fixed
+  summary: Story length is the only setting that varies. The vocabularies, the sentence template,
+    and the question form are the same at both settings.
+- task_id: bounded_tiny_python_execution
+  value: number of variables, number of assignments, loop nesting depth, largest iteration
+    count, how often conditionals appear, the modulus, and how many variables are printed
+  summary: 'Across the three settings the first five all move: three, four, then five variables;
+    eight, eight, then ten assignments; no loops, then one level, then two; no loops, then
+    up to four, then up to five iterations; and no conditionals, then a quarter of the time,
+    then a bit more. The modulus stays at ten and the printed count stays at three.'
+- task_id: constant_label
+  value: the answer character is the only tunable quantity, and it is fixed at 0
+  summary: There is nothing to make longer, deeper, or wider. The pool of input characters
+    is not adjustable, so no structural pressure can be applied.
+- task_id: copy
+  value: sequence length only, set to 16, 64, or 128
+  summary: 'Nothing else is tunable: the alphabet stays at ten digits, the separator stays
+    a single space, and the three-line layout is the same in every bin.'
+- task_id: dyck_balanced_parentheses
+  value: the deepest nesting, which also fixes row length, and the number of bracket kinds,
+    held at two
+  summary: Row length is tied to the depth setting at four times the depth plus one, and the
+    odd length is what guarantees the row cannot come out fully closed.
+- task_id: fictional_ontology_cot
+  value: chain length and the number of unrelated sentences, raised together
+  summary: 'The two are not varied independently: they go 2 and 2, then 3 and 4, then 5 and
+    8, so each larger setting deepens the chain and thickens the surrounding material at once.'
+- task_id: gridworld_detour_planning
+  value: map side, route length, number of dead ends, longest dead end, and the switch forcing
+    a tempting dead end
+  summary: Four size knobs plus the switch that guarantees at least one dead end opens at
+    a point where entering it shortens the straight-line gap to the goal more than the correct
+    move does.
+- task_id: horn_forward_chaining
+  value: the chain length and the number of irrelevant rules, with the extra starting statements
+    following from the second
+  summary: Extra starting statements are a quarter of the irrelevant-rule count, at least
+    one whenever any irrelevant rule exists, so the starting list grows from three names to
+    eleven across the settings.
+- task_id: iterated_string_replace
+  value: instruction count, starting length, letter count, pattern and substitution lengths,
+    and the rates of deleting, lengthening, doing nothing, and depending on an earlier step
+  summary: Instruction count runs two, four, six, eight and starting length sixteen, thirty-two,
+    forty-eight, sixty-four across the bins, with letters rising from three to five, patterns
+    from one-or-two characters to two-to-four, and every rate rising alongside.
+- task_id: label_anchor_feature_match
+  value: number of labels, lists per label, and tokens per list
+  summary: These three settings between them fix the prompt size, since the number of lists
+    is the number of labels times the lists per label, plus the final one.
+- task_id: listops_nested_prefix
+  value: nesting depth at 2, 4, or 6; operator set, operand count of two or three, and digit
+    range all fixed
+  summary: Depth is the only setting that varies between bins. The operand count is capped
+    at three deliberately so that a six-level expression stays inside the length budget for
+    the prompt.
+- task_id: majority
+  value: the sequence length; the alphabet is fixed at two symbols
+  summary: Length is the only setting that varies. Because the length also fixes how large
+    the typical gap between the counts is in relative terms, it controls both how much there
+    is to count and how much error is survivable.
+- task_id: markov_first_rewrite
+  value: the number of rules and the string length, doubled together; pattern length, replacement
+    lengths, and the nothing-applies rate held fixed
+  summary: The three settings pair 2 rules with 32 characters, 4 with 64, and 8 with 128.
+    Patterns are three letters everywhere, replacements are drawn uniformly from one to five
+    letters everywhere, and a quarter of instances have no match everywhere.
+- task_id: passkey_retrieval
+  value: the target context length and the offset at which the sentence is spliced in
+  summary: The requested length is capped so the whole instance stays within about 1024 characters.
+    The cap never bites at 128 or 512 and does bite at the largest request, which yields about
+    944 characters instead.
+- task_id: random_label
+  value: the answer pool is the only tunable quantity, fixed at two characters
+  summary: The size of the pool sets the best achievable accuracy, which is one half here.
+    Nothing about the family can be made longer, deeper, or wider.
+- task_id: relabeled_cyclic_row_completion
+  value: the number of symbols in the table and the number of unrelated equations
+  summary: The first sets how many entries the row has and how many candidate names the answer
+    is chosen from; the second sets how much of the listing is irrelevant. Nothing else varies
+    between settings.
+- task_id: reverse_sequence
+  value: the sequence length; the alphabet is fixed at ten digits
+  summary: Length is the only setting that varies, and it sets how much must be stored and
+    how much must be emitted at the same time.
+- task_id: sat_dpll_trace
+  value: variable count and clause count, raised together to keep about 4.3 clauses per variable,
+    plus an inactive record-length ceiling
+  summary: 'The two size settings are not varied independently: 17 clauses over 4 variables,
+    26 over 6, and 34 over 8 all sit within a few hundredths of the same ratio. The third
+    setting caps record length but is never reached.'
+- task_id: scan_command_to_actions
+  value: the target word count, which also sets the number of segments and the answer length
+  summary: The word-count window is the only control. Within a segment, a direction word and
+    a repetition word are each included with probability one half, and the action list is
+    capped at fifty items.
+- task_id: tfidf_rank_documents
+  value: number of documents, tokens per document, token-pool size, query width, and the cap
+    on copies per document
+  summary: The first four move across the settings. The cap on copies stays at three throughout,
+    so a document can never contribute more than three occurrences of one token to its own
+    score.
+- task_id: tree_next_hop_search
+  value: the depth and the branching factor; branching is held at two and depth takes the
+    values two, four, and five
+  summary: Depth is the only setting that varies, and it fixes the listing at six, thirty,
+    or sixty-two edges and the tree at seven, thirty-one, or sixty-three nodes.
+- task_id: variable_tracing
+  value: the number of references in the chain and the number of unreferenced assignments,
+    held equal to each other
+  summary: These are the only settings, and the three configurations set them to 1 and 1,
+    2 and 2, then 4 and 4. Together they fix the total number of lines at 3, 5, and 9.
+- task_id: xor_parity
+  value: row length only, set to 16, 64, or 128
+  summary: 'Nothing else about the instance can be tuned: the alphabet, the format, the rule,
+    and the answer shape are the same at every length.'
+- task_id: year_span_greater_than
+  value: the range the difference between the two years is drawn from; nothing else varies
+    between settings
+  summary: Both years always share their first two digits, the sentence pattern is fixed,
+    and the prompt length is fixed, so the only structural pressure the settings apply is
+    how close the two numbers are.

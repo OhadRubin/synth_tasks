@@ -1,0 +1,120 @@
+axis: generalization_regime
+factor: holdout_unit
+axis_frame: Generalization regime describes the relationship between training and evaluation
+  distributions. The axis is about which dimension shifts, how train and evaluation relate,
+  what is held out, how much support overlaps, how primitives recombine, how nuisance factors
+  are controlled, and how far evaluation moves from training.
+factor_description: The unit absent, restricted, or specially controlled during training and
+  exercised at evaluation. Holdouts may apply to examples, labels, symbols, entities, rules,
+  operators, templates, latent shapes, worlds, graph motifs, or generator modes.
+tasks:
+- task_id: associative_recall
+  value: nothing is held out
+  summary: No key, digit, or question is reserved for evaluation, so any specific instance
+    may appear on either side.
+- task_id: babi_counting
+  value: nothing is held out
+  summary: No person, object kind, amount, or total is reserved for evaluation, so any particular
+    instance could appear on either side.
+- task_id: babi_multi_hop
+  value: nothing is held out
+  summary: No object, person, room, or pairing of them is reserved for evaluation, so any
+    particular chain can appear on either side.
+- task_id: babi_single_hop
+  value: nothing is held out
+  summary: No person, room, story shape, or question is reserved for evaluation, so any particular
+    instance could appear on either side.
+- task_id: bounded_tiny_python_execution
+  value: nothing is held out
+  summary: No operator, statement shape, variable, constant, or program pattern is reserved
+    for evaluation only.
+- task_id: constant_label
+  value: nothing is held out
+  summary: Neither input character is reserved for evaluation, and the answer is the same
+    on both sides, so nothing is withheld and later tested.
+- task_id: copy
+  value: nothing is held out
+  summary: No digit, position, or particular sequence is reserved for evaluation, so any instance
+    could appear on either side of the split.
+- task_id: dyck_balanced_parentheses
+  value: nothing is held out
+  summary: No bracket kind, depth, row, or answer length is reserved for evaluation, so any
+    particular instance may land on either side.
+- task_id: fictional_ontology_cot
+  value: nothing is held out
+  summary: No name, category word, property word, or chain shape is reserved for evaluation,
+    so any instance may appear on either side.
+- task_id: gridworld_detour_planning
+  value: nothing is held out
+  summary: No map size, route shape, wall pattern, start or goal placement is reserved for
+    evaluation, so any instance may fall on either side.
+- task_id: horn_forward_chaining
+  value: nothing is held out
+  summary: Neither verdict, chain length, statement name, nor rule shape is reserved for evaluation,
+    so any instance could equally have appeared on either side.
+- task_id: iterated_string_replace
+  value: nothing is held out
+  summary: No letter, pattern, substitution, or program shape is reserved for evaluation,
+    so any program the generator can build may appear on either side.
+- task_id: label_anchor_feature_match
+  value: nothing is held out
+  summary: No token is reserved as filler and no label is reserved for evaluation; any token
+    can carry a label or be filler in any instance on either side.
+- task_id: listops_nested_prefix
+  value: nothing is held out
+  summary: No operator, digit, operand count, or tree shape is reserved for evaluation, so
+    any expression that can be generated may appear on either side.
+- task_id: majority
+  value: nothing is held out
+  summary: No symbol, no answer and no range of margins is reserved for evaluation, so any
+    sequence may appear on either side.
+- task_id: markov_first_rewrite
+  value: nothing is held out
+  summary: No pattern, replacement, rule position, match position, or instance shape is reserved
+    for evaluation, so any specific instance may appear on either side.
+- task_id: passkey_retrieval
+  value: nothing is held out
+  summary: No value, no offset region and no filler pattern is reserved for evaluation, so
+    any instance may appear on either side.
+- task_id: random_label
+  value: nothing is held out
+  summary: Neither input character nor either answer character is reserved for evaluation,
+    so nothing is withheld and later tested.
+- task_id: relabeled_cyclic_row_completion
+  value: nothing is deliberately held out, though fresh names make repeats vanishingly rare
+  summary: No name, pair, or arrangement is reserved for evaluation. Because the assignment
+    of names to symbols is redrawn every time, an evaluation instance is essentially never
+    a copy of a training one even so.
+- task_id: reverse_sequence
+  value: nothing is held out
+  summary: No digit, position or arrangement is reserved for evaluation, so any sequence may
+    appear on either side, although in practice no specific sequence appears twice at all.
+- task_id: sat_dpll_trace
+  value: nothing is held out
+  summary: No variable, clause pattern, verdict, or record shape is reserved for evaluation;
+    any instance may appear on either side.
+- task_id: scan_command_to_actions
+  value: nothing is held out
+  summary: No word, modifier, joining word or word combination is reserved for evaluation,
+    so any command that can appear at evaluation can also appear during training.
+- task_id: tfidf_rank_documents
+  value: nothing is held out
+  summary: No token, query, corpus size, or arrangement is reserved for evaluation, so any
+    instance could equally have appeared on either side.
+- task_id: tree_next_hop_search
+  value: nothing is held out
+  summary: No label, tree position, goal, or edge order is reserved for evaluation, so any
+    particular instance could appear on either side.
+- task_id: variable_tracing
+  value: nothing is held out
+  summary: No letter, digit, chain shape, or line ordering is reserved for evaluation, so
+    any particular instance may appear on either side.
+- task_id: xor_parity
+  value: nothing is held out
+  summary: No symbol, length, or particular row is reserved for evaluation, so any instance
+    may appear on either side of the split.
+- task_id: year_span_greater_than
+  value: nothing is held out within a setting, though the difference ranges do not overlap
+    between settings
+  summary: No noun, century, year, or answer is reserved for evaluation. A difference of 5
+    simply never occurs at the closest setting, because that range stops at 3.

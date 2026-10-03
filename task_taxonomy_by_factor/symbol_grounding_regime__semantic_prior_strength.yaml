@@ -1,0 +1,145 @@
+axis: symbol_grounding_regime
+factor: semantic_prior_strength
+axis_frame: Symbol grounding regime describes how tokens, labels, and symbols in an instance
+  get their task-local meaning. The axis is about the relationship between external associations,
+  visible type cues, local remappings, semantic alignment, and the unit at which meaning attaches.
+factor_description: How strongly a symbol arrives with meaning before the task defines it.
+  This includes variation from opaque identifiers through lightly typed placeholders to words,
+  domain terms, or culturally loaded labels that may bring pretrained associations into the
+  instance.
+tasks:
+- task_id: associative_recall
+  value: near zero; keys are bare letter strings and values are bare digits
+  summary: Keys are "a", "b", ... and then "aa", "ab", ...; nothing about a key suggests which
+    digit it should carry, and nothing outside the instance predicts it.
+- task_id: babi_counting
+  value: high; real given names, everyday objects, ordinary room words, and digits with their
+    usual numeric value
+  summary: Nothing has to be redefined. The digits in particular arrive already meaning one,
+    two, and three, which is what makes adding them the obvious reading.
+- task_id: babi_multi_hop
+  value: high; real given names, ordinary room words, and everyday objects
+  summary: Every content word is common English arriving with its usual meaning. The same
+    four names, five rooms, and four objects appear in every instance, and nothing is redefined.
+- task_id: babi_single_hop
+  value: high; real given names and ordinary room words
+  summary: The four names and the five room words are everyday English and arrive with their
+    usual meanings. Nothing in the instance redefines them, and the same twelve or so words
+    appear in every instance.
+- task_id: bounded_tiny_python_execution
+  value: strong for the operators and keywords, near zero for the variable names
+  summary: Arithmetic signs, the remainder sign, the comparison signs, and the loop and conditional
+    keywords all mean what they mean in the language they are written in, and the task does
+    not redefine them. The variables are single letters taken in alphabetical order and carry
+    no meaning of their own.
+- task_id: constant_label
+  value: near zero; the characters 0 and 1 are used as bare marks
+  summary: Both the input character and the answer character look like digits, but no arithmetic,
+    ordering, or truth-value meaning is used anywhere in the family.
+- task_id: copy
+  value: none in use; digits act as bare distinguishable characters
+  summary: 'The characters 0 through 9 are familiar, but nothing in the task uses their numeric
+    value: they are never compared, added, or ordered. Any ten distinct characters would give
+    exactly the same task.'
+- task_id: dyck_balanced_parentheses
+  value: strong; brackets carry their everyday pairing convention into the task
+  summary: A round opening bracket obviously belongs with a round closing one, and that familiarity
+    supplies the pairing rule that the instance never states.
+- task_id: fictional_ontology_cot
+  value: essentially zero for the invented words; ordinary for the person's name
+  summary: The category words and property words are made up from a fixed set of syllables
+    and mean nothing outside the instance, so whether one category falls under another cannot
+    be known from background familiarity and must be read off the listed sentences. The person's
+    name is a real given name, but no name is ever associated with any category.
+- task_id: gridworld_detour_planning
+  value: strong and load-bearing; the move letters are mnemonics whose directions are never
+    stated
+  summary: The rules sentence lists the four move letters but never says which one means which
+    direction, so knowing that they abbreviate up, down, left and right, and that up means
+    towards the first row, has to be brought from outside. The map characters are explained
+    in the rules sentence and follow common conventions for walls and open ground.
+- task_id: horn_forward_chaining
+  value: near zero; a statement name is one letter and two digits with no meaning outside
+    the instance
+  summary: Nothing about a name suggests whether it is true or what it depends on. The only
+    words carrying real-world meaning are in the explanatory sentence and the question.
+- task_id: iterated_string_replace
+  value: letters carry nothing; the instruction spelling carries a strong prior
+  summary: The strings are drawn from three to five lowercase letters and never spell words,
+    so no letter suggests anything. The instruction line, by contrast, is a form most readers
+    already associate with replacing text.
+- task_id: label_anchor_feature_match
+  value: zero for the list tokens, near zero for the labels
+  summary: A token is the letter f followed by three digits and stands for nothing outside
+    the instance. The labels are capital letters from A to H, which carry an alphabetical
+    ordering but no category content, so no label is a more plausible answer than another
+    before the prompt is read.
+- task_id: listops_nested_prefix
+  value: strong; the operator names mean what they usually mean and digits are numbers
+  summary: Largest, smallest, median, and modular sum arrive with their ordinary meanings,
+    and the operands are compared and added as numbers, so outside knowledge transfers directly
+    instead of having to be induced from the instance.
+- task_id: majority
+  value: near zero; the two symbols are bare marks
+  summary: Nothing outside the instance suggests which of the two should win, and neither
+    symbol has a meaning the task relies on beyond being distinguishable from the other.
+- task_id: markov_first_rewrite
+  value: none; every letter sequence is drawn at random from the alphabet
+  summary: Patterns, replacements, and the string are meaningless letter runs with no pronunciation
+    and no resemblance to words, so nothing arrives carrying an association from outside the
+    instance.
+- task_id: passkey_retrieval
+  value: the word naming the value is an ordinary English word; the value itself carries nothing
+  summary: A reader already knows what a passkey is and that "The passkey is X" asserts a
+    value for it, which is exactly what the task needs. The five digits are arbitrary and
+    no prior predicts them.
+- task_id: random_label
+  value: near zero; the characters 0 and 1 are used as bare marks
+  summary: Both the input and the two possible answers look like digits, but no arithmetic,
+    ordering, or truth-value meaning is used anywhere in the family.
+- task_id: relabeled_cyclic_row_completion
+  value: none; every symbol is a fixed-width name with no content, redrawn each instance
+  summary: The names come from one common pool of interchangeable strings, and which members
+    of that pool an instance uses is decided by a shuffle. No name arrives with an association,
+    and none it acquires survives the end of the instance.
+- task_id: reverse_sequence
+  value: near zero; digits are opaque marks whose numeric meaning is unused
+  summary: Nothing about a digit affects what happens to it, and the answer would be identical
+    if the ten digits were replaced throughout by ten unfamiliar marks.
+- task_id: sat_dpll_trace
+  value: none for the variables; the two outcome words and the minus sign carry their usual
+    meaning
+  summary: Variables are just the numbers 1 upward, and nothing outside the instance suggests
+    what value any of them should take. The words for satisfiable and unsatisfiable are conventional
+    abbreviations and mean here what they normally mean; the guess and undo markers are arbitrary
+    and get their meaning only from the task.
+- task_id: scan_command_to_actions
+  value: high; every word is a common English word used in its everyday sense
+  summary: '"jump", "left", "twice" and "after" all arrive with meanings a reader already
+    has, and those meanings are the ones the rules assign. Nothing has to be learned from
+    the instance itself.'
+- task_id: tfidf_rank_documents
+  value: near zero for the tokens and identifiers, but the surrounding vocabulary is a familiar
+    one
+  summary: A token is one letter and two digits and a document identifier is one letter and
+    a number, so neither carries meaning. The words around them, and the shape of the formula,
+    belong to a widely used way of scoring documents against a query, which a reader may recognise.
+- task_id: tree_next_hop_search
+  value: near zero; labels are random two-character strings
+  summary: Each label is drawn from a large pool of pairs built from lower-case letters, upper-case
+    letters, and digits. Nothing about a label suggests where it sits in the tree, and nothing
+    outside the instance predicts it.
+- task_id: variable_tracing
+  value: near zero; names are single lowercase letters, values are bare digits
+  summary: A name carries nothing that hints at what it holds or whether it is on the chain.
+    Nothing outside the instance predicts which letter points to which.
+- task_id: xor_parity
+  value: strong for the two symbols; 0 and 1 arrive with their usual numeric sense
+  summary: The symbols are the familiar binary digits, and treating them as numbers to be
+    added is exactly what the task wants. Nothing about a particular position or bit has to
+    be learned from the instance.
+- task_id: year_span_greater_than
+  value: strong for the words and the dates, though none of it decides the answer
+  summary: Years, and nouns such as treaty, dynasty, and siege, all arrive with real-world
+    meaning attached, and four-digit numbers in this range read as historical dates rather
+    than as bare quantities. What settles the answer is only their numeric order.

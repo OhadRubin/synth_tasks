@@ -1,0 +1,124 @@
+axis: latent_topology
+factor: hierarchy_and_nesting
+axis_frame: Latent topology describes the abstract structure that exists before an input is
+  rendered as text. The axis is about how entities, relations, events, states, and constraints
+  are arranged, connected, ordered, nested, shared, or evolved.
+factor_description: How containment, scoping, and recursive structure appear. Variation may
+  involve flat structures, nested trees, shared substructure, nested scopes, multi-root hierarchies,
+  and cases where hierarchy determines valid interpretation or evaluation order.
+tasks:
+- task_id: associative_recall
+  value: flat, depth one
+  summary: Pairs are not contained in one another and no scope opens or closes anywhere in
+    the listing.
+- task_id: babi_counting
+  value: flat, depth one
+  summary: No sentence is contained in another and no scope opens or closes anywhere in the
+    story.
+- task_id: babi_multi_hop
+  value: flat, depth one
+  summary: No sentence is contained in another and no scope opens or closes; the depth in
+    this task is path length, not containment.
+- task_id: babi_single_hop
+  value: flat, depth one
+  summary: No sentence is contained in another and no scope opens or closes anywhere in the
+    story.
+- task_id: bounded_tiny_python_execution
+  value: none in the first setting, one level in the second, two levels of loops plus conditionals
+    in the third
+  summary: The first setting is a flat run of assignments. The second allows a loop or a conditional
+    to contain assignments. The third allows a loop inside a loop, so a single innermost assignment
+    can run many times over.
+- task_id: constant_label
+  value: flat; nothing contains anything else
+  summary: No scope opens or closes and no element sits inside another. The instance is two
+    labelled values side by side.
+- task_id: copy
+  value: flat, depth one
+  summary: No digit contains another and no scope opens or closes anywhere in the sequence.
+    There is a single level of structure throughout.
+- task_id: dyck_balanced_parentheses
+  value: nesting up to the configured depth of two, four, or eight
+  summary: Nesting is the point of the family, and the setting names exactly how deep the
+    row is guaranteed to get at its deepest point.
+- task_id: fictional_ontology_cot
+  value: a containment ladder 2 to 5 levels deep, written flat
+  summary: Each category sits inside the next, and the person sits inside the first, but nothing
+    in the text indents, brackets, or otherwise displays the levels.
+- task_id: gridworld_detour_planning
+  value: flat; every dead end hangs directly off the main corridor and none branch further
+  summary: A dead-end corridor attaches to the correct route at a single cell and runs away
+    from it in a line of up to two, four, or five cells, so there are no dead ends inside
+    dead ends and no scope that opens and closes.
+- task_id: horn_forward_chaining
+  value: flat; rules are never nested and no scope opens or closes
+  summary: Depth appears only as the length of a derivation, never as containment, so no rule
+    is evaluated inside another.
+- task_id: iterated_string_replace
+  value: flat; no instruction contains another
+  summary: There are no scopes, subroutines, branches, or loops. The only structure the program
+    has is the order of its lines, and every instruction applies to the whole string.
+- task_id: label_anchor_feature_match
+  value: two levels, tokens inside lists, and nothing deeper
+  summary: No list contains another and no token opens a scope; the containment is a single
+    layer and is shown by line breaks alone.
+- task_id: listops_nested_prefix
+  value: nesting is the entire structure, at exactly 2, 4, or 6 levels
+  summary: 'Containment fixes evaluation order: an outer group cannot be computed until every
+    group inside it has been. The depth setting is the difficulty knob, and expressions whose
+    deepest chain falls short of it are discarded.'
+- task_id: majority
+  value: flat, depth one
+  summary: Nothing is contained in anything else and no scope opens or closes at any point
+    in the sequence.
+- task_id: markov_first_rewrite
+  value: flat; no nesting, and one step means no rewrite feeds another
+  summary: Patterns are plain substrings that cannot contain one another as structure, and
+    because exactly one substitution is performed the result of the edit is never itself examined
+    for further matches.
+- task_id: passkey_retrieval
+  value: flat; the sentence is not contained in anything
+  summary: No scope opens or closes, nothing is nested inside anything else, and the context
+    has a single level of structure throughout.
+- task_id: random_label
+  value: flat; nothing contains anything else
+  summary: No scope opens or closes and no element sits inside another. The instance is two
+    labelled values side by side.
+- task_id: relabeled_cyclic_row_completion
+  value: flat; no equation contains another and nothing nests
+  summary: A result is never fed back into a further equation as part of the task, so there
+    is one level only and no scope opens or closes anywhere.
+- task_id: reverse_sequence
+  value: flat, depth one
+  summary: Nothing is contained in anything else and no scope opens or closes at any point
+    in the sequence.
+- task_id: sat_dpll_trace
+  value: guesses nest to a depth of at most the number of variables, written out flat
+  summary: Every guess opens a scope that its matching undo closes, so the record is a flattened
+    tree of depth up to 4, 6, or 8. Nothing in the surface marks the nesting.
+- task_id: scan_command_to_actions
+  value: two levels of nesting, with the outer chain up to five deep
+  summary: 'Inside a segment, modifiers scope over a motion word. Above that, joining words
+    nest one inside the next: one to two segments in the short setting, two to three in the
+    medium, three to five in the long.'
+- task_id: tfidf_rank_documents
+  value: two levels, corpus over documents over tokens; depth two
+  summary: No token contains another and no document contains another. Nothing opens or closes
+    a scope, so containment is fixed by the line structure alone.
+- task_id: tree_next_hop_search
+  value: a strict hierarchy of two, four, or five levels below the root
+  summary: The whole task is about position in this hierarchy - the goal always sits at the
+    deepest level and the answer always sits one level below the root, so the answer is the
+    goal's topmost ancestor short of the root.
+- task_id: variable_tracing
+  value: flat; no scopes, blocks, or containment anywhere
+  summary: Every statement sits at the same level, nothing opens or closes a region, and no
+    name is shadowed by a name in an inner scope.
+- task_id: xor_parity
+  value: flat, depth one
+  summary: There is no containment, no scope that opens and closes, and no recursive structure
+    anywhere in the instance.
+- task_id: year_span_greater_than
+  value: flat; no containment or scope anywhere
+  summary: There is one clause with two values in it, nothing nested inside anything else,
+    and no evaluation order to respect.

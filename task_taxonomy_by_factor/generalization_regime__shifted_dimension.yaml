@@ -1,0 +1,130 @@
+axis: generalization_regime
+factor: shifted_dimension
+axis_frame: Generalization regime describes the relationship between training and evaluation
+  distributions. The axis is about which dimension shifts, how train and evaluation relate,
+  what is held out, how much support overlaps, how primitives recombine, how nuisance factors
+  are controlled, and how far evaluation moves from training.
+factor_description: The main property whose support differs across training and evaluation.
+  This may involve length, depth, vocabulary, alphabet size, graph size, distractor density,
+  proof pattern, rendering, rule schema, output length, or another axis of variation.
+tasks:
+- task_id: associative_recall
+  value: the number of pairs, which carries prompt length and key width with it
+  summary: The three bins differ only in how many pairs are listed. The largest bin also shifts
+    the surface form, since keys become two letters.
+- task_id: babi_counting
+  value: the story length, which carries the number of contributions and the size of the answer
+    with it
+  summary: The two settings differ in length, in how many sentences add to the total, and
+    consequently in how large that total gets.
+- task_id: babi_multi_hop
+  value: the number of distractor sentences, which carries the gap between the two supporting
+    sentences with it
+  summary: The two settings differ in story length alone. Because the supporting positions
+    are drawn uniformly, a longer story also spreads the two links further apart.
+- task_id: babi_single_hop
+  value: the number of sentences, which carries the amount of superseded state with it
+  summary: The two settings differ only in story length. Because moves are drawn independently,
+    a longer story also means more earlier rooms for the asked person that have to be discarded.
+- task_id: bounded_tiny_python_execution
+  value: program complexity, with five properties moving together
+  summary: Between settings the number of variables, the number of assignments, the loop nesting
+    depth, the maximum iteration count, and the conditional rate all increase at once.
+- task_id: constant_label
+  value: nothing shifts; the family is run at one setting only
+  summary: There is a single setting, so no property differs between one group of instances
+    and another, and there is no ladder of difficulty.
+- task_id: copy
+  value: sequence length, which sets input length and answer length together
+  summary: The bins differ in nothing but how many digits are present. Because the answer
+    is the input, the same setting fixes how much must be read and how much must be emitted.
+- task_id: dyck_balanced_parentheses
+  value: nesting depth, which drags row length and answer length along with it
+  summary: Raising the depth setting simultaneously lengthens the row, raises the pile size
+    to be held, and allows longer answers, so three properties move as one.
+- task_id: fictional_ontology_cot
+  value: chain length together with the amount of surrounding unrelated material
+  summary: Both move at every step of the ladder, from 2 links among 2 unrelated sentences
+    to 5 links among 8, and the required derivation grows from 3 sentences to 9.
+- task_id: gridworld_detour_planning
+  value: map size, route length, dead-end count and dead-end length, all moving together
+  summary: Every one of the four size knobs increases from one setting to the next, so the
+    settings differ along several dimensions at once rather than one.
+- task_id: horn_forward_chaining
+  value: chain length and irrelevant-rule count, raised together in three steps
+  summary: One application with four irrelevant rules, then three with eight, then six with
+    sixteen. The number of starting statements rises alongside both.
+- task_id: iterated_string_replace
+  value: program length and string length together, with letter count, pattern length, and
+    the deleting and dependency rates rising alongside
+  summary: Bins move from two instructions over sixteen characters to eight over sixty-four,
+    and every other pressure the generator controls rises in step with them rather than being
+    held constant.
+- task_id: label_anchor_feature_match
+  value: prompt size together with the number of labels
+  summary: Both rise at every step of the ladder, taking the prompt from 3 lists of 6 tokens
+    to 17 lists of 16, and the number of possible answers from 2 to 8.
+- task_id: listops_nested_prefix
+  value: nesting depth, which carries expression length with it
+  summary: The bins differ in how many levels the deepest chain runs. Because a deeper expression
+    needs more groups, it is also longer and contains more operators and digits than a shallow
+    one.
+- task_id: majority
+  value: sequence length, which also sets how close the two counts typically are
+  summary: The three settings differ only in how many symbols are present, but that also moves
+    the typical margin between the counts from about a quarter of the length down to about
+    a thirteenth.
+- task_id: markov_first_rewrite
+  value: the rule count and the string length, which move together
+  summary: Both double at each step of the ladder, so what shifts between settings is how
+    many patterns must be checked and how many characters must be reproduced, never one without
+    the other.
+- task_id: passkey_retrieval
+  value: the amount of filler surrounding the sentence
+  summary: The three settings differ only in how many characters of digit noise the sentence
+    is embedded in, which also sets how far the sentence can be from the question.
+- task_id: random_label
+  value: nothing shifts; the family is run at one setting only
+  summary: There is a single setting, so no property differs between one group of instances
+    and another, and there is no ladder of difficulty.
+- task_id: relabeled_cyclic_row_completion
+  value: the size of the table and the number of unrelated equations, raised together in three
+    steps
+  summary: Four symbols with none, then eight with eight, then twelve with twenty-four. The
+    row length and the amount of interference never move separately.
+- task_id: reverse_sequence
+  value: sequence length, which is also the answer length
+  summary: The three settings differ only in how many items are present, and because the answer
+    has the same size as the input, that one change moves both sides at once.
+- task_id: sat_dpll_trace
+  value: formula size, which carries record length with it
+  summary: Variables go 4 to 6 to 8 and clauses 17 to 26 to 34; the middle record length follows
+    at 24, 31, and 49 items and the number of guesses at 6, 7, and 10.
+- task_id: scan_command_to_actions
+  value: command word count, carrying segment count and answer length with it
+  summary: The three settings differ only in how long the command is. Because segments are
+    at most three words, a longer command necessarily means more segments and more joining
+    words.
+- task_id: tfidf_rank_documents
+  value: corpus size, document length, token-pool size, and query width, all moved together
+    in four steps
+  summary: No setting isolates any one of them, and the length of the required answer moves
+    with the corpus size as well, so five properties advance at once.
+- task_id: tree_next_hop_search
+  value: the depth, which carries route length, listing length, and node count with it
+  summary: The three settings differ only in how many levels the tree has, and every other
+    size in the instance follows from that one number.
+- task_id: variable_tracing
+  value: chain length, which moves together with the number of irrelevant lines and hence
+    with total length
+  summary: Going from one setting to the next raises the number of references and the number
+    of unreferenced assignments by the same amount, so the listing gets longer at the same
+    time as the chain gets deeper.
+- task_id: xor_parity
+  value: row length, and nothing else
+  summary: The three settings differ only in how many bits are combined; unusually for a graded
+    family, no second property such as alphabet size or answer format moves with it.
+- task_id: year_span_greater_than
+  value: the difference between the two years, moving across three disjoint ranges
+  summary: The settings draw the difference from 1 to 3, then 4 to 12, then 13 to 40, so what
+    shifts is how close the comparison sits to the point where the two numbers would be equal.

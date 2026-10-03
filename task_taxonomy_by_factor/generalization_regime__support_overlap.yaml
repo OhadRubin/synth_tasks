@@ -1,0 +1,144 @@
+axis: generalization_regime
+factor: support_overlap
+axis_frame: Generalization regime describes the relationship between training and evaluation
+  distributions. The axis is about which dimension shifts, how train and evaluation relate,
+  what is held out, how much support overlaps, how primitives recombine, how nuisance factors
+  are controlled, and how far evaluation moves from training.
+factor_description: How much train and evaluation share representational, structural, and
+  semantic support. Overlap can be full, partial, disjoint for selected units, based on shared
+  primitives with new compositions, or located in a new domain built from familiar ingredients.
+tasks:
+- task_id: associative_recall
+  value: complete within a bin; across bins the smaller key sets are contained in the larger
+  summary: A 4-pair instance uses keys "a" through "d", which also appear in 16-pair and 64-pair
+    instances, and all bins use the same ten digits.
+- task_id: babi_counting
+  value: words and templates shared completely; the answer ranges only partly overlap
+  summary: Totals at the shorter setting run from two to nine, while the longer setting regularly
+    produces totals above nine that the shorter setting can never produce. The set of possible
+    answers therefore grows rather than merely reweighting.
+- task_id: babi_multi_hop
+  value: complete; both settings use the same words, templates, and chain length
+  summary: Everything a solver could learn at the shorter setting remains valid at the longer
+    one, since only the quantity of irrelevant material differs.
+- task_id: babi_single_hop
+  value: complete; both settings use the same people, rooms, and template
+  summary: The two settings differ in how long the story is, and in nothing else that appears
+    on the surface. Every word usable at one setting is usable at the other.
+- task_id: bounded_tiny_python_execution
+  value: complete within a setting; the smaller settings' programs are a special case of the
+    larger ones
+  summary: A straight-line program over three variables is exactly what the larger settings
+    produce when no loop or conditional happens to be drawn, and all three settings share
+    the same arithmetic, the same modulus, and the same three printed variables.
+- task_id: constant_label
+  value: complete; there are only two distinct instances and both occur on each side
+  summary: The family can produce exactly two different pieces of text, one for each input
+    character, and both answer with the same character. Anything seen at evaluation has been
+    seen in training.
+- task_id: copy
+  value: complete within a bin; all bins share the same ten digits and layout
+  summary: A stretch of a 128-digit sequence is statistically indistinguishable from a 16-digit
+    sequence, so shorter and longer bins draw on exactly the same local material and differ
+    only in how much of it there is.
+- task_id: dyck_balanced_parentheses
+  value: shared alphabet, layout, and rule everywhere; deeper nesting and longer rows only
+    in the higher settings
+  summary: A shallow row is also a legal fragment under a deeper setting, but the reverse
+    is not true, so the settings nest rather than merely overlap.
+- task_id: fictional_ontology_cot
+  value: complete; the same 12 names, 280 category words, and 16 properties at every setting
+  summary: A category word that appears mid-chain at one setting can appear on an unrelated
+    sentence at another, and the vocabulary never grows or shrinks with the setting.
+- task_id: gridworld_detour_planning
+  value: rules, characters and moves shared by all settings; larger maps and longer plans
+    only in the higher ones
+  summary: A short plan is a legal answer shape under every setting, but a twenty-eight move
+    plan on a ten-cell map only ever occurs in the largest one.
+- task_id: horn_forward_chaining
+  value: complete within a setting; the shorter chains are prefixes of the longer ones
+  summary: The one-step chain uses the first two chain statements and the first helper, all
+    of which reappear unchanged at the beginning of the six-step chain, and all settings share
+    the naming scheme and the rule format.
+- task_id: iterated_string_replace
+  value: complete within a bin; across bins the smaller letter sets sit inside the larger
+  summary: The three letters of the smallest bin are among the five of the largest and the
+    instruction lines look the same everywhere. What does not carry over is the smallest bin's
+    guarantee that no instruction deletes and none depends on another.
+- task_id: label_anchor_feature_match
+  value: complete; the same pool of one thousand tokens and the same eight label letters at
+    every setting
+  summary: The smaller settings use only two or four of the eight letters per instance, but
+    they are drawn from the same eight, so no label at the largest setting is new.
+- task_id: listops_nested_prefix
+  value: complete within a bin; deeper expressions contain the shallower shapes as parts
+  summary: Every two-level expression looks like something that sits inside a six-level one,
+    and all bins draw on the same four operators and the same ten digits, so nothing structurally
+    new appears at greater depth.
+- task_id: majority
+  value: complete; the same two symbols and the same two possible answers everywhere
+  summary: All three settings share one alphabet and one answer space, and differ only in
+    how many positions are filled from that alphabet.
+- task_id: markov_first_rewrite
+  value: complete within a setting; across settings the same alphabet, pattern length, replacement
+    lengths, and nothing-applies rate
+  summary: The smaller settings differ from the larger only by having fewer rules and shorter
+    strings, and every rule that could appear at one setting could appear at another. The
+    proportion of unchanged answers is the same everywhere.
+- task_id: passkey_retrieval
+  value: complete; the same sentence, question and answer space in every setting
+  summary: All three settings share one template, one question, and the same hundred thousand
+    possible values. Only the length of the surrounding filler separates them.
+- task_id: random_label
+  value: complete; four distinct instances exist and all four occur on each side
+  summary: Two input characters times two answer characters exhaust the family, and each combination
+    appears about a quarter of the time on both sides. Every evaluation instance has an exact
+    twin in training, and half of those twins carry the opposite answer.
+- task_id: relabeled_cyclic_row_completion
+  value: complete within a setting, and every setting draws names from the same pool
+  summary: The visible vocabulary is shared across all settings and all instances, while the
+    meanings attached to it are shared by nothing, so surface overlap is total and structural
+    overlap is limited to the shape of the table.
+- task_id: reverse_sequence
+  value: complete; the same ten digits everywhere, with sequences essentially never repeating
+  summary: All three settings draw from one alphabet under one rule. The space of possible
+    sequences is so large even at the shortest length that overlap is a property of the alphabet
+    rather than of the instances.
+- task_id: sat_dpll_trace
+  value: notation, markers, and verdict words shared everywhere; the formulas themselves cannot
+    be shared across settings
+  summary: A formula drawn at one setting has the wrong number of clauses for another, so
+    the three sets of formulas are disjoint even though everything else about the instances
+    is identical.
+- task_id: scan_command_to_actions
+  value: the same ten words everywhere, but the three length windows do not overlap
+  summary: Every setting draws on the identical vocabulary and identical rules, yet no command
+    from one setting can occur in another, because the word-count windows are disjoint.
+- task_id: tfidf_rank_documents
+  value: complete within a setting; across settings the smaller token pools sit inside the
+    larger
+  summary: The eight tokens used by the smallest setting are the first eight of the eighteen
+    used by the largest, and all four settings use the same identifier naming scheme and the
+    same formula.
+- task_id: tree_next_hop_search
+  value: the label pool and the edge notation are shared; the shallower trees are the top
+    of the deeper ones
+  summary: A two-level tree has the same shape as the top two levels of a five-level tree,
+    so the structures are nested rather than disjoint, and every label usable at one setting
+    is usable at all of them.
+- task_id: variable_tracing
+  value: complete within a setting; across settings the same alphabet, digits, and line format
+    with shorter chains contained in longer ones
+  summary: A one-reference chain is the opening of a four-reference chain, and every setting
+    draws from the same 26 letters and ten digits. Only the number of lines and the depth
+    of the chain differ.
+- task_id: xor_parity
+  value: full within a setting; across settings only the length differs
+  summary: All settings share the same two symbols, the same layout, the same rule, and the
+    same pair of possible answers.
+- task_id: year_span_greater_than
+  value: complete within a setting; across settings the same sentence, nouns, centuries, and
+    answers with disjoint difference ranges
+  summary: Every setting produces text of the same shape from the same vocabulary, so a reader
+    could not tell the settings apart except by subtracting the two numbers. The range the
+    first year is drawn from does narrow as the difference grows.

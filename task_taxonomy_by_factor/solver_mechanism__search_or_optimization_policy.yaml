@@ -1,0 +1,124 @@
+axis: solver_mechanism
+factor: search_or_optimization_policy
+axis_frame: Solver mechanism describes the machinery an exact solution would use under the
+  task assumptions. The axis is about memory form, control flow, access pattern, update discipline,
+  primitive routines, search policy, optimization policy, and resource scaling.
+factor_description: How alternatives are explored, ranked, pruned, or optimized. This includes
+  exhaustive enumeration, heuristic search, dynamic programming, constraint propagation, greedy
+  choice, priority queues, deterministic tie-breaking, and related policies.
+tasks:
+- task_id: associative_recall
+  value: scan until the exact match; no scoring, ranking, or pruning
+  summary: There is one match and no notion of a better or worse candidate, so no tie-breaking
+    rule is ever needed.
+- task_id: babi_counting
+  value: no search; every qualifying sentence is taken and none is ranked
+  summary: Candidates are never scored, compared, or pruned, and no tie-break is needed, because
+    membership in the contributing set is decided outright by two word matches.
+- task_id: babi_multi_hop
+  value: no search; each lookup has exactly one hit
+  summary: Candidates are never scored, ranked, or pruned, and no tie-break rule is needed,
+    because the generator guarantees the object and the carrier each appear in only the sentences
+    that matter.
+- task_id: babi_single_hop
+  value: no search; recency is the deciding rule
+  summary: Candidates are not scored or pruned. Where several sentences name the asked person,
+    the latest one wins outright.
+- task_id: bounded_tiny_python_execution
+  value: none; there is nothing to search
+  summary: Every choice the program makes is settled by the state at that moment, so no alternatives
+    are enumerated, ranked, or pruned, and no tie ever arises.
+- task_id: constant_label
+  value: none; there are no alternatives
+  summary: Only one answer is ever correct, so nothing is enumerated, scored, pruned, or tie-broken
+    at any point.
+- task_id: copy
+  value: none; there are no alternatives to consider
+  summary: Every step has exactly one legal continuation, so no enumeration, scoring, pruning,
+    or tie-breaking rule is ever invoked.
+- task_id: dyck_balanced_parentheses
+  value: none; every step is forced by the symbol just read
+  summary: No alternative is ever considered, nothing is ranked or pruned, and no tie-breaking
+    rule is needed because no ties arise.
+- task_id: fictional_ontology_cot
+  value: no search; exactly one sentence matches at each step
+  summary: There is nothing to rank, prune, or backtrack over, because a word that appears
+    as a subject appears as the subject of only one sentence along the chain.
+- task_id: gridworld_detour_planning
+  value: exhaustive expansion in order of distance, or systematic exploration with backtracking;
+    a straight-line-distance heuristic is unsafe here
+  summary: Preferring whichever move most shortens the straight-line gap to the goal is exactly
+    what the forced dead end punishes, so the shortest route can only be trusted if alternatives
+    are actually explored.
+- task_id: horn_forward_chaining
+  value: no search; exhaustive application with nothing to rank or prune
+  summary: Every applicable rule is applied, there are no competing alternatives, no costs
+    to compare, and no tie to break.
+- task_id: iterated_string_replace
+  value: none; the leftmost match is taken and scanning resumes after the substituted text
+  summary: There is nothing to rank or prune and no alternative alignment is ever considered,
+    so no tie-breaking decision beyond leftmost-first is left open.
+- task_id: label_anchor_feature_match
+  value: no search; the first and only match wins
+  summary: There is exactly one match, so nothing has to be scored, ranked, pruned, or tie-broken.
+- task_id: listops_nested_prefix
+  value: none; the nesting forces the evaluation order
+  summary: There are no alternatives to enumerate, rank, or prune, and the median's tie rule
+    is fixed in advance, so no tie-breaking decision is ever left to the solver.
+- task_id: majority
+  value: none; no alternatives are ever considered
+  summary: There are no candidates to score, prune or rank, and no tie-break rule is needed
+    because ties never reach the model.
+- task_id: markov_first_rewrite
+  value: first match over the rule list and leftmost match within the string; no scoring and
+    no backtracking
+  summary: Both selections are deterministic first-hit rules, so no candidate is ever ranked
+    against another and nothing is explored and then abandoned. Once a rule matches, the remaining
+    rules are never examined.
+- task_id: passkey_retrieval
+  value: no alternatives; the only match wins
+  summary: There is never more than one candidate, so nothing is scored, ranked, pruned or
+    tie-broken.
+- task_id: random_label
+  value: none; both candidates are equally good
+  summary: Enumerating the two possible answers is trivial and ranking them is impossible,
+    since no evidence distinguishes them and no tie-break improves on chance.
+- task_id: relabeled_cyclic_row_completion
+  value: no search; elimination leaves exactly one candidate
+  summary: Nothing is ranked, scored, or pruned, and no tie-break is ever required, because
+    the shown entries reduce the possibilities to one.
+- task_id: reverse_sequence
+  value: none; every step is forced
+  summary: There are no candidates to consider, nothing to score or prune, and no tie-break
+    rule, because each output position admits exactly one item.
+- task_id: sat_dpll_trace
+  value: exhaustive depth-first exploration with deduction as the only pruning, plus fixed
+    tie-breaks
+  summary: There is no heuristic ranking of variables, no restart, and no recording of reasons
+    for a conflict; the lowest-numbered eligible variable is taken and tried true before false.
+- task_id: scan_command_to_actions
+  value: none; the derivation is forced at every step
+  summary: No candidate is ever weighed against another, nothing is pruned, and no tie-break
+    rule exists, because each word admits exactly one reading.
+- task_id: tfidf_rank_documents
+  value: no search; a full sort with a deterministic secondary key
+  summary: Every document is placed and nothing is pruned or discarded. Equal scores are separated
+    by increasing identifier number rather than arbitrarily, so the policy never leaves a
+    choice open.
+- task_id: tree_next_hop_search
+  value: none needed going upward; two-way branching with backtracking going downward
+  summary: Because every node has exactly one parent, walking from the goal toward the root
+    never chooses and never needs pruning, scoring, or a tie-break. The direction of travel
+    is what decides whether search is required at all.
+- task_id: variable_tracing
+  value: none; the next step is forced at every point
+  summary: At each step exactly one line binds the name being resolved, so there are no alternatives
+    to rank, prune, or tie-break, and nothing is ever explored and abandoned.
+- task_id: xor_parity
+  value: none; no alternatives are ever considered
+  summary: Every step is forced by the bit just read, so there is nothing to enumerate, rank,
+    prune, or tie-break during solving.
+- task_id: year_span_greater_than
+  value: none; there are no alternatives to explore
+  summary: Nothing is enumerated, ranked, pruned, or tie-broken, because the answer follows
+    from the two values without any candidate being considered.

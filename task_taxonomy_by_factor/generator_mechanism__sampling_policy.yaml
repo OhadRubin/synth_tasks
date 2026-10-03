@@ -1,0 +1,153 @@
+axis: generator_mechanism
+factor: sampling_policy
+axis_frame: Generator mechanism describes how benchmark inputs and labels are produced. The
+  axis is about source process, controllable structure, sampling, validity constraints, label
+  oracle, variation scope, and perturbation model.
+factor_description: How instances are chosen from the generator's support. Sampling may be
+  uniform, balanced, stratified, rejection-based, curriculum-based, adversarial, coverage-guided,
+  or otherwise shaped to emphasize particular regions of the instance space.
+tasks:
+- task_id: associative_recall
+  value: uniform throughout
+  summary: The pair order is shuffled uniformly, each digit is drawn uniformly, and the asked
+    key is chosen uniformly among the listed keys. No region of the instance space is emphasised
+    or balanced.
+- task_id: babi_counting
+  value: uniform draws throughout, with contributing positions drawn without replacement
+  summary: The contributing sentences can land anywhere in the story, including all at the
+    start or all at the end. Each remaining slot flips a coin between a movement sentence
+    and a pick-up by somebody else.
+- task_id: babi_multi_hop
+  value: two positions drawn without replacement and then sorted, distractors drawn independently
+  summary: Sorting the two drawn positions is what guarantees the possession sentence precedes
+    the movement sentence. Each remaining slot picks a person other than the carrier and then
+    flips a coin between the two sentence templates.
+- task_id: babi_single_hop
+  value: uniform throughout, with the question drawn among people who actually moved
+  summary: People and rooms are drawn uniformly for each sentence, and the person asked about
+    is drawn uniformly among those the story mentions.
+- task_id: bounded_tiny_python_execution
+  value: uniform choices at each construction step, with fixed probabilities for opening a
+    loop or a conditional
+  summary: Operands, constants, iteration counts, and initial values are all drawn uniformly.
+    A loop is opened about one time in three when nesting is still allowed and enough statement
+    budget remains, and a conditional is opened according to the setting's rate.
+- task_id: constant_label
+  value: uniform over the two possible input characters
+  summary: Each of the two characters is chosen with equal probability and independently each
+    time, with no balancing, stratification, or rejection.
+- task_id: copy
+  value: uniform with replacement; every sequence of the given length is equally likely
+  summary: No balancing, stratification, rejection, or curriculum shapes the draw, so no region
+    of the space of sequences is emphasised and adjacent positions are unrelated.
+- task_id: dyck_balanced_parentheses
+  value: rejection sampling; a walk is thrown away unless it truly reaches the target depth
+    and ends unfinished
+  summary: Redrawing until the deepest point equals the setting exactly keeps the setting
+    honest, so a deep instance really exercises deep nesting rather than being a long shallow
+    wander.
+- task_id: fictional_ontology_cot
+  value: uniform draws throughout, with the verdict a fair coin
+  summary: The person, the words, the shuffle, and which unrelated sentences point at a category
+    rather than a property are all uniform, and True and False each occur about half the time.
+- task_id: gridworld_detour_planning
+  value: rejection sampling; attempts are discarded until every requirement is met at once
+  summary: An attempt is thrown away if the route is not the shortest one, if more than one
+    shortest route exists, if the requested number of dead ends could not be fitted in, or
+    if no tempting dead end survived, and the whole construction is retried.
+- task_id: horn_forward_chaining
+  value: a fair coin for the verdict, uniform draws for everything else
+  summary: Which chain step is broken in a negative instance, which conditions the irrelevant
+    rules take, and the printed order of the rules and the starting statements are all uniform.
+    No region of the instance space is emphasised.
+- task_id: iterated_string_replace
+  value: each instruction is drawn against the current string, usually a pattern that occurs,
+    sometimes one known to be absent, sometimes text an earlier step created
+  summary: Around three instructions in four have their pattern cut directly out of the running
+    text, so they are certain to match. A step meant to change nothing is given a pattern
+    verified to be absent, and to build a dependency a step's substitution is chosen to be
+    text that does not yet occur, which a later step then looks for.
+- task_id: label_anchor_feature_match
+  value: uniform at every point
+  summary: The token pool is shuffled uniformly, the label pool is shuffled uniformly, the
+    records are shuffled, the tokens within each record are shuffled, and the label asked
+    about is drawn uniformly from those in play.
+- task_id: listops_nested_prefix
+  value: uniform over operators, operand counts, and digits, with one operand per group forced
+    to be one level deeper
+  summary: At each group one operand is made a subexpression of exactly one level less, which
+    keeps a chain running down to the target depth; each other operand is a digit about three
+    times in four and otherwise a shallower subexpression. Nothing balances the answer, so
+    which digits come out reflects which operators happened to be drawn.
+- task_id: majority
+  value: uniform draws, with whole sequences discarded and redrawn when the counts are equal
+  summary: 'Rejection is live in every setting, since all three lengths are even: about one
+    draw in five is discarded at 16 symbols, one in ten at 64, and one in fourteen at 128.'
+- task_id: markov_first_rewrite
+  value: a quarter of instances built to have no match; in the rest the firing rule is chosen
+    uniformly from the list
+  summary: Which rule fires is balanced across the list rather than skewed toward the first,
+    so at the largest setting each of the eight rules fires in about an eighth of the changing
+    instances. The planting position is drawn uniformly, so the edit is equally likely anywhere
+    in the string.
+- task_id: passkey_retrieval
+  value: uniform throughout, with digits drawn independently and with repetition allowed
+  summary: Each filler digit and each of the five answer digits is drawn uniformly and independently,
+    so every five-digit string including ones with repeated digits is equally likely, and
+    the split of filler either side of the sentence is uniform.
+- task_id: random_label
+  value: uniform over the answer pool, independently of the input
+  summary: Each character in the pool is chosen with equal probability every time, with no
+    balancing across inputs, no stratification, and no rejection.
+- task_id: relabeled_cyclic_row_completion
+  value: uniform throughout, with the unrelated pairs drawn with replacement
+  summary: The assignment of names to symbols, the queried pair, and each unrelated pair are
+    all uniform. Drawing the unrelated pairs with replacement is why the same equation can
+    be printed several times in one instance.
+- task_id: reverse_sequence
+  value: uniform with repetition allowed, and nothing rejected
+  summary: Every sequence of a given length is equally likely, including ones with long runs
+    of the same digit, and no draw is ever discarded or redrawn.
+- task_id: sat_dpll_trace
+  value: a target verdict is drawn first and formulas are redrawn until one matches, making
+    the two verdicts equally likely
+  summary: Left alone, the sampler produces satisfiable formulas about 49 percent of the time
+    at the smallest setting but 71 and 74 percent at the two larger ones, so the verdict alone
+    would become guessable. The rejection step removes that. In 3000 draws at each setting
+    no formula's search exceeded the length ceiling, so that filter does not shape the distribution
+    here.
+- task_id: scan_command_to_actions
+  value: uniform over words and joining words, with resampling until the word count lands
+    in the window
+  summary: Every motion word, direction, repetition and joining word is equally likely at
+    its position. A whole command is discarded and redrawn if its word count misses the window
+    or its action list exceeds the cap.
+- task_id: tfidf_rank_documents
+  value: uniform draws inside a rejection loop that forces whole-number weights
+  summary: The number of documents holding a token is drawn uniformly from those numbers that
+    divide the corpus size, which deliberately over-represents tokens held by exactly one
+    document and tokens held by all of them relative to a uniform choice. A corpus failing
+    a check is thrown away and rebuilt.
+- task_id: tree_next_hop_search
+  value: uniform throughout - a random child at each level fixes the goal, and both the labelling
+    and the edge order are uniform shuffles
+  summary: Choosing a random child repeatedly means the goal is a uniformly drawn deepest
+    leaf, so both branches below the start are equally likely to be the answer and no region
+    of the tree is favoured.
+- task_id: variable_tracing
+  value: uniform throughout, including the interleaving of the two groups of lines
+  summary: Names are assigned by a uniform shuffle, digits are drawn uniformly, and the lines
+    are merged by repeatedly picking from the two groups in proportion to how many remain
+    in each, which makes every order that keeps the chain lines in dependency order equally
+    likely.
+- task_id: xor_parity
+  value: uniform, with no rejection, balancing, or stratification
+  summary: Rows are taken exactly as drawn, which leaves the two possible answers about equally
+    frequent across many instances without that being enforced.
+- task_id: year_span_greater_than
+  value: the two answers drawn in equal proportion, the difference drawn uniformly inside
+    the setting's range
+  summary: Whether the end year is later is decided by an even coin before the second year
+    is built, so neither answer is more common at any setting. The first year is drawn uniformly
+    among those that leave room for the difference in both directions, which at the widest
+    setting concentrates it toward the middle of the century.

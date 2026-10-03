@@ -1,0 +1,119 @@
+axis: output_interface
+factor: ordering_requirement
+axis_frame: 'Output interface describes the answer form the task requires. The axis is about
+  how the computed result becomes visible: cardinality, syntax, ordering, process detail,
+  normalization, length, and uncertainty or status channels.'
+factor_description: How answer order is interpreted. Order may be exact, sorted, ranked, traversal-derived,
+  canonicalized, or ignored under the scoring rule; this factor records the policy the output
+  interface imposes.
+tasks:
+- task_id: associative_recall
+  value: none; a single item carries no order
+  summary: With one item to emit, no sorting, ranking, or traversal rule applies.
+- task_id: babi_counting
+  value: none; a single item carries no order
+  summary: With one number to emit, no sorting, ranking, or traversal convention applies to
+    the output.
+- task_id: babi_multi_hop
+  value: none; a single item carries no order
+  summary: With one word to emit, no sorting, ranking, or traversal convention applies to
+    the output.
+- task_id: babi_single_hop
+  value: none; a single item carries no order
+  summary: With one word to emit, no sorting, ranking, or traversal convention applies to
+    the output.
+- task_id: bounded_tiny_python_execution
+  value: exact; the values must follow the order the printing statement names them
+  summary: The three variables are always the first three in alphabetical order, and the same
+    three digits in a different order is a wrong answer.
+- task_id: constant_label
+  value: none; a single item carries no order
+  summary: With one character to emit, no sorting, ranking, or traversal rule can apply.
+- task_id: copy
+  value: exact; the answer order must match the input position for position
+  summary: No sorting or canonical order is allowed. A permutation of the right digits is
+    wrong, which is what makes this an ordering task rather than a set task.
+- task_id: dyck_balanced_parentheses
+  value: exact; the reverse of the order in which the unfinished brackets were opened
+  summary: Any other arrangement of the same characters is wrong, so the output order is itself
+    a large part of what is being tested.
+- task_id: fictional_ontology_cot
+  value: exact; chain order starting from the person
+  summary: The derivation alternates between the sentence used and the new conclusion about
+    the person, always moving one link further out. Producing the same sentences in the order
+    they were printed is wrong.
+- task_id: gridworld_detour_planning
+  value: exact; the moves must appear in the order they are taken
+  summary: The same letters in a different order describe a different walk, which almost always
+    runs into a wall, so ordering is a full part of correctness.
+- task_id: horn_forward_chaining
+  value: none; a single item carries no order
+  summary: With one character to emit, no sorting, ranking, or traversal rule applies anywhere
+    in the output.
+- task_id: iterated_string_replace
+  value: exact; characters must appear in the order the program produces them
+  summary: 'There is no sorting or canonical order: the answer is a specific string and any
+    transposition of its characters is a different, wrong answer.'
+- task_id: label_anchor_feature_match
+  value: none; a single item carries no order
+  summary: With one letter to emit, no sorting, ranking, or traversal rule can apply to the
+    answer.
+- task_id: listops_nested_prefix
+  value: none; a single item carries no order
+  summary: With one digit to emit, no sorting, ranking, or traversal convention applies to
+    the output, even though ordering matters a great deal inside the computation.
+- task_id: majority
+  value: none; a single item carries no order
+  summary: With one item to emit, no sorting, ranking, canonical order or traversal rule applies.
+- task_id: markov_first_rewrite
+  value: exact; the order of the characters is the answer
+  summary: Every character has to appear in its place. There is no set, sorted, or canonical
+    reading under which a differently ordered string would count.
+- task_id: passkey_retrieval
+  value: the five digits must be in the order they were stated
+  summary: There is one item to emit so no sorting or ranking applies, but the order of characters
+    inside it is exact and a transposition is simply wrong.
+- task_id: random_label
+  value: none; a single item carries no order
+  summary: With one character to emit, no sorting, ranking, or traversal rule can apply.
+- task_id: relabeled_cyclic_row_completion
+  value: none; a single item carries no order
+  summary: With one name to emit, no sorting, ranking, or traversal rule applies anywhere
+    in the output.
+- task_id: reverse_sequence
+  value: exact order, and the order is the substance of the answer
+  summary: The correct answer and the plain copy of the input contain the same items in different
+    arrangements, so getting the collection right earns nothing on its own.
+- task_id: sat_dpll_trace
+  value: exact; the sequence is the order the prescribed search runs in
+  summary: No reordering, sorting, or regrouping is acceptable, since the order is the content.
+    Every record opens with a guess, because no clause has fewer than three parts and so nothing
+    is forced before the first guess is made.
+- task_id: scan_command_to_actions
+  value: exact order, and the order is the substance of the answer
+  summary: Two commands that differ only in a joining word have answers containing the same
+    actions in a different arrangement, so getting the multiset right earns nothing on its
+    own.
+- task_id: tfidf_rank_documents
+  value: an exact total order, descending by score and ascending by identifier number within
+    a tie
+  summary: The order is the entire content of the answer, since the set of items is known
+    in advance. Ties are common, because every document holding no query token scores zero,
+    and they must be emitted by increasing identifier number, so at twelve documents the one
+    numbered ten follows the one numbered nine rather than the one numbered one.
+- task_id: tree_next_hop_search
+  value: none; a single item carries no order
+  summary: With one label to emit, no sorting, ranking, or traversal convention applies to
+    the output, even though a traversal is what produced it.
+- task_id: variable_tracing
+  value: none; a single item carries no order
+  summary: With one character to emit, no sorting, ranking, or traversal ordering rule applies
+    to the output.
+- task_id: xor_parity
+  value: none; a single item carries no order
+  summary: With one character to emit there is nothing to sort, rank, or traverse, so no ordering
+    rule applies to the output.
+- task_id: year_span_greater_than
+  value: none; a single item carries no order
+  summary: With one character to emit there is no sorting, ranking, or traversal rule that
+    the output interface could impose.

@@ -1,0 +1,125 @@
+axis: latent_topology
+factor: dimensionality
+axis_frame: Latent topology describes the abstract structure that exists before an input is
+  rendered as text. The axis is about how entities, relations, events, states, and constraints
+  are arranged, connected, ordered, nested, shared, or evolved.
+factor_description: The structural dimensionality or layout of the latent object. This may
+  involve a single label, a sequence, a grid, a table, a tensor-like arrangement, or a mixed-layout
+  object; the factor describes the coordinate or layout assumptions needed to interpret positions
+  and neighborhoods.
+tasks:
+- task_id: associative_recall
+  value: an unordered set of pairs; a flat finite map
+  summary: The structure behind the text is a mapping from keys to digits, with no rows, columns,
+    coordinates, or positions that matter.
+- task_id: babi_counting
+  value: a sequence of events over a small table of per-person, per-object counters
+  summary: Behind the text sits a grid of counters indexed by who and by what kind of object,
+    together with the order in which they were incremented.
+- task_id: babi_multi_hop
+  value: a sequence of events over a small set of people, objects, and rooms
+  summary: Behind the text sit two kinds of link over three small vocabularies, plus the order
+    in which the links were asserted.
+- task_id: babi_single_hop
+  value: a sequence of events over a small table of people and their rooms
+  summary: Behind the text sit at most four cells, one per person, holding a room word, together
+    with the order in which those cells were written.
+- task_id: bounded_tiny_python_execution
+  value: a tree of nested statements over a fixed vector of three to five integer slots
+  summary: 'Behind the text sit two objects: the program, which is a sequence of statements
+    with blocks inside blocks, and the machine state, which is a small fixed set of named
+    single-digit slots.'
+- task_id: constant_label
+  value: a single label, with one drawn character alongside it
+  summary: The structure behind the text is one constant. There are no positions, neighbourhoods,
+    rows, columns, or coordinates to interpret.
+- task_id: copy
+  value: a one-dimensional sequence of 16, 64, or 128 digits
+  summary: The structure behind the text is a list. Position along that list is the only coordinate;
+    there are no rows, columns, or neighbourhoods beyond being earlier or later.
+- task_id: dyck_balanced_parentheses
+  value: a one-dimensional row of symbols that encodes a tree
+  summary: Positions run in a line, but the object the positions describe is a nesting of
+    spans inside spans, so the layout is a flattening of a two-level-plus structure.
+- task_id: fictional_ontology_cot
+  value: a directed graph of one-step links; one path with isolated edges beside it
+  summary: There are no coordinates, rows, or positions. The structure is just words joined
+    by arrows, of which only one connected run matters.
+- task_id: gridworld_detour_planning
+  value: a two-dimensional square grid, six, eight, or ten cells on a side
+  summary: Interpreting the instance requires reading positions as rows and columns and knowing
+    that each cell has up to four neighbours sharing an edge.
+- task_id: horn_forward_chaining
+  value: a set of implications over statements; no grid, sequence, or coordinate
+  summary: Position carries nothing. The only structure is which statements feed which others,
+    and that is recoverable from the rules alone.
+- task_id: iterated_string_replace
+  value: a one-dimensional string paired with a linear list of instructions
+  summary: 'Both objects are flat sequences: position in the text and position in the program
+    are the only coordinates, and there is no grid, table, or multi-axis layout.'
+- task_id: label_anchor_feature_match
+  value: a set of equal-length token lists, each carrying one label
+  summary: There are no coordinates, no rows and columns, and no ordering among the lists.
+    The layout assumption a reader needs is only that a label belongs to the list printed
+    just above it.
+- task_id: listops_nested_prefix
+  value: a tree; the only coordinates are which group you are in and how deep
+  summary: The latent object is neither a sequence nor a grid. A position matters only through
+    which group contains it, so neighbouring tokens in the text can sit at very different
+    levels.
+- task_id: majority
+  value: a sequence in the text, but only the collection of its symbols matters
+  summary: 'The input is written as a line, yet the structure the answer depends on is unordered:
+    how many of each symbol are present, with no coordinates or neighbourhoods needed.'
+- task_id: markov_first_rewrite
+  value: a one-dimensional sequence of characters plus an ordered list of pairs
+  summary: The object being edited is a line of letters indexed by position, and the program
+    acting on it is a list indexed by priority. There is no grid, table, or higher-dimensional
+    layout.
+- task_id: passkey_retrieval
+  value: a one-dimensional character stream with one marked position
+  summary: The structure behind the text is a line with an offset at which the relevant span
+    begins. There are no rows, columns, coordinates or neighbourhoods to interpret.
+- task_id: random_label
+  value: a single label drawn from two options, with one unrelated character alongside it
+  summary: The structure behind the text is one coin flip. There are no positions, neighbourhoods,
+    rows, columns, or coordinates to interpret.
+- task_id: relabeled_cyclic_row_completion
+  value: one row of a square table whose two sides are both the symbol set
+  summary: The full latent object says what any ordered pair of the four to twelve symbols
+    combines to. Only a single row of it reaches the text, so what the reader sees is one-dimensional.
+- task_id: reverse_sequence
+  value: a one-dimensional sequence in which positions carry the structure
+  summary: The input is a line of items whose indices are the entire structure. There are
+    no rows, columns or coordinates beyond the single position index.
+- task_id: sat_dpll_trace
+  value: a flat set of three-element clauses over a small variable set, plus the binary tree
+    of guesses explored over it
+  summary: Two coupled objects sit behind the text. The formula has no rows, columns, or coordinates;
+    the search over it is a tree whose branching is over the two values a variable can take.
+- task_id: scan_command_to_actions
+  value: a sequence of small records, each a motion word with up to two optional modifiers
+  summary: 'The structure behind the text is one-dimensional: an ordered run of segments,
+    each of which is a motion word plus an optional direction and an optional repetition count.'
+- task_id: tfidf_rank_documents
+  value: a document-by-query-token table of counts, with one weight per token and one score
+    per document
+  summary: The latent object is rectangular, with documents down one side and the two or three
+    query tokens across the other. It is never drawn as a table, so its rows have to be reconstructed
+    from the document lines.
+- task_id: tree_next_hop_search
+  value: a graph with no coordinates, rows, or positions
+  summary: There is no grid, sequence, or layout behind the text. Positions in the listing
+    are an artefact of the shuffle and carry no structural meaning.
+- task_id: variable_tracing
+  value: a flat set of names, presented as a sequence of lines
+  summary: There are no rows, columns, coordinates, or neighbourhoods. Position in the listing
+    matters only for the rule that a name is defined before it is used.
+- task_id: xor_parity
+  value: a one-dimensional sequence, 16 to 128 positions long
+  summary: The latent object is a row of independent bits indexed by position, with no rows,
+    columns, coordinates, or neighbourhood structure.
+- task_id: year_span_greater_than
+  value: two scalar values and one binary label
+  summary: The whole structure behind the text is a pair of numbers, with no sequence, grid,
+    table, or coordinate system needed to interpret it.

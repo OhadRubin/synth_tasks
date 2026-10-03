@@ -1,0 +1,123 @@
+axis: target_operation
+factor: operation_family
+axis_frame: Target operation describes the abstract relation from latent input to required
+  answer. The axis is about the kind of computation the task requests, the result orientation,
+  how suboperations compose, how state participates, which algebraic properties matter, and
+  how many valid outputs exist.
+factor_description: The computational family of the target mapping. It may involve copying,
+  permuting, reducing, comparing, looking up, parsing, evaluating, rewriting, inferring, searching,
+  optimizing, ranking, or other operations defined over the latent instance.
+tasks:
+- task_id: associative_recall
+  value: lookup by exact key match
+  summary: Find the pair whose key equals the asked key and read its digit.
+- task_id: babi_counting
+  value: filter the sentences by two keys, then reduce them by addition
+  summary: Keep the pick-up sentences that name both the asked person and the asked object
+    kind, then add the numbers they carry.
+- task_id: babi_multi_hop
+  value: two lookups joined on a shared name
+  summary: Find the sentence that gives the asked object to somebody, then find the sentence
+    that moves that same somebody, and read the room off the second.
+- task_id: babi_single_hop
+  value: select the sentences naming one person, then take the latest
+  summary: The mapping is a filter by name followed by a most-recent choice, with the room
+    word read off the sentence that survives.
+- task_id: bounded_tiny_python_execution
+  value: evaluating a program by simulating it
+  summary: 'The mapping from input to answer is the meaning of the program itself: carry out
+    every statement in order and report the resulting values.'
+- task_id: constant_label
+  value: emitting a constant
+  summary: The mapping from input to answer ignores its argument entirely and returns the
+    same character for every possible input.
+- task_id: copy
+  value: copying
+  summary: 'The mapping from input to answer is the identity: read the sequence and write
+    the same sequence. No lookup, reduction, comparison, or rewrite is involved.'
+- task_id: dyck_balanced_parentheses
+  value: parse the row, cancel matched pairs, then complete what is left
+  summary: The mapping is a reduction that discards every finished pair, followed by emitting
+    the mirror of the residue that survives.
+- task_id: fictional_ontology_cot
+  value: walking a chain of links and comparing its endpoint with a claim
+  summary: Repeated lookup of the current word as a subject, until the object reached is a
+    property, followed by one equality test between that property and the one the question
+    names.
+- task_id: gridworld_detour_planning
+  value: searching a map for a shortest route, then reading the moves off it
+  summary: The required computation explores the open cells to find how the start connects
+    to the goal, rather than looking anything up or transforming the text.
+- task_id: horn_forward_chaining
+  value: inference by repeated rule application until nothing changes, then a membership test
+  summary: The whole rule set is swept until a sweep adds no new statement, and only then
+    is the queried statement checked against the result.
+- task_id: iterated_string_replace
+  value: rewriting by repeated global substitution
+  summary: Each step finds every occurrence of one piece of text in the current string and
+    puts another piece in its place, and the target mapping is those steps performed one after
+    another.
+- task_id: label_anchor_feature_match
+  value: intersecting the final list with the earlier ones, then looking up a label
+  summary: Find the one token that occurs on both sides of the prompt, then read off the label
+    of the record it occurs in.
+- task_id: listops_nested_prefix
+  value: parsing followed by evaluation
+  summary: 'Two things are demanded together: recovering the tree from the brackets, and computing
+    a value at each node under the operator''s rule. Neither alone produces the answer.'
+- task_id: majority
+  value: reduction; count each symbol, then compare the two totals
+  summary: The whole input collapses into two numbers, and the answer names whichever symbol
+    the larger one belongs to.
+- task_id: markov_first_rewrite
+  value: conditional rewriting; select a rule, then substitute
+  summary: The mapping searches for the applicable rule and then edits the string, so it combines
+    a lookup over a small program with a transformation of a large piece of data.
+- task_id: passkey_retrieval
+  value: search for a marker phrase, then copy what follows it
+  summary: Finding the sentence is a match against known words; producing the answer is reproducing
+    the characters between the marker and the full stop.
+- task_id: random_label
+  value: drawing a label at random; no computation over the input
+  summary: The relation between input and answer is not a function at all. The answer is produced
+    by a fair choice from a fixed pool of two characters.
+- task_id: relabeled_cyclic_row_completion
+  value: completion by elimination, taking the one symbol of the row not yet produced as a
+    result
+  summary: The symbols of the table are those appearing as inputs in the row together with
+    the one in the question, and the shown entries produce all but one of them. The work is
+    set subtraction rather than arithmetic.
+- task_id: reverse_sequence
+  value: permutation; a fixed rearrangement of the input
+  summary: Every item of the answer is an item of the input and the mapping between them is
+    decided by position alone, the same mapping in every instance of a given length.
+- task_id: sat_dpll_trace
+  value: search combined with deduction, deciding whether an assignment exists
+  summary: Values are forced where a clause leaves only one option and guessed where it does
+    not, and the space of assignments is explored until one works or all are ruled out.
+- task_id: scan_command_to_actions
+  value: parsing a small grammar and then evaluating it
+  summary: The command is first broken into segments and joining words, then each segment
+    is turned into actions and the pieces are combined. Both stages are needed; neither alone
+    gives the answer.
+- task_id: tfidf_rank_documents
+  value: count, weight, sum, then rank
+  summary: One corpus-wide aggregation produces the weights, one per-document aggregation
+    produces the counts, an arithmetic combination produces the scores, and a sort produces
+    the answer.
+- task_id: tree_next_hop_search
+  value: route finding in a graph, followed by projection to the first step
+  summary: The full route between two named nodes must be determined, and then only its opening
+    edge is reported.
+- task_id: variable_tracing
+  value: repeated lookup; resolving a name to its value until a digit is reached
+  summary: The same lookup step is applied over and over, with each result naming the key
+    for the next lookup, until the value found is a digit rather than a name.
+- task_id: xor_parity
+  value: reduction of the whole row by a two-valued fold
+  summary: The required mapping adds the bits and keeps only whether the total is odd, which
+    is a single aggregation over all positions.
+- task_id: year_span_greater_than
+  value: comparison of two integers
+  summary: The mapping asks which of two numbers is larger and nothing else; no lookup, rewriting,
+    counting, or search is involved anywhere.

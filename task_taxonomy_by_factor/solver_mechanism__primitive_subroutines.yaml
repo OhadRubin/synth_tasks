@@ -1,0 +1,141 @@
+axis: solver_mechanism
+factor: primitive_subroutines
+axis_frame: Solver mechanism describes the machinery an exact solution would use under the
+  task assumptions. The axis is about memory form, control flow, access pattern, update discipline,
+  primitive routines, search policy, optimization policy, and resource scaling.
+factor_description: The low-level exact operations the solver must implement. These may include
+  equality tests, copying, counting, comparison, arithmetic, parsing, unification, propagation,
+  scoring, sorting, path reconstruction, or other task-specific primitives.
+tasks:
+- task_id: associative_recall
+  value: string equality between keys, and copying one character
+  summary: Comparing the asked key against each listed key and reproducing the matched digit
+    are the only exact operations required.
+- task_id: babi_counting
+  value: word equality on the person and the object kind, telling the two verbs apart, reading
+    a digit, and adding
+  summary: Arithmetic is what separates this from a matching task, and at the longer setting
+    the sum crosses from one digit into two, so carrying is required as well as adding.
+- task_id: babi_multi_hop
+  value: word equality on the object and on the name, telling the two verbs apart, and copying
+    a room word
+  summary: Distinguishing a possession sentence from a movement sentence is a genuine primitive
+    here, because the same person may appear in both kinds and only one kind answers each
+    half of the question.
+- task_id: babi_single_hop
+  value: name equality, copying a word, and comparing recency
+  summary: Deciding whether a sentence is about the asked person, keeping the later of two
+    candidate sentences, and reproducing the room word are the only exact operations needed.
+- task_id: bounded_tiny_python_execution
+  value: addition, subtraction, multiplication, remainder by ten, six integer comparisons,
+    and joining numbers with spaces
+  summary: The comparisons are less-than, less-or-equal, greater-than, greater-or-equal, equal,
+    and not-equal, any of which can appear in a conditional. Formatting the final values into
+    a single space-separated line is the last step.
+- task_id: constant_label
+  value: writing one character
+  summary: No comparison, arithmetic, counting, parsing, or copying is needed. Emitting a
+    fixed character is the whole of the exact computation.
+- task_id: copy
+  value: reading one character, reproducing it, and advancing one position
+  summary: These three operations are the whole solver. No comparison, arithmetic, sorting,
+    or parsing is required at any point.
+- task_id: dyck_balanced_parentheses
+  value: telling an opener from a closer, adding and removing an item, and mapping an opener
+    to its partner
+  summary: These few exact operations, applied once per symbol, cover the whole computation;
+    no counting beyond the pile size and no comparison of distant positions is required.
+- task_id: fictional_ontology_cot
+  value: string equality between words, recognising a property by its ending, copying a sentence,
+    and one final comparison
+  summary: Copying is a substantial part of the work, since half the derivation sentences
+    are reproduced verbatim from the list and the other half are the person's name joined
+    to a word taken from the list.
+- task_id: gridworld_detour_planning
+  value: finding the start and goal, testing whether a neighbour is open, counting steps,
+    rebuilding the route, and turning a step between cells into a letter
+  summary: 'The final conversion is the only place arithmetic on positions appears: the difference
+    between two touching cells picks out one of the four letters.'
+- task_id: horn_forward_chaining
+  value: string equality, set membership, set insertion, and noticing that a sweep changed
+    nothing
+  summary: The last of these is what licenses a negative verdict, since answering no means
+    asserting that a further sweep would add nothing rather than that a route was not found.
+- task_id: iterated_string_replace
+  value: substring search, splicing text in and out, and copying the unmatched stretches unchanged
+  summary: Finding each occurrence and assembling the new string from the untouched pieces
+    and the substituted ones covers the whole computation; no arithmetic, comparison, or sorting
+    is involved.
+- task_id: label_anchor_feature_match
+  value: exact string equality over four-character tokens, set membership, and copying one
+    letter
+  summary: Equality has to be exact across all four characters, since tokens differing in
+    a single digit are common and only one of them is correct.
+- task_id: listops_nested_prefix
+  value: digit comparison, sorting two or three values, addition with a remainder by ten,
+    bracket matching
+  summary: 'These four exact operations cover all of the work: the first three implement the
+    operator rules and the last recovers the structure they apply to.'
+- task_id: majority
+  value: comparing a symbol against a known mark, incrementing, and comparing two numbers
+  summary: Three low-level operations suffice, the first applied once per position and the
+    third exactly once at the end.
+- task_id: markov_first_rewrite
+  value: substring search reporting the leftmost hit, arithmetic on the match length, and
+    exact copying of long spans
+  summary: The search must report the first position rather than merely whether the pattern
+    is present, the length difference between pattern and replacement shifts everything after
+    the edit, and the copying must be exact over up to 128 characters.
+- task_id: passkey_retrieval
+  value: matching a fixed word sequence and copying five characters
+  summary: 'Two low-level operations suffice: comparing incoming text against a known phrase,
+    and reproducing the characters that follow it up to the full stop.'
+- task_id: random_label
+  value: writing one character; no exact operation reaches the answer
+  summary: Comparison, arithmetic, counting, and copying are all available and all useless
+    here, because no function of the visible text agrees with the answer more than half the
+    time.
+- task_id: relabeled_cyclic_row_completion
+  value: string equality, set insertion, and set subtraction
+  summary: No arithmetic is performed anywhere despite the arithmetic-looking notation, and
+    no comparison other than whether two names are the same is ever needed.
+- task_id: reverse_sequence
+  value: copying one item and tracking how far from the end the current position is
+  summary: 'Two low-level operations suffice, and the second is where the difficulty lies:
+    the position counter must stay aligned across up to 128 steps without drifting.'
+- task_id: sat_dpll_trace
+  value: evaluating one part under the current values, counting a clause's parts that are
+    not yet false, testing all clauses, and taking a minimum over variable numbers
+  summary: A part is true, false, or undetermined depending on its sign and the value of its
+    variable. A clause forces its last open part when it does not yet hold and exactly one
+    part is undetermined, and conflicts when none is.
+- task_id: scan_command_to_actions
+  value: classifying a word, repeating a short list two or three times, and joining two lists
+    in either order
+  summary: Only three low-level operations are needed, and the whole difficulty lies in applying
+    the third with the right operand order at each joining word.
+- task_id: tfidf_rank_documents
+  value: token equality, counting, exact division, multiplication, addition, and sorting with
+    a numeric secondary key
+  summary: The division is always exact, because the number of documents holding a token is
+    forced to be one that divides the corpus size, so every weight and every score is a whole
+    number. The secondary key is the identifier read as a number.
+- task_id: tree_next_hop_search
+  value: splitting the listing into edges, label equality, and following a link
+  summary: Splitting is a real step here because the only separator is the repeated marker.
+    Label equality has to be exact over two characters that may differ from a competitor's
+    by case alone.
+- task_id: variable_tracing
+  value: equality between names, telling a digit apart from a letter, and copying one character
+  summary: Matching the current name against the name a line binds is the lookup step, the
+    digit-or-letter test is the halting condition, and reproducing the digit is the output
+    step.
+- task_id: xor_parity
+  value: reading a symbol, comparing it to 1, and flipping a bit
+  summary: These three operations, applied once per position, are the whole exact computation;
+    no arithmetic beyond a two-state toggle is required.
+- task_id: year_span_greater_than
+  value: reading a four-digit number, comparing two integers, and emitting one of two characters
+  summary: Digit by digit, the comparison is a run of equality tests followed by one ordering
+    test at the first position where the two differ, which at the closest setting is usually
+    the final digit.

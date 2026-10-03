@@ -1,0 +1,128 @@
+axis: solver_mechanism
+factor: access_pattern
+axis_frame: Solver mechanism describes the machinery an exact solution would use under the
+  task assumptions. The axis is about memory form, control flow, access pattern, update discipline,
+  primitive routines, search policy, optimization policy, and resource scaling.
+factor_description: How the solver finds and revisits relevant information. Access may be
+  sequential, indexed, content-addressed, pointer-based, frontier-based, priority-based, or
+  organized as repeated global passes over the instance.
+tasks:
+- task_id: associative_recall
+  value: found by matching content, not by position
+  summary: Because the listing order is random, the relevant pair can only be located by comparing
+    keys.
+- task_id: babi_counting
+  value: sequential, with every sentence tested rather than searched for
+  summary: There is no way to jump to the relevant sentences, since they sit at random positions
+    and look like the rest, so the solver must consider all of them.
+- task_id: babi_multi_hop
+  value: content-addressed twice, first by object word then by person name
+  summary: Neither supporting sentence can be found by position, since both sit at random
+    places. Each is located by matching a word, and the second match key comes from the first
+    sentence found.
+- task_id: babi_single_hop
+  value: sequential, with matching on the person's name
+  summary: Sentences are consumed in order and relevance is decided by comparing the first
+    word against the name in the question rather than by position.
+- task_id: bounded_tiny_python_execution
+  value: variables reached by name; statements consumed in order, loop bodies revisited
+  summary: Values are found by looking up a name in the current state rather than by position
+    in the text. The only repeated reading is of a loop body, which is revisited once per
+    iteration.
+- task_id: constant_label
+  value: none; no part of the instance is consulted
+  summary: Because the answer does not depend on the input, no lookup, match, or search over
+    the text is ever performed.
+- task_id: copy
+  value: sequential, in the input's own order
+  summary: Positions are visited in order and never searched for by content, since the next
+    digit needed is always the one immediately after the last one used.
+- task_id: dyck_balanced_parentheses
+  value: sequential over the input, most-recent-first over the stored items
+  summary: Input symbols are touched once each in order, while stored items are only ever
+    read or removed from the top of the pile.
+- task_id: fictional_ontology_cot
+  value: content-addressed; each step looks up the current word as a subject
+  summary: Position in the list is useless because the sentences are shuffled, so the only
+    way to find the next link is to match on the word.
+- task_id: gridworld_detour_planning
+  value: frontier-based over neighbouring cells
+  summary: Progress is made by asking what lies next to the cells reached so far, which means
+    repeatedly consulting positions scattered across different lines of the text rather than
+    reading in order.
+- task_id: horn_forward_chaining
+  value: repeated global passes, matching conditions by content against the set of true statements
+  summary: Nothing can be located by position. A rule's relevance is decided entirely by whether
+    both of its conditions are currently members of the set.
+- task_id: iterated_string_replace
+  value: repeated left-to-right passes over the entire string, one per instruction
+  summary: Two to eight passes are needed depending on the bin, and each pass visits every
+    character, because occurrences of a short pattern can sit anywhere and move as the string
+    is rewritten.
+- task_id: label_anchor_feature_match
+  value: content-addressed by exact token equality
+  summary: Position is useless because both the records and the tokens within them are shuffled,
+    so the match can be found only by comparing token strings.
+- task_id: listops_nested_prefix
+  value: sequential over the tokens, with bracket matching to pair each group's ends
+  summary: Tokens are read once in order, but a group's operands can only be assembled by
+    tracking which opening bracket is still unmatched, so position alone does not say where
+    an operand belongs.
+- task_id: majority
+  value: strictly sequential; every position is visited exactly once
+  summary: Nothing is looked up by content or by position, because every symbol is equally
+    relevant and none has to be found again after being read.
+- task_id: markov_first_rewrite
+  value: a full substring search over the string per rule, then sequential copying with one
+    jump
+  summary: The search stage is a repeated global pass over the whole string, once per rule
+    until a hit, so the earlier a rule fires the less of the work is done. The emission stage
+    is strictly sequential except at the edit.
+- task_id: passkey_retrieval
+  value: found by matching content, not by position
+  summary: Because the offset is drawn at random, no fixed position in the input can be read
+    off; the span is located only by recognising the words that introduce it.
+- task_id: random_label
+  value: none; consulting the input gains nothing
+  summary: A solver that reads the input character and one that ignores it are equally accurate,
+    so no lookup, match, or search is ever worth performing.
+- task_id: relabeled_cyclic_row_completion
+  value: content-addressed; equations are selected by exact match on their left symbol
+  summary: Position carries nothing, because the row's entries are shuffled in among the unrelated
+    ones, so relevance can only be decided by comparing names.
+- task_id: reverse_sequence
+  value: by position, walking from the last item to the first
+  summary: Items are never found by content, since content repeats and carries no identifying
+    information. Access is by index and proceeds back to front.
+- task_id: sat_dpll_trace
+  value: repeated whole-formula scans restarting from the first clause after each deduction
+  summary: The scan does not continue from where it left off; each forced part sends it back
+    to the top. That restart is exactly what makes the required record depend on the printed
+    clause order.
+- task_id: scan_command_to_actions
+  value: sequential while reading, then back-to-front while combining
+  summary: Reading is strictly forward and positional, but assembly revisits the segments
+    in the reverse of the order they were written.
+- task_id: tfidf_rank_documents
+  value: repeated global passes; the query arrives after the corpus, so documents must be
+    held or revisited
+  summary: Reading strictly left to right, nothing about a document can be filtered until
+    the query line is reached, so every token must be retained. A solver allowed to look back
+    re-scans the listing once per pass instead.
+- task_id: tree_next_hop_search
+  value: content-addressed by label, one lookup per level
+  summary: Nothing can be found by position because the listing is shuffled. Each step matches
+    a label against the edges, and the key for the next step is whatever the current step
+    returned.
+- task_id: variable_tracing
+  value: pointer-based; each step's value is the key for the next lookup
+  summary: Nothing is found by position. The line needed at each step is identified only by
+    the name the previous step produced, so the reading path jumps around the listing.
+- task_id: xor_parity
+  value: strictly sequential
+  summary: Positions are touched once each in order; nothing has to be located by content
+    or jumped back to, because every position is relevant.
+- task_id: year_span_greater_than
+  value: positional; both numbers sit at fixed points in a fixed sentence pattern
+  summary: Because the sentence never varies apart from its noun, the two numbers can be found
+    by their surrounding words without any searching or matching.

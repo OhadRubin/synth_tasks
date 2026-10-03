@@ -1,0 +1,143 @@
+axis: input_realization
+factor: structural_serialization
+axis_frame: Input realization describes the concrete textual form used to present an underlying
+  task instance to the model. The axis is about how the same latent task structure can be
+  rendered as text, including choices about format, serialization, boundaries, order, linguistic
+  style, and surface regularity.
+factor_description: The method used to linearize latent objects, relations, events, or nested
+  structures into a readable text stream. This includes whether information is represented
+  as a flat sequence, a nested expression, a set of keyed records, rows and columns, an edge
+  or adjacency representation, a chronological log, or another serialization convention that
+  determines how structure is exposed.
+tasks:
+- task_id: associative_recall
+  value: flat one-line list of key=digit items separated by single spaces
+  summary: Every pair is written as key, an equals sign, and one digit. Pairs sit side by
+    side on one line with no grouping, nesting, or numbering.
+- task_id: babi_counting
+  value: one event per line, in the order events happen, drawn from two interleaved sentence
+    templates
+  summary: Sentences either pair a person with a number and an object kind or pair a person
+    with a room. Both kinds sit in one undivided run with no grouping and no marker separating
+    them.
+- task_id: babi_multi_hop
+  value: one event per line, in the order events happen, drawn from two interleaved sentence
+    templates
+  summary: Sentences either pair a person with an object or pair a person with a room, and
+    the two kinds alternate unpredictably down the story with no grouping or separation between
+    them.
+- task_id: babi_single_hop
+  value: one event per line, in the order the events happen
+  summary: Every sentence has the same shape - a name, the words "went to the", a room word,
+    and a full stop. There is no numbering, grouping, or nesting.
+- task_id: bounded_tiny_python_execution
+  value: one statement per line, top to bottom, with nested blocks shown by indentation
+  summary: The program is a flat run of lines in which a loop or conditional header is followed
+    by its more-indented body. Reading order is also execution order, except that a loop body
+    is read once and run several times.
+- task_id: constant_label
+  value: flat; one named field carrying one character, on its own line
+  summary: There is nothing to linearize. The whole instance is a label and a value, with
+    no sequence, nesting, table, or record structure of any kind.
+- task_id: copy
+  value: flat one-line sequence of single digits separated by single spaces
+  summary: Each digit is its own token and the whole sequence sits on one line. No grouping,
+    numbering, chunking, or nesting is imposed on the digits.
+- task_id: dyck_balanced_parentheses
+  value: flat token stream whose nesting is implicit in which brackets pair up
+  summary: The nested structure is never drawn out with indentation, numbering, or an explicit
+    tree; it has to be recovered from the order of the characters alone.
+- task_id: fictional_ontology_cot
+  value: a flat run of subject-is-object sentences on one line, with links recovered by matching
+    a subject to an earlier object
+  summary: Nothing groups the sentences, numbers them, or draws the chain out; the reader
+    has to notice that one sentence ends on the word another begins with.
+- task_id: gridworld_detour_planning
+  value: row by row, one map row per line, cells separated by single spaces
+  summary: Position is carried entirely by which line a cell is on and how far along that
+    line it sits; no cell is ever named, numbered, or given coordinates.
+- task_id: horn_forward_chaining
+  value: one rule per line as two conditions joined by an ampersand and an arrow to a conclusion
+  summary: The dependency structure is exposed as a flat unordered list of individual rules
+    rather than as a proof, a tree, or a chain, so the connections between rules are never
+    written down and must be found by matching statement names.
+- task_id: iterated_string_replace
+  value: a chronological list of instructions, written in the order they take effect
+  summary: The starting text comes first and the instructions follow as a flat sequence with
+    no nesting, numbering, or grouping. The intermediate strings are not serialized at all,
+    so only the two endpoints of the trajectory are visible.
+- task_id: label_anchor_feature_match
+  value: one record per pair of lines, tokens space-separated within a line
+  summary: There is no nesting, no table, and no field beyond the section word before each
+    colon. The link between a list and its label is carried entirely by the two lines being
+    adjacent.
+- task_id: listops_nested_prefix
+  value: nested prefix notation, with the operator written before its operands
+  summary: Each group is an opening bracket, an operator name, then two or three operands
+    each of which is a digit or another group, then a closing bracket. Structure is exposed
+    by nesting rather than by a flat list or keyed fields.
+- task_id: majority
+  value: a flat run of space-separated symbols
+  summary: Symbols sit side by side on one line with no grouping, chunking, numbering or line
+    breaks that might make counting easier.
+- task_id: markov_first_rewrite
+  value: rules as one line each with an arrow between the two halves; the string as one unbroken
+    run of letters
+  summary: The rules are a flat numbered list with no grouping or nesting. The string is serialised
+    with no internal separators at all, so its substrings have no marked boundaries and any
+    three consecutive letters could be a pattern.
+- task_id: passkey_retrieval
+  value: one flat line of space-separated single digits, cut once to admit a sentence
+  summary: There is no nesting, no record structure and no field layout. The context is a
+    single uninterrupted stream in which the sentence appears as one span between two stretches
+    of digits.
+- task_id: random_label
+  value: flat; one named field carrying one character, on its own line
+  summary: There is nothing to linearize. The whole instance is a label and a value, with
+    no sequence, nesting, table, or record structure.
+- task_id: relabeled_cyclic_row_completion
+  value: a flat list of equations, each a left symbol, an operator sign, a right symbol, an
+    equals sign, and a result
+  summary: No table or grid is drawn anywhere. The row structure has to be recovered by noticing
+    which equations share a left symbol, and the shape of the underlying table is never stated.
+- task_id: reverse_sequence
+  value: a flat run of space-separated digits, mirrored on output
+  summary: Items sit side by side on one line with no grouping, chunking, indexing or line
+    breaks that would help a reader keep track of position.
+- task_id: sat_dpll_trace
+  value: flat integer stream with zero closing each clause; the record is a flat token sequence
+  summary: Clauses are not bracketed, numbered, or separated by punctuation; they are recovered
+    by counting off groups ended by a zero. The tree shape of the search is likewise flattened
+    into one line of items.
+- task_id: scan_command_to_actions
+  value: a flat run of space-separated words, with grouping left implicit
+  summary: Segments and joining words sit side by side on one line. The nesting the rules
+    imply is never written down, so the reader has to recover it from which words are motion
+    words and which are joining words.
+- task_id: tfidf_rank_documents
+  value: one line per document holding an identifier, a colon, then space-separated tokens;
+    the query as one space-separated line
+  summary: The corpus is a flat sequence of rows. Nothing is nested, no counts or weights
+    are shown anywhere, and the document-by-token table the formula refers to has to be built
+    by the reader from these rows.
+- task_id: tree_next_hop_search
+  value: an edge list; each edge is a marker character, then the parent label, then the child
+    label
+  summary: The tree is exposed one connection at a time with no node ever collected together
+    with all its children. Reconstructing any node's neighbourhood means gathering edges from
+    across the whole listing.
+- task_id: variable_tracing
+  value: a flat sequence of single assignments, one per line, with the chain exposed only
+    through which names appear on right-hand sides
+  summary: Nothing groups the chain lines together or marks them as related. The links between
+    lines are recoverable only by noticing that the value of one line is the name assigned
+    by another.
+- task_id: xor_parity
+  value: flat left-to-right sequence, one symbol per position
+  summary: Bits are written one after another with nothing grouping, chunking, numbering,
+    or nesting them, so position is the only structure the text carries.
+- task_id: year_span_greater_than
+  value: embedded in prose; the two values are carried by phrases rather than listed as fields
+  summary: Nothing is tabulated or keyed. Each number is introduced by the word "year" inside
+    a running sentence, so recovering the pair means parsing the sentence rather than reading
+    off a record.

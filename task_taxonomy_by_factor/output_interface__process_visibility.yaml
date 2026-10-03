@@ -1,0 +1,122 @@
+axis: output_interface
+factor: process_visibility
+axis_frame: 'Output interface describes the answer form the task requires. The axis is about
+  how the computed result becomes visible: cardinality, syntax, ordering, process detail,
+  normalization, length, and uncertainty or status channels.'
+factor_description: How much of the solving process must appear in the output. The interface
+  may ask for the final result, evidence, partial derivations, state snapshots, proof objects,
+  execution traces, or other intermediate artifacts.
+tasks:
+- task_id: associative_recall
+  value: final answer only
+  summary: No reasoning, evidence, quotation of the matched pair, or restatement of the key
+    is asked for or scored.
+- task_id: babi_counting
+  value: final total only; no partial sums and no listing of contributions
+  summary: The sentences that were counted are never quoted and the running value is never
+    shown, so all the intermediate work is invisible to scoring.
+- task_id: babi_multi_hop
+  value: final answer only; the linking person is never named
+  summary: The person who joins the two supporting sentences is essential to the answer and
+    appears nowhere in it, so the intermediate step is invisible to scoring.
+- task_id: babi_single_hop
+  value: final answer only
+  summary: The deciding sentence is never quoted, the discarded earlier rooms are never mentioned,
+    and no reasoning is asked for or scored.
+- task_id: bounded_tiny_python_execution
+  value: final printed text only
+  summary: No intermediate variable values, no per-iteration snapshots, and no explanation
+    of which branch was taken are asked for or scored.
+- task_id: constant_label
+  value: final answer only
+  summary: No reasoning, evidence, or restatement of the input is asked for or scored, and
+    there would be nothing to show in any case.
+- task_id: copy
+  value: final answer only
+  summary: No counting, chunking, position markers, or restatement of progress is asked for
+    or scored, even for the 128-digit bin where a solver plainly has to keep track of where
+    it is.
+- task_id: dyck_balanced_parentheses
+  value: final answer only
+  summary: The pile of pending brackets, the positions of the cancelled pairs, and any intermediate
+    count are never shown or scored.
+- task_id: fictional_ontology_cot
+  value: the whole derivation, with each intermediate conclusion written out separately
+  summary: At every link the model both restates the sentence it is applying and states what
+    now follows about the person, so no step is left implicit. The verdict is the last word
+    of a much longer answer.
+- task_id: gridworld_detour_planning
+  value: final plan only
+  summary: No cells visited, no distances, no explored alternatives, and no explanation appear
+    in the answer, even though a solver must work all of them out.
+- task_id: horn_forward_chaining
+  value: the verdict only; no derivation, no intermediate statements
+  summary: Even where the answer rests on six rule applications, none of them is written out,
+    and no rule is quoted or named. Nothing between the input and the verdict is scored.
+- task_id: iterated_string_replace
+  value: final string only
+  summary: The intermediate string after each instruction is never requested or scored, although
+    two to eight of them exist and a solver has to construct every one of them to reach the
+    answer.
+- task_id: label_anchor_feature_match
+  value: final answer only
+  summary: The shared token is never quoted, the matching list is never pointed at, and no
+    reasoning is asked for. The entire computation is hidden behind one character.
+- task_id: listops_nested_prefix
+  value: final answer only
+  summary: The values of the inner groups are never requested or scored, although a six-level
+    expression forces a solver to compute at least six of them along the way.
+- task_id: majority
+  value: final answer only
+  summary: The counts that determine the answer are never written down, so the output shows
+    the verdict without any of the evidence behind it.
+- task_id: markov_first_rewrite
+  value: the resulting string only
+  summary: Which rule fired, where its pattern was found, and whether any earlier pattern
+    was checked are all absent from the required output; only the end product is scored.
+- task_id: passkey_retrieval
+  value: final answer only
+  summary: No quotation of the sentence, no statement of where it was found, and no reasoning
+    is asked for or scored.
+- task_id: random_label
+  value: final answer only
+  summary: No reasoning or evidence is asked for or scored, and none could be given, since
+    nothing in the instance supports the answer.
+- task_id: relabeled_cyclic_row_completion
+  value: the final symbol only; the row is never restated and no reasoning is shown
+  summary: Which equations belong to the row, and which symbols have already been produced
+    as results, are both needed to answer and neither is asked for.
+- task_id: reverse_sequence
+  value: final sequence only
+  summary: No indices, no partial output and no statement of the rule being applied appears;
+    the answer is the result alone.
+- task_id: sat_dpll_trace
+  value: the entire search, step by step, with the verdict as its final item
+  summary: 'Every forced part, every guess, and every undo is written out. This is the defining
+    feature of the task: the one-word verdict is a single item at the end of a record dozens
+    of items long.'
+- task_id: scan_command_to_actions
+  value: final action list only
+  summary: No segment breakdown, no statement of how the joining words were applied, and no
+    intermediate list is written down or scored.
+- task_id: tfidf_rank_documents
+  value: the ranking only; no counts, weights, or scores are emitted
+  summary: The formula block names three intermediate quantities and none of them is asked
+    for. The prompt states explicitly that only the ranked identifiers should be returned.
+- task_id: tree_next_hop_search
+  value: final answer only; the route that was traced is never shown
+  summary: The whole route from start to goal has to be established and then all but its first
+    step discarded, so the work done is entirely invisible in the output and an answer reached
+    by guessing looks identical to one reached by searching.
+- task_id: variable_tracing
+  value: final digit only
+  summary: The chain that was followed, the names visited, and the line the digit came from
+    are all absent from the required output.
+- task_id: xor_parity
+  value: final answer only
+  summary: No running total, partial count, restatement of the row, or explanation is asked
+    for or scored; only the last digit matters.
+- task_id: year_span_greater_than
+  value: final label only
+  summary: Neither year is quoted back, the difference between them is not stated, and no
+    justification of the comparison is asked for or scored.

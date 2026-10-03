@@ -1,0 +1,127 @@
+axis: latent_topology
+factor: temporal_state_structure
+axis_frame: Latent topology describes the abstract structure that exists before an input is
+  rendered as text. The axis is about how entities, relations, events, states, and constraints
+  are arranged, connected, ordered, nested, shared, or evolved.
+factor_description: How the topology changes over time or across transitions. This includes
+  fixed structures, linear histories, event logs with overwrites, stochastic transitions,
+  branching states, reversible histories, and other cases where the relevant structure is
+  a state trajectory.
+tasks:
+- task_id: associative_recall
+  value: fixed; one snapshot with no transitions
+  summary: The set of bindings is complete when the listing ends and it never changes.
+- task_id: babi_counting
+  value: a trajectory that only grows, with the final value asked about
+  summary: The counter of interest is monotone, since every qualifying sentence adds and none
+    subtracts. Intermediate values exist while reading but are never queried.
+- task_id: babi_multi_hop
+  value: a history of writes in which the two relevant writes are never overwritten
+  summary: Other people's rooms are overwritten repeatedly as the story runs, but the carrier
+    moves once and picks up once, so the two facts that matter are established and then left
+    alone.
+- task_id: babi_single_hop
+  value: a trajectory of overwrites where only the final state is asked about
+  summary: Each event writes one cell of the person-to-room table. The whole history is present
+    in the text but only the last write per person survives into the answer.
+- task_id: bounded_tiny_python_execution
+  value: a trajectory of overwrites; loop counters are created and destroyed
+  summary: The state is a history of destructive updates with no record kept of previous values.
+    Counters enter the state at the start of a loop, take each value in turn, and leave when
+    the loop finishes.
+- task_id: constant_label
+  value: fixed; a single snapshot with no transitions
+  summary: Nothing evolves within an instance, and instances are independent of one another,
+    so there is no trajectory or history at any level.
+- task_id: copy
+  value: fixed; one snapshot with no transitions
+  summary: The sequence is complete when the input line ends and it never changes. There is
+    no history, no overwrite, and no trajectory to follow.
+- task_id: dyck_balanced_parentheses
+  value: a trajectory; the pile of pending brackets after each symbol
+  summary: The relevant structure is not the row itself but the sequence of states it walks
+    through, and the answer is a read-out of the very last state.
+- task_id: fictional_ontology_cot
+  value: fixed; every sentence holds at once and nothing is ever revised
+  summary: There are no events, no updates, and no contradictions between sentences, so the
+    set of links is complete as soon as the list is read.
+- task_id: gridworld_detour_planning
+  value: the map never changes; the trajectory is the position along the plan
+  summary: Nothing on the map opens, closes, moves or is consumed, so the only thing that
+    evolves is which cell you are standing on after each move.
+- task_id: horn_forward_chaining
+  value: a set of true statements that only grows, until it stops changing
+  summary: Nothing ever becomes false again and nothing is retracted, so the process has a
+    single end state that does not depend on the order in which rules are applied.
+- task_id: iterated_string_replace
+  value: a trajectory of two to eight rewrites over a single overwritten string
+  summary: Each step replaces the entire state with a new one and the intermediate states
+    are never shown. Instances are required to have a minimum number of steps that actually
+    change the string and a minimum number of distinct states along the way, rising from two
+    states in the smallest bin to five in the largest.
+- task_id: label_anchor_feature_match
+  value: fixed; one snapshot with no transitions
+  summary: All the labelled lists hold at once, none supersedes another, and the mapping is
+    complete as soon as the last labelled record is read.
+- task_id: listops_nested_prefix
+  value: fixed; the expression never changes
+  summary: Nothing is assigned, updated, or overwritten during the instance. The only thing
+    that evolves is the solver's own collection of finished group values.
+- task_id: majority
+  value: fixed; one snapshot with no transitions
+  summary: The contents are complete when the sequence ends and nothing in the instance revises
+    them. The state a solver keeps is its own, not the input's.
+- task_id: markov_first_rewrite
+  value: a single transition; one state before the edit and one after, with a quarter of instances
+    having no transition at all
+  summary: The instance shows a string and asks for the string that follows one step. It is
+    not run to a fixed point and there is no history of intermediate strings, which is what
+    separates this from an iterated rewriting process.
+- task_id: passkey_retrieval
+  value: fixed; one statement, no transitions
+  summary: The binding is established when the sentence is read and it is never overwritten,
+    retracted or superseded later in the input.
+- task_id: random_label
+  value: independent draws; no history within or across instances
+  summary: Nothing evolves inside an instance, and no instance carries information about the
+    next, so there is no trajectory to track at any level.
+- task_id: relabeled_cyclic_row_completion
+  value: fixed; one table with no history and no transitions
+  summary: Nothing is added, removed, or revised over the course of the instance, and the
+    withheld entry was withheld from the start.
+- task_id: reverse_sequence
+  value: fixed; one snapshot with no transitions
+  summary: The sequence is complete when the line ends and nothing in the instance revises
+    it or any item in it.
+- task_id: sat_dpll_trace
+  value: a trajectory of partial assignments with rollbacks
+  summary: The assignment is extended one variable at a time along a branch and restored to
+    an earlier snapshot at each undo, so the same variable can be set true, then unset, then
+    set false later in the same record.
+- task_id: scan_command_to_actions
+  value: fixed; the command is a static expression that never changes
+  summary: The command describes a sequence of actions, but the description itself has no
+    history, no revision and no transition; the same text always denotes the same action list.
+- task_id: tfidf_rank_documents
+  value: fixed; one snapshot with no events, updates, or history
+  summary: The corpus is complete when the listing ends and nothing is ever added, removed,
+    or revised.
+- task_id: tree_next_hop_search
+  value: fixed; one structure with no transitions
+  summary: The tree is complete when the listing ends and nothing about it changes. There
+    is no history, no update, and no trajectory.
+- task_id: variable_tracing
+  value: monotone growth; one binding is added per line and no binding is ever replaced
+  summary: The bindings form an append-only history in which nothing is retracted or overwritten,
+    so the final snapshot answers the question and no earlier snapshot is needed. There are
+    no transitions other than additions.
+- task_id: xor_parity
+  value: fixed; one snapshot with no transitions
+  summary: The row is fully determined the moment it is drawn and nothing about it changes,
+    is overwritten, or evolves.
+- task_id: year_span_greater_than
+  value: fixed; a single snapshot with no transitions, despite the sentence describing a span
+    of time
+  summary: The event's duration is part of what the sentence says, not something the instance
+    evolves through. Nothing about the instance changes between its first character and its
+    last.

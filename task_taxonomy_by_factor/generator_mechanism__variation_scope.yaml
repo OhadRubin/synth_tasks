@@ -1,0 +1,144 @@
+axis: generator_mechanism
+factor: variation_scope
+axis_frame: Generator mechanism describes how benchmark inputs and labels are produced. The
+  axis is about source process, controllable structure, sampling, validity constraints, label
+  oracle, variation scope, and perturbation model.
+factor_description: The level at which vocabularies, templates, rules, worlds, or schemas
+  are resampled. Variation may be global to a dataset, tied to a split, local to an episode
+  or instance, bound to a generated world, or reserved for held-out generator modes.
+tasks:
+- task_id: associative_recall
+  value: assignments and order vary per instance; the alphabets are the same in every instance
+  summary: Which digit sits under which key, the listing order, and the asked key are redrawn
+    each time, while the pool of possible keys and the ten digits never change.
+- task_id: babi_counting
+  value: the person, the object kind, the amounts, the positions, and the distractors vary
+    per instance; the vocabulary never varies
+  summary: Every instance redraws who is asked about, what they collect, how much, and where
+    those sentences fall, while the same names, rooms, object kinds, and templates recur throughout.
+- task_id: babi_multi_hop
+  value: the chain, the distractors, and the two positions vary per instance; the vocabulary
+    never varies
+  summary: Every instance redraws which object, person, and room form the chain and where
+    the two supporting sentences land, while the same names, rooms, objects, and templates
+    recur throughout.
+- task_id: babi_single_hop
+  value: the move sequence and the asked person vary per instance; the vocabulary never varies
+  summary: Every instance redraws which people move where and who is asked about, while the
+    same four names, five rooms, and one template appear throughout.
+- task_id: bounded_tiny_python_execution
+  value: per instance for everything except the variable names, the operator set, and the
+    wrapper
+  summary: Initial values, which statement shapes appear, which variables they read and write,
+    the constants, the iteration counts, and where loops and conditionals fall are all redrawn
+    each time. The names, the arithmetic menu, the modulus, and the surrounding labels never
+    change.
+- task_id: constant_label
+  value: the input character varies per instance; the answer is fixed for the whole family
+  summary: The only thing redrawn from instance to instance is the character on the input
+    line, which never affects the answer.
+- task_id: copy
+  value: the sequence is redrawn per instance; the alphabet and layout are the same everywhere
+  summary: Only which digits appear and in what order changes between instances. The ten available
+    characters, the spacing convention, and the labels are fixed for the whole family.
+- task_id: dyck_balanced_parentheses
+  value: per instance; the alphabet, layout, and rule are the same everywhere
+  summary: What changes between instances is only the particular walk taken, including how
+    many brackets are left open and of which kinds.
+- task_id: fictional_ontology_cot
+  value: per instance for the words and the links; the word pools, sentence pattern, and question
+    wording are fixed throughout
+  summary: Every instance draws a fresh person, fresh categories, and fresh properties from
+    the same pools, and the surrounding template is byte-identical from instance to instance.
+- task_id: gridworld_detour_planning
+  value: per instance; the rules sentence, characters, and four moves never vary
+  summary: What is redrawn each time is the route, the wall layout, the placement of the dead
+    ends, and where the start and goal fall.
+- task_id: horn_forward_chaining
+  value: rule conditions, the broken step, and the printed order vary per instance; the naming
+    scheme, rule shape, and framing sentences are constant
+  summary: Every instance uses two conditions per rule, the same leading letters for the same
+    roles, and the same explanatory sentence, so only the wiring and the ordering are resampled.
+- task_id: iterated_string_replace
+  value: the starting string and the program are redrawn per instance; the letter set and
+    the line format are fixed within a bin
+  summary: Between bins the letter count grows from three to five, but within a bin every
+    instance draws on the same letters and lays out its sections the same way.
+- task_id: label_anchor_feature_match
+  value: the token draw and the label assignment are redrawn per instance; the pools and the
+    layout are fixed
+  summary: Which tokens appear, which of them carry labels, which labels are in play, and
+    how the lists are shuffled all vary every time, while the pool of one thousand tokens,
+    the eight label letters, and the section wording never change.
+- task_id: listops_nested_prefix
+  value: the tree is redrawn per instance; operators, operand counts, and digits are the same
+    everywhere
+  summary: Which operators appear where, how deep each branch runs, and which digits sit at
+    the leaves change every time, while the pool of four operators and ten digits never changes.
+- task_id: majority
+  value: the sequence varies per instance; the alphabet is the same everywhere
+  summary: Which symbols land where is redrawn each time, while the two available symbols
+    and the format around them never change.
+- task_id: markov_first_rewrite
+  value: rules, string, firing rule, and match position redrawn per instance; alphabet, pattern
+    length, and format fixed for the family
+  summary: Every instance is a fresh program over fresh data. The 26 letters, the three-letter
+    pattern length, the one-to-five replacement lengths, the labels, and the numbering are
+    identical in every instance at every setting.
+- task_id: passkey_retrieval
+  value: the value, the filler and the offset vary per instance; the sentence template and
+    the question never do
+  summary: Exactly the same wording introduces the value and asks for it in every instance
+    of every setting, so only content and placement are resampled.
+- task_id: random_label
+  value: both the input character and the answer are redrawn per instance; the answer pool
+    is fixed for the whole family
+  summary: Everything visible changes from one instance to the next, while the set of characters
+    the answer can come from never does.
+- task_id: relabeled_cyclic_row_completion
+  value: the name assignment and the queried pair vary per instance; the pool of names, the
+    combining rule, and the equation format are the same in every instance
+  summary: Only which names stand for which symbols changes from one instance to the next,
+    which is exactly what forces the answer to come from local structure rather than from
+    anything carried in.
+- task_id: reverse_sequence
+  value: the sequence varies per instance; the alphabet is the same everywhere
+  summary: Which digits land where is redrawn each time, while the ten available digits and
+    the format around them never change. Sequences are long enough that the same one never
+    recurs.
+- task_id: sat_dpll_trace
+  value: the formula is redrawn per instance; the notation, markers, and procedure are the
+    same throughout
+  summary: Nothing about the output format, the tie-breaking rules, or the token vocabulary
+    is resampled at any level. Only which clauses appear varies.
+- task_id: scan_command_to_actions
+  value: the vocabulary and rules are global; only the command varies per instance
+  summary: All three settings draw from the same ten words with the same meanings. What changes
+    from instance to instance is which words appear and in what arrangement.
+- task_id: tfidf_rank_documents
+  value: corpus, query, and placements per instance; naming scheme and formula text constant
+    across all instances
+  summary: The token pool for a setting is the same list of strings every time and the formula
+    block is a constant. Only which tokens the query names and where they were placed varies.
+- task_id: tree_next_hop_search
+  value: the labelling, the goal, and the edge order vary per instance; the tree shape is
+    fixed by the setting
+  summary: Every instance of a setting describes the same abstract tree wearing different
+    names and written in a different order, which is exactly what stops any answer from being
+    memorised.
+- task_id: variable_tracing
+  value: names, digits, chain membership, and line order redrawn per instance; the letter
+    pool and digit set fixed for the family
+  summary: Every instance is a fresh assignment of roles to letters and values to lines. The
+    26 letters, the ten digits, and the line format are the same in every instance at every
+    setting.
+- task_id: xor_parity
+  value: per instance; only the particular bits change
+  summary: The alphabet, labels, layout, and rule are shared by every instance in every setting,
+    so the whole of what varies is which bits were drawn.
+- task_id: year_span_greater_than
+  value: noun, century, difference, direction, and first year redrawn per instance; the sentence
+    pattern and noun list fixed for the family
+  summary: Each instance is a fresh filling of the same template. The wording of the rule,
+    the wording of the sentence, the sixteen nouns, and the eight centuries are the same at
+    every setting.

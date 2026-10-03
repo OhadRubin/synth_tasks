@@ -1,0 +1,123 @@
+axis: generalization_regime
+factor: compositional_recombination
+axis_frame: Generalization regime describes the relationship between training and evaluation
+  distributions. The axis is about which dimension shifts, how train and evaluation relate,
+  what is held out, how much support overlaps, how primitives recombine, how nuisance factors
+  are controlled, and how far evaluation moves from training.
+factor_description: How evaluation combines known or newly introduced primitives. This includes
+  familiar primitives in familiar patterns, familiar primitives in held-out combinations,
+  new argument orders, new rule chains, systematic splits, and few-shot induction of new primitives.
+tasks:
+- task_id: associative_recall
+  value: the same pattern throughout; only which digit sits under which key is new
+  summary: There are no primitives to recombine, no new rule chains, and no held-out combinations.
+- task_id: babi_counting
+  value: the same pattern throughout, with more terms in the sum
+  summary: There are no new relations to combine and no held-out pairings of person and object
+    kind. The only novelty at the longer setting is a longer chain of additions.
+- task_id: babi_multi_hop
+  value: the same two-step pattern throughout; only which object, person, and room fill it
+    is new
+  summary: There are no new relations to combine, no longer chains, and no held-out pairings
+    of the two sentence templates.
+- task_id: babi_single_hop
+  value: the same pattern throughout; only the sequence of moves is new
+  summary: There are no primitives to recombine, no new question forms, and no held-out combinations
+    of person and room.
+- task_id: bounded_tiny_python_execution
+  value: the same handful of statement shapes, arranged more deeply as settings grow
+  summary: 'No new operator or construct is introduced at any setting. What changes is how
+    the same pieces are stacked: longer runs, a loop around them, then a loop inside a loop.'
+- task_id: constant_label
+  value: none; there are no primitives to combine
+  summary: Nothing is built out of parts, so there are no familiar pieces in new arrangements,
+    no new rule chains, and no held-out combinations.
+- task_id: copy
+  value: the same pattern throughout; only the digit sequence is new
+  summary: There are no primitives to recombine, no held-out combinations, and no new argument
+    orders. Every instance exercises the same single operation.
+- task_id: dyck_balanced_parentheses
+  value: the same two bracket kinds combined into deeper arrangements
+  summary: No new symbol or rule is introduced at any setting; the novelty in the deeper settings
+    is more nesting of the same primitives.
+- task_id: fictional_ontology_cot
+  value: the same single-link step repeated more times
+  summary: There is one rule in the task and it never changes; the larger settings apply it
+    two or three more times in sequence rather than introducing anything new.
+- task_id: gridworld_detour_planning
+  value: the same four moves chained into longer plans
+  summary: No new move, character or rule is introduced anywhere; the higher settings ask
+    for longer chains of what the lower settings already contain.
+- task_id: horn_forward_chaining
+  value: one motif at every length; only how many times it repeats changes
+  summary: There is a single rule shape and a single chaining pattern, so nothing is combined
+    at one setting in a way that was not already present at another.
+- task_id: iterated_string_replace
+  value: one instruction type throughout, chained more times and in harder combinations
+  summary: Nothing new is introduced at higher bins. The same rewrite instruction is stacked
+    more deeply and appears in combinations the smallest bin never produces, notably deleting
+    substitutions and instructions whose pattern was manufactured by an earlier step.
+- task_id: label_anchor_feature_match
+  value: the same single pattern with more competitors
+  summary: There are no primitives to recombine, no new rule chains, and no held-out combinations;
+    the larger settings only supply more filler and more candidate labels.
+- task_id: listops_nested_prefix
+  value: the same four rules recombined into longer chains
+  summary: No new operator or notation is introduced at higher depth. What changes is how
+    many times familiar rules are stacked, so the deeper bins test familiar primitives in
+    longer compositions.
+- task_id: majority
+  value: none; the same single pattern with fresh contents each time
+  summary: There are no primitives to recombine, no rule chains and no held-out combinations,
+    only new draws of the same kind.
+- task_id: markov_first_rewrite
+  value: the same pattern throughout, with more rules to filter and more to copy
+  summary: No new operation is introduced at the harder settings and no familiar operation
+    is asked for in a new combination; the extra load is quantitative.
+- task_id: passkey_retrieval
+  value: none; a single pattern with fresh content each time
+  summary: There are no primitives to recombine, no rule chains and no held-out combinations;
+    every instance instantiates the same one-fact pattern.
+- task_id: random_label
+  value: none; there are no primitives to combine
+  summary: Nothing is built out of parts, so there are no familiar pieces in new arrangements,
+    no new rule chains, and no held-out combinations.
+- task_id: relabeled_cyclic_row_completion
+  value: one pattern throughout; only the row length and the amount of interference change
+  summary: There is a single motif and no held-out combination, so nothing appears at one
+    setting that was not already present in kind at the others.
+- task_id: reverse_sequence
+  value: none; the same single rule applied to fresh content each time
+  summary: There are no primitives to recombine, no rule chains and no held-out combinations,
+    only new draws handled the same way.
+- task_id: sat_dpll_trace
+  value: the same steps in longer and deeper arrangements
+  summary: No new marker, rule, or step type appears at the larger settings. What changes
+    is how many deductions run between guesses and how deep the guesses nest.
+- task_id: scan_command_to_actions
+  value: familiar words in a fresh combination every time, and longer chains across settings
+  summary: Because commands are sampled rather than enumerated, essentially every instance
+    is a combination not seen before, but it is always a combination the same rules cover.
+    The only progression across settings is chains of the same joining words growing from
+    one segment to five.
+- task_id: tfidf_rank_documents
+  value: one fixed pattern throughout; only sizes and draws change
+  summary: The same four stages are required in every instance, and no new operation, rule
+    chain, or arrangement appears at any setting that was absent from the others.
+- task_id: tree_next_hop_search
+  value: the same pattern throughout, with more steps in the route
+  summary: There is one relation and one question form at every setting. The only novelty
+    deeper down is that the same step has to be chained more times.
+- task_id: variable_tracing
+  value: the same single step repeated more times; no new primitive appears
+  summary: Harder settings ask for more applications of the identical lookup step rather than
+    for a step combined with something else, so there is no held-out combination and no new
+    rule to induce.
+- task_id: xor_parity
+  value: one primitive applied more times; no recombination
+  summary: There are no separate rules or operators to combine, so a longer row is more of
+    exactly the same step rather than a new pattern of steps.
+- task_id: year_span_greater_than
+  value: one pattern throughout; nothing recombines
+  summary: There are no primitives to put together in new ways, no new rule chains, and no
+    held-out combinations, since every instance asks for the identical single comparison.

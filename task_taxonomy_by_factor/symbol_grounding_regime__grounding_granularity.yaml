@@ -1,0 +1,138 @@
+axis: symbol_grounding_regime
+factor: grounding_granularity
+axis_frame: Symbol grounding regime describes how tokens, labels, and symbols in an instance
+  get their task-local meaning. The axis is about the relationship between external associations,
+  visible type cues, local remappings, semantic alignment, and the unit at which meaning attaches.
+factor_description: The level of structure that receives a task-local meaning. Meaning may
+  attach to entity names, variables, constants, relation predicates, operators, event verbs,
+  labels, templates, or larger schema patterns; this factor records the unit at which grounding
+  matters.
+tasks:
+- task_id: associative_recall
+  value: individual key symbols
+  summary: The unit that receives a meaning inside the instance is the single key, which names
+    one digit. No relation, template, or larger pattern is redefined.
+- task_id: babi_counting
+  value: the verb phrase; which relation a sentence asserts decides whether it contributes
+    at all
+  summary: Meaning attaches at the level of the two relations. Picking up marks a sentence
+    as countable and moving marks it as inert, even when both name the person being asked
+    about.
+- task_id: babi_multi_hop
+  value: the verb phrase; which relation a sentence asserts decides which role it can play
+  summary: Meaning attaches at the level of the two relations rather than the nouns, because
+    one relation supplies the link from object to person and the other supplies the link from
+    person to room.
+- task_id: babi_single_hop
+  value: whole sentences; each one asserts a person-to-room pairing that holds until replaced
+  summary: The unit that acquires an instance-local meaning is not a word but a whole event,
+    since only an event says where somebody currently is.
+- task_id: bounded_tiny_python_execution
+  value: individual variables, plus the fixed meaning of the operators and keywords
+  summary: 'Meaning attaches at two levels: each variable name stands for a number that keeps
+    changing, and each operator or keyword stands for a fixed rule. No template or larger
+    schema receives a special reading.'
+- task_id: constant_label
+  value: the family as a whole, not any symbol inside an instance
+  summary: No key, variable, operator, or entity in the text receives a task-local meaning.
+    The one thing that carries meaning is the answer character chosen for the family, which
+    is never shown in the prompt.
+- task_id: copy
+  value: the single character, which stands for itself
+  summary: The unit that carries meaning is one digit token. No relation, operator, template,
+    or larger pattern exists in the instance to receive a task-local meaning.
+- task_id: dyck_balanced_parentheses
+  value: individual characters, plus the pairing relation between two of them
+  summary: Meaning attaches to four single characters and to the fact that each opening one
+    has exactly one closing partner; no larger template or schema is redefined.
+- task_id: fictional_ontology_cot
+  value: individual category and property words
+  summary: Meaning attaches to single invented words, which get their place in the instance
+    from the sentences they appear in. The relation is the same word in every sentence and
+    is never redefined.
+- task_id: gridworld_detour_planning
+  value: single characters; four cell markers and four move letters
+  summary: Meaning attaches to individual characters, with the move letters additionally grounded
+    as changes of position rather than as things that appear on the map.
+- task_id: horn_forward_chaining
+  value: individual statement names, plus the arrow and the ampersand whose meaning the explanatory
+    sentence supplies
+  summary: The implication relation and the joining of two conditions are given their meaning
+    inside the instance by an English sentence. The statements themselves are bare labels
+    that receive no meaning at all.
+- task_id: iterated_string_replace
+  value: the instruction as a whole, plus individual characters as bare symbols
+  summary: Meaning attaches to the rewrite operation and to the letters it moves around. There
+    are no entities, variables, relations, or templates in the instance to receive a meaning.
+- task_id: label_anchor_feature_match
+  value: single tokens receive a label; the labels are arbitrary names for groups
+  summary: The unit that acquires a meaning within the instance is one token, whose meaning
+    is exactly the label it predicts. No pattern, position, or template is redefined.
+- task_id: listops_nested_prefix
+  value: the operator word, which names the rule for combining its operands
+  summary: 'Meaning attaches at two units only: the four operator names, and digits as numeric
+    values. There are no entity names, variables, relations, or templates in the instance
+    to carry meaning.'
+- task_id: majority
+  value: individual symbols, which matter only as countable tokens
+  summary: 'Meaning attaches at the smallest possible unit, and even there it is minimal:
+    a symbol''s whole contribution is which of two tallies it adds to.'
+- task_id: markov_first_rewrite
+  value: whole substrings and the position of a rule in the list; the arrow and the priority
+    convention are fixed for the family
+  summary: Meaning attaches to a three-letter substring, which stands for a place that may
+    be edited, and to a rule's number, which stands for its priority. The notation itself
+    is the same in every instance.
+- task_id: passkey_retrieval
+  value: one named quantity bound to one value
+  summary: 'Meaning attaches at a single point: a name introduced by the sentence and the
+    digit string it is bound to. No relation, operator or template is given a task-local meaning.'
+- task_id: random_label
+  value: the answer set as a whole; no symbol inside an instance receives a meaning
+  summary: There is no key, variable, operator, or entity in the text to which the family
+    attaches a local meaning. The only defined object is the pool the answer comes from.
+- task_id: relabeled_cyclic_row_completion
+  value: individual symbol names; the operator and the equals sign keep fixed roles
+  summary: Only the names are reassigned between instances. The combining operation, the shape
+    of an equation, and the meaning of the question stay the same every time, so what is relabelled
+    is exactly the set of elements and nothing else.
+- task_id: reverse_sequence
+  value: individual items, which matter only as things to be carried across
+  summary: 'Meaning attaches at the smallest possible unit and is minimal even there: an item''s
+    whole contribution is that it must reappear, unchanged, at the mirrored position.'
+- task_id: sat_dpll_trace
+  value: individual signed numbers as parts of clauses, plus a fixed set of three control
+    tokens
+  summary: Meaning attaches at the level of one signed number (a variable together with the
+    value claimed for it), the zero that closes a clause, and the guess, undo, and outcome
+    markers. No larger pattern or template is redefined per instance.
+- task_id: scan_command_to_actions
+  value: individual words, plus the segment pattern and the two joining operations
+  summary: 'Meaning attaches at three levels: single words map to actions or to numbers, the
+    segment pattern says how a motion word and its modifiers combine, and the joining words
+    are operations over whole action lists.'
+- task_id: tfidf_rank_documents
+  value: the query tokens, which alone receive weights, plus three quantities the formula
+    block names and defines
+  summary: An individual token matters only through whether it equals a query token. The three
+    named quantities in the formula block are given their meanings inside the instance and
+    are the only defined vocabulary the answer depends on.
+- task_id: tree_next_hop_search
+  value: individual node labels, plus the fixed marker whose meaning is the parent-child relation
+  summary: Two units receive meaning. Each label names one node for the duration of the instance,
+    and the repeated marker announces that the next two labels stand in the parent-to-child
+    relation in that order.
+- task_id: variable_tracing
+  value: individual names; the meaning of the equals sign is fixed across the family
+  summary: The unit that receives an instance-local meaning is the single-letter name, which
+    stands either for a digit or for another name. No operator, relation, or line template
+    is redefined between instances.
+- task_id: xor_parity
+  value: two constant symbols, plus the tag that names which function to apply
+  summary: Meaning attaches to individual characters, and the operation itself is carried
+    only by the family tag at the top, since the text never spells out what to compute.
+- task_id: year_span_greater_than
+  value: whole numbers and the two role-marking phrases
+  summary: The units that carry meaning are the two four-digit numbers and the phrases that
+    assign them to the start and end roles. No individual digit, word, or template is given
+    a special reading.

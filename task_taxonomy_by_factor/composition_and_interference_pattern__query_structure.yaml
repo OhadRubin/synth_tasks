@@ -1,0 +1,123 @@
+axis: composition_and_interference_pattern
+factor: query_structure
+axis_frame: Composition and interference pattern describes how relevant pieces combine within
+  one instance and how competing pieces affect that combination. The axis is about dependency
+  shape, depth, distractor source, evidence placement, conflict resolution, coupling among
+  subproblems, and query structure.
+factor_description: How queries are posed against the same instance and how their answers
+  interact. A task may use a single query, batched independent queries, multi-head outputs,
+  dependent follow-ups, stateful dialogue turns, or queries that update later context.
+tasks:
+- task_id: associative_recall
+  value: one question per instance
+  summary: A single key is asked about, with no follow-ups and no later question that depends
+    on the answer.
+- task_id: babi_counting
+  value: one question per instance
+  summary: A single person and object kind are asked about at the end of the story, with no
+    follow-ups and no later question that depends on the answer.
+- task_id: babi_multi_hop
+  value: one question per instance
+  summary: A single object is asked about at the end of the story, with no follow-ups and
+    no later question that depends on the answer.
+- task_id: babi_single_hop
+  value: one question per instance
+  summary: A single person is asked about at the end of the story, with no follow-ups and
+    no later question that depends on the answer.
+- task_id: bounded_tiny_python_execution
+  value: one question per instance, answered with three values drawn from the same final state
+  summary: There is a single query — what does this program print — whose answer happens to
+    have three parts. The three parts are not independent questions; they are three readings
+    of one state reached by one execution.
+- task_id: constant_label
+  value: one question per instance, and the same question every time
+  summary: Every instance asks the identical thing, with no follow-up, no batching, and no
+    later question whose answer depends on this one.
+- task_id: copy
+  value: one request per instance, covering the whole sequence
+  summary: A single answer is asked for and it accounts for the entire input. There are no
+    follow-up questions and no later query that depends on this one.
+- task_id: dyck_balanced_parentheses
+  value: one implicit query per instance; complete this row
+  summary: Each instance poses a single demand covering the whole input, with no follow-up
+    question and no second query whose answer depends on the first.
+- task_id: fictional_ontology_cot
+  value: one claim per instance
+  summary: A single property is asked about, with no follow-up questions and no second claim
+    whose answer would depend on the first.
+- task_id: gridworld_detour_planning
+  value: one query per instance; the whole plan from start to goal
+  summary: A single demand covers the entire map, with no follow-up question and no second
+    query whose answer depends on the first.
+- task_id: horn_forward_chaining
+  value: one yes-or-no question per instance, always about the far end of the chain
+  summary: The queried statement is always the last one on the chain, so the question never
+    asks about a partial derivation, about a helper statement, or about an irrelevant conclusion.
+- task_id: iterated_string_replace
+  value: one request per instance, for the string after the last instruction
+  summary: No intermediate state is asked for, the instructions are not queried individually,
+    and no follow-up question depends on the answer.
+- task_id: label_anchor_feature_match
+  value: one query per instance
+  summary: A single unlabelled list is presented, with no follow-ups and no later question
+    whose answer would depend on this one.
+- task_id: listops_nested_prefix
+  value: one question per instance, over the whole expression
+  summary: A single value is asked for, no inner group is queried separately, and no follow-up
+    question depends on the answer.
+- task_id: majority
+  value: one implicit question per instance, the same every time
+  summary: The question is carried by the task tag rather than stated, is identical in every
+    instance, and has no follow-up.
+- task_id: markov_first_rewrite
+  value: one implicit request per instance, stated by the labels rather than as a question
+  summary: Every instance asks for the same thing, the result of one rewriting step, so there
+    is no question to interpret, no follow-up, and no second query whose answer depends on
+    the first.
+- task_id: passkey_retrieval
+  value: one fixed question per instance, identical every time
+  summary: The same wording is asked in every instance of every setting, with no follow-up
+    and no later question that depends on the answer.
+- task_id: random_label
+  value: one question per instance, and the same question every time
+  summary: Every instance asks the identical thing, with no follow-up, no batching, and no
+    later question whose answer depends on this one.
+- task_id: relabeled_cyclic_row_completion
+  value: one question per instance, naming the pair whose entry was withheld
+  summary: There are no follow-ups. The question also supplies the one right-hand input the
+    row itself never shows, which is what makes the table's full set of symbols recoverable
+    from the prompt.
+- task_id: reverse_sequence
+  value: one implicit instruction per instance, the same every time
+  summary: The instruction is carried by the task tag rather than stated, is identical in
+    every instance, and has no follow-up.
+- task_id: sat_dpll_trace
+  value: one question per instance, answered by one record
+  summary: There is a single formula and a single record, with no follow-up questions, though
+    the record itself is a long chain of steps that each depend on the last.
+- task_id: scan_command_to_actions
+  value: one command, one answer, no follow-ups
+  summary: A single command is posed per instance and nothing later in the instance depends
+    on or revises the answer to it.
+- task_id: tfidf_rank_documents
+  value: one query per instance, resolved into a single ranking of every document
+  summary: The two or three query tokens are treated together as one query rather than answered
+    separately, and there are no follow-up questions.
+- task_id: tree_next_hop_search
+  value: one question per instance, giving one start and one goal
+  summary: A single route is asked about, with no follow-ups, no second goal, and no later
+    question that depends on the answer.
+- task_id: variable_tracing
+  value: one question per instance, always about the end of the chain
+  summary: A single name is asked about, there are no follow-up questions, and the asked name
+    is never one of the irrelevant lines or a name partway down the chain.
+- task_id: xor_parity
+  value: one query per instance, always the same question
+  summary: Each instance asks for one summary of one row, with no follow-up query and no second
+    question whose answer depends on the first.
+- task_id: year_span_greater_than
+  value: one request per instance, the same one every time, stated as a rule rather than as
+    a question
+  summary: There is no question mark and no variation in what is asked, so the request could
+    be read once for the whole family. There are no follow-ups and no query whose answer changes
+    later context.

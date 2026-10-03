@@ -1,0 +1,130 @@
+axis: output_interface
+factor: length_relation
+axis_frame: 'Output interface describes the answer form the task requires. The axis is about
+  how the computed result becomes visible: cardinality, syntax, ordering, process detail,
+  normalization, length, and uncertainty or status channels.'
+factor_description: How output length scales with the input or computation. It may compress
+  the result into a short label, copy a span, transduce input-length material, emit a plan,
+  or produce a trace whose length reflects the computation.
+tasks:
+- task_id: associative_recall
+  value: constant, independent of the listing length
+  summary: The answer is one character whether the prompt lists 4 pairs or 64, so the task
+    compresses a long input to a fixed-size output.
+- task_id: babi_counting
+  value: near constant; one digit at the shorter setting and one or two at the longer one
+  summary: Totals run from two to nine at the shorter setting and from three into the teens
+    at the longer one, so a twenty-sentence story still compresses to at most two characters.
+- task_id: babi_multi_hop
+  value: constant, independent of story length
+  summary: One word is emitted whether the story runs five sentences or twenty, so a two-step
+    inference over a long narrative compresses into a fixed-size output.
+- task_id: babi_single_hop
+  value: constant, independent of story length
+  summary: One word is emitted whether the story runs five sentences or twenty, so the task
+    compresses the whole narrative into a fixed-size output.
+- task_id: bounded_tiny_python_execution
+  value: constant; three digits regardless of program length or work done
+  summary: The answer is the same size whether it took eight steps or several dozen to reach,
+    so the task compresses a long computation into a fixed short output.
+- task_id: constant_label
+  value: constant; one character, and the input is one character too
+  summary: Both sides of the instance are fixed size, so the answer neither compresses nor
+    expands anything.
+- task_id: copy
+  value: one-to-one; the answer is exactly as long as the input sequence
+  summary: 'Nothing is compressed or summarised: an instance transduces its input at full
+    length, so the 128-digit bin demands a 128-digit answer while the 16-digit bin demands
+    16.'
+- task_id: dyck_balanced_parentheses
+  value: short relative to the input and set by how much nesting is left open, at most the
+    depth setting
+  summary: A row of thirty-three symbols yields an answer of at most eight, and the answer
+    length varies between instances of the same setting because the number of unfinished brackets
+    varies.
+- task_id: fictional_ontology_cot
+  value: grows with the chain and is unaffected by the number of unrelated sentences
+  summary: At the largest setting 13 sentences are listed and 9 are derived, but the 8 unrelated
+    ones contribute nothing to the answer, so the input grows faster than the output does.
+- task_id: gridworld_detour_planning
+  value: the answer is a plan whose length is the route length, growing faster than the map
+    does
+  summary: Between the smallest and largest settings the map side grows by under a factor
+    of two while the required output grows from eight letters to twenty-eight.
+- task_id: horn_forward_chaining
+  value: constant; one character however long the listing
+  summary: The largest setting shows twenty-two rules and eleven starting statements and still
+    answers in one character, so the task compresses the whole input to a fixed size.
+- task_id: iterated_string_replace
+  value: the length of the rewritten text, from one character up to one hundred ninety-two
+  summary: Deletions shrink the string while replacements biased to be longer than what they
+    replace stretch it, so the answer may be far shorter or several times longer than the
+    start. Each bin caps how long the finished string may be, at thirty-two, seventy-two,
+    one hundred twenty-eight, and one hundred ninety-two.
+- task_id: label_anchor_feature_match
+  value: constant, one character, whether the prompt holds 18 tokens or 272
+  summary: The task compresses the whole prompt to a fixed-size label, and the compression
+    ratio grows by a factor of fifteen from the smallest setting to the largest.
+- task_id: listops_nested_prefix
+  value: constant; one character however large the expression
+  summary: A six-level expression can run past a hundred characters and still reduces to one
+    digit, so the task compresses the input to a fixed-size output regardless of bin.
+- task_id: majority
+  value: constant one character, independent of the input length
+  summary: The output is the same size whether the input holds 16 symbols or 128, so the task
+    compresses a long input into a single bit of information.
+- task_id: markov_first_rewrite
+  value: tracks the input length; the answer differs from the input by the replacement length
+    minus three
+  summary: Because replacements run from one to five letters and patterns are always three,
+    an answer is between two characters shorter and two characters longer than the input,
+    and exactly equal to it when nothing applies.
+- task_id: passkey_retrieval
+  value: constant five characters regardless of input length
+  summary: The answer is the same size whether the input holds 127 characters or 944, so the
+    task compresses its input by a factor that grows across settings.
+- task_id: random_label
+  value: constant; one character, and the input is one character too
+  summary: Both sides of the instance are fixed size, so the answer neither compresses nor
+    expands anything.
+- task_id: relabeled_cyclic_row_completion
+  value: constant; three characters however many equations are listed
+  summary: The largest setting lists thirty-five equations on one line and still answers with
+    a single name, so the task compresses heavily and the answer gives no indication of how
+    much was read.
+- task_id: reverse_sequence
+  value: output length equals input length exactly
+  summary: 'The task neither compresses nor expands: every item read must be written back
+    out once, so the answer grows one for one with the input across all three settings.'
+- task_id: sat_dpll_trace
+  value: grows with the size of the search rather than with the length of the formula
+  summary: Two formulas with the same number of clauses can need 10 items or 75. The record
+    is neither a copy of the input nor a fixed-size label.
+- task_id: scan_command_to_actions
+  value: between about half and twice the command's word count, decided by which modifiers
+    appear
+  summary: 'Word count alone does not fix the answer length: a three-word segment with a direction
+    and a repetition yields six actions, while a joining word costs a word and yields none.
+    A three-word command can produce six actions, and the longest answers seen, eighteen actions,
+    come from eleven-word commands.'
+- task_id: tfidf_rank_documents
+  value: grows linearly with the number of documents and ignores document length
+  summary: The answer is eleven characters at four documents and thirty-seven at twelve, while
+    the input grows from sixteen tokens to eighty-four. Longer documents make the work larger
+    without making the answer longer.
+- task_id: tree_next_hop_search
+  value: constant, independent of the listing length
+  summary: Two characters are emitted whether the listing holds six edges or sixty-two, so
+    the task compresses a long listing and a multi-step traversal into a fixed-size output.
+- task_id: variable_tracing
+  value: constant, independent of chain length and listing length
+  summary: The output is one character whether the instance has 3 lines or 9, so a longer
+    computation is compressed into the same fixed-size answer.
+- task_id: xor_parity
+  value: constant; one character whatever the input length
+  summary: The task compresses as many as 128 input symbols down to a single symbol, so output
+    length carries no information about input length.
+- task_id: year_span_greater_than
+  value: constant; one character regardless of the setting
+  summary: The prompt is the same length at every setting and so is the answer, so nothing
+    about output length varies across the family.

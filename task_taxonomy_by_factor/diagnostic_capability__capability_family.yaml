@@ -1,0 +1,156 @@
+axis: diagnostic_capability
+factor: capability_family
+axis_frame: Diagnostic capability describes the model ability or failure mode that a task
+  is meant to expose. The axis is about what kind of competence the instance probes, what
+  information that competence depends on, and what kind of pressure makes the competence succeed
+  or fail.
+factor_description: The general kind of competence or vulnerability being tested. This identifies
+  the behavior the task is meant to diagnose, with the exact task domain, representation,
+  and solver strategy left open.
+tasks:
+- task_id: associative_recall
+  value: binding many symbols to values in context and retrieving one on demand
+  summary: Solving an instance requires keeping every key associated with its own digit while
+    the list is read, then producing the digit for the one key that is asked about afterwards.
+- task_id: babi_counting
+  value: keeping a running total over the sentences that qualify for it
+  summary: Solving an instance means recognising which sentences count, adding a small number
+    from each of them as the story is read, and carrying that total to the end without losing
+    or repeating any contribution.
+- task_id: babi_multi_hop
+  value: joining two separate statements through a shared name to place an object that is
+    never located directly
+  summary: No sentence says where the object is. One sentence links the object to a person
+    and another links that person to a room, and the answer exists only once the two are put
+    together.
+- task_id: babi_single_hop
+  value: keeping a changing property of several people current and reading one off
+  summary: Each sentence replaces where one person is. Solving an instance means holding the
+    current room of every person mentioned so far and reporting the one belonging to the person
+    asked about.
+- task_id: bounded_tiny_python_execution
+  value: mentally executing a small imperative program and reporting what it prints
+  summary: Solving an instance means carrying the values of a few integer variables through
+    every statement in order, applying each arithmetic update, taking the branch the condition
+    selects, repeating loop bodies the stated number of times, and reading off the final values
+    that get printed.
+- task_id: constant_label
+  value: producing a fixed answer while the input varies
+  summary: The only competence involved is noticing that the answer never changes and committing
+    to it. This is the easiest possible case, present as a reference point against which harder
+    families can be compared.
+- task_id: copy
+  value: reproducing a long symbol sequence exactly, without dropping or drifting
+  summary: The only competence at issue is emitting each of the digits in the order they were
+    given. Nothing has to be selected, transformed, counted, or combined, so a failure isolates
+    exact reproduction over length.
+- task_id: dyck_balanced_parentheses
+  value: keeping a last-in-first-out record of open items and unwinding it in order
+  summary: Solving an instance means tracking which opening brackets are still waiting to
+    be closed, in what order, and of which kind, then discharging them from the most recent
+    backwards.
+- task_id: fictional_ontology_cot
+  value: chaining sentences through shared invented words and writing the chain out, then
+    comparing its endpoint against a claim
+  summary: Solving an instance means finding the one sentence about the person, following
+    it to the next sentence whose subject is the word it ended on, repeating until a property
+    word is reached, and then checking that property against the one the question names.
+- task_id: gridworld_detour_planning
+  value: planning a whole route in advance instead of choosing one step at a time
+  summary: The answer is a complete walk that must be committed to before any of it is taken,
+    and at least one point along it offers a move that looks better locally while leading
+    into a dead end.
+- task_id: horn_forward_chaining
+  value: applying implication rules repeatedly to a growing set of true statements and deciding
+    a yes-or-no question about the result
+  summary: An instance is solved by starting from the given true statements and applying every
+    rule whose two conditions are already true, over and over until no application adds anything
+    new. The question asks whether one named statement ends up in that final set.
+- task_id: iterated_string_replace
+  value: executing a short program over a changing string and reporting the exact result
+  summary: Each instruction must be applied to whatever the previous one left behind, not
+    to the original text, and the whole resulting string must be emitted character for character.
+    Recognising what the program does in general is not enough.
+- task_id: label_anchor_feature_match
+  value: binding a token to a label from examples given in the same prompt and applying that
+    binding to a new list
+  summary: Nothing outside the instance says which token means which label. The mapping is
+    created by the labelled lists themselves and has to be picked up while reading them and
+    then applied once at the end.
+- task_id: listops_nested_prefix
+  value: evaluating a nested expression by combining inner results outward
+  summary: Producing the answer requires recovering which operands belong to which group,
+    computing the innermost groups first, and feeding each result to the group that contains
+    it until one digit is left. Recognising or summarising the expression is not enough.
+- task_id: majority
+  value: aggregating evidence over an entire input into one global judgement
+  summary: No part of the sequence can be trusted on its own, because a local run of one symbol
+    says nothing about which symbol is more common overall. The whole input has to be taken
+    into account before the answer is committed to.
+- task_id: markov_first_rewrite
+  value: following an ordered instruction list, then editing one place in a string and copying
+    the rest exactly
+  summary: Two competences are needed at once. Choosing the right rule requires reading a
+    priority list and checking each pattern against the whole string, and carrying it out
+    requires reproducing a long random string character for character with a single substitution
+    made in the correct place.
+- task_id: passkey_retrieval
+  value: locating one stated fact inside a long stretch of irrelevant material and copying
+    it exactly
+  summary: The answer is written out in full in the input, so nothing has to be computed.
+    What is tested is finding the one sentence that states it among hundreds of characters
+    that do not, and then reproducing five digits without error.
+- task_id: random_label
+  value: none is probed; the family measures what a learner does with data that cannot be
+    learned
+  summary: No competence can raise accuracy above one half, because the answer is a coin flip.
+    The family exists as a reference point at the opposite end from a task whose answer is
+    fixed and immediately learnable.
+- task_id: relabeled_cyclic_row_completion
+  value: completing a partially shown combination table whose symbols have meaning only inside
+    the instance
+  summary: No symbol keeps its meaning from one instance to the next, so the answer cannot
+    come from anything remembered. It has to come from the pattern the shown equations make,
+    which is that a row of this table produces each of its symbols exactly once.
+- task_id: reverse_sequence
+  value: reproducing an input exactly while rearranging it by position
+  summary: Nothing about the content has to be understood, only preserved. What is tested
+    is holding an arbitrary sequence intact and emitting it under a fixed change of position,
+    without losing, duplicating or displacing any item.
+- task_id: sat_dpll_trace
+  value: running a branching search with deductions and undo steps, and writing every step
+    of it out
+  summary: The model has to decide whether the formula can be satisfied and, at the same time,
+    reproduce the exact sequence of deductions, guesses and undo steps that the prescribed
+    procedure would take on that formula.
+- task_id: scan_command_to_actions
+  value: interpreting a novel word combination by applying fixed rules compositionally
+  summary: 'Every word means the same thing in every instance, and the whole challenge is
+    applying those meanings to a combination never seen before: working out what each segment
+    produces and in what order the segments'' results are laid out.'
+- task_id: tfidf_rank_documents
+  value: executing a stated numeric scoring rule over a whole corpus and ranking by the result
+  summary: The formula is written out in the prompt, so nothing has to be recalled. What is
+    tested is counting how many documents hold a token, counting how often a token occurs
+    inside one document, combining those into a weighted sum, and then sorting every document
+    by that sum.
+- task_id: tree_next_hop_search
+  value: working out the first step of a route through a graph presented as an unordered pile
+    of edges
+  summary: The connection between start and goal is never shown in one place; it has to be
+    assembled from edges scattered through the listing. Only the first step of the assembled
+    route is reported.
+- task_id: variable_tracing
+  value: following a chain of name-to-name references back to a stored value
+  summary: Each line binds a name to either a digit or another name. Answering means resolving
+    the asked name to what it points at, then resolving that, and so on until a digit is reached.
+- task_id: xor_parity
+  value: integrating every element of a long input into one global summary bit
+  summary: The answer depends jointly on all of the bits, so nothing can be committed to until
+    the last one has been read. Flipping any single bit anywhere in the row flips the required
+    answer.
+- task_id: year_span_greater_than
+  value: comparing two numbers written inside ordinary prose and reporting which is larger
+  summary: The instance states the comparison rule outright, so what is being probed is whether
+    the two four-digit numbers can be located in a sentence, read as numbers, and ordered
+    correctly, rather than whether the rule can be inferred.

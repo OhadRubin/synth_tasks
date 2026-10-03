@@ -1,0 +1,147 @@
+axis: composition_and_interference_pattern
+factor: evidence_layout
+axis_frame: Composition and interference pattern describes how relevant pieces combine within
+  one instance and how competing pieces affect that combination. The axis is about dependency
+  shape, depth, distractor source, evidence placement, conflict resolution, coupling among
+  subproblems, and query structure.
+factor_description: Where relevant and competing information appears relative to the query
+  and to each other. Layout can cluster support, separate it across long distances, interleave
+  it with distractors, front-load it, bury it, shuffle it, or arrange it adversarially.
+tasks:
+- task_id: associative_recall
+  value: one supporting pair at a random position among the distractors
+  summary: The relevant pair is not front-loaded, buried, or clustered with anything; it is
+    placed uniformly at random within the listing.
+- task_id: babi_counting
+  value: contributing sentences scattered uniformly and interleaved with distractors
+  summary: Nothing clusters or front-loads them. In a twenty-sentence story roughly a quarter
+    of the sentences contribute and they may be adjacent or spread from first to last.
+- task_id: babi_multi_hop
+  value: the two supporting sentences sit at two random positions with distractors between
+    and around them
+  summary: They are about two sentences apart on average in the short setting and about eight
+    in the long one, occasionally spanning the whole story from first sentence to last.
+- task_id: babi_single_hop
+  value: the deciding sentence sits late in the story with distractors on both sides
+  summary: In the twenty-sentence stories the last mention of the asked person falls at the
+    seventeenth sentence on average, so material both before and after it must be inspected
+    and rejected.
+- task_id: bounded_tiny_python_execution
+  value: spread over the whole program, from the initial values to the last statement before
+    the printing statement
+  summary: 'What determines a printed value can be anywhere: an initial value at the top,
+    the final write just before the print, or any update in between. The last write to a variable
+    is the one that survives.'
+- task_id: constant_label
+  value: no evidence appears anywhere in the instance
+  summary: Nothing shown in the prompt supports the answer, so there is no question of where
+    support sits, how far it lies from the query, or what it is mixed with.
+- task_id: copy
+  value: spread evenly across the whole input, in the same order as the answer
+  summary: 'Support is neither clustered nor buried, but it is maximally spread: the last
+    digit of a 128-item answer is supported by material at the far end of the input line.'
+- task_id: dyck_balanced_parentheses
+  value: the brackets that matter are scattered through the row and the most important one
+    is usually the furthest away
+  summary: The outermost unfinished bracket is typically among the first symbols, so the item
+    emitted last in the answer comes from the position read first, with all the cancelling
+    material in between.
+- task_id: fictional_ontology_cot
+  value: chain sentences at random positions among the unrelated ones, in no particular order
+    relative to one another
+  summary: The first link may be printed last and the last link first, as in the sampled instances,
+    so the derivation order has to be worked out rather than read off.
+- task_id: gridworld_detour_planning
+  value: the deciding walls sit immediately beside the route, and a tempting dead end can
+    open at the very first step
+  summary: 'Relevant and misleading material are adjacent rather than separated: in one sampled
+    instance both alternatives to the correct first move were traps, and in another the traps
+    appeared partway along the route.'
+- task_id: horn_forward_chaining
+  value: the chain's rules shuffled uniformly among the irrelevant ones, starting statements
+    shuffled too
+  summary: The relevant rules are neither clustered nor placed first. At the largest setting
+    six of the twenty-two rules matter and they can land in any position, including in reverse
+    order of application.
+- task_id: iterated_string_replace
+  value: the starting string first, the instructions in order after it, and the affected positions
+    scattered through the text
+  summary: Nothing is buried, shuffled, or held back. The difficulty is that each instruction
+    touches every occurrence wherever it sits, and those positions shift as earlier instructions
+    lengthen or shorten the string.
+- task_id: label_anchor_feature_match
+  value: the two or three occurrences of the relevant token sit at random positions in randomly
+    placed records, usually far apart
+  summary: The relevant occurrence is not front-loaded, clustered, or buried on purpose; the
+    shuffle places it uniformly, so at the largest setting the earlier occurrence may be more
+    than 250 tokens before the final list.
+- task_id: listops_nested_prefix
+  value: spread across the whole line, with the values needed first sitting deepest inside
+  summary: The operator that produces the answer stands at the very front while its operands
+    are scattered from there to the end, and the groups that must be computed first are typically
+    buried near the middle of the line.
+- task_id: majority
+  value: relevant information spread uniformly across the whole input
+  summary: Support is neither clustered, front-loaded nor buried; it is uniformly distributed
+    by construction, so no region can be skipped and no region is worth more attention than
+    another.
+- task_id: markov_first_rewrite
+  value: the deciding rule anywhere in the list and its match anywhere in the string, the
+    two far apart in the prompt
+  summary: The two pieces of evidence sit at opposite ends of the prompt and must be brought
+    together. Ruling out the earlier rules additionally requires evidence spread over every
+    position of the string, not evidence at any one place.
+- task_id: passkey_retrieval
+  value: one span at a uniformly random offset, with distractor filler on both sides
+  summary: 'The sentence is neither front-loaded nor buried at a fixed depth: across samples
+    it starts anywhere from the first character of the context to within about twenty characters
+    of its end. The gap between the sentence and the question therefore ranges from a couple
+    of dozen characters to the entire context.'
+- task_id: random_label
+  value: no evidence appears anywhere in the instance
+  summary: Nothing shown supports the answer, so there is no question of where support sits,
+    how far it lies from the query, or what it is mixed with.
+- task_id: relabeled_cyclic_row_completion
+  value: the row's entries shuffled uniformly among the unrelated ones on a single line, with
+    the question stated last
+  summary: The relevant equations are neither clustered nor placed first, and the question
+    that reveals which of them matter arrives only after all of them have been read.
+- task_id: reverse_sequence
+  value: relevant material covers the whole input and is consumed from the end backwards
+  summary: The item needed first sits immediately before the answer and each subsequent one
+    lies further back, so the distance from the item being emitted to the point of emission
+    grows steadily across the answer.
+- task_id: sat_dpll_trace
+  value: spread over the whole formula and re-located after every step
+  summary: The clause that forces the next part can be anywhere in the printed list, and which
+    clause that is changes each time a value is assigned, so no region of the formula can
+    be attended to once and set aside.
+- task_id: scan_command_to_actions
+  value: entirely relevant and spread over the whole command; the first-emitted segment may
+    sit at either end
+  summary: Which segment supplies the opening action names depends on the joining words rather
+    than on position, so it can be the leftmost segment or the rightmost one, and there is
+    no region of the command that can be skipped.
+- task_id: tfidf_rank_documents
+  value: spread across every line, with the query stated only after the whole corpus
+  summary: The occurrences that matter are scattered inside shuffled document lines, and a
+    reader does not learn which tokens matter until every document has already gone by.
+- task_id: tree_next_hop_search
+  value: the route's edges scattered uniformly through the listing and rarely adjacent
+  summary: Consecutive steps of the route almost never sit next to each other, so following
+    the route means jumping back and forth across the listing rather than reading it in order.
+- task_id: variable_tracing
+  value: the supporting lines spread through the listing in dependency order, mixed with the
+    irrelevant ones
+  summary: The digit that answers the question sits at the start of the chain, so it is typically
+    far from the question line, while the last link may be adjacent to the question or several
+    lines above it. Irrelevant lines can fall before, between, or after the chain lines.
+- task_id: xor_parity
+  value: spread evenly; every position is supporting evidence
+  summary: Relevant information is neither clustered, front-loaded, nor buried, because the
+    whole input is relevant and uniformly so.
+- task_id: year_span_greater_than
+  value: both numbers in the same short sentence a few words apart, with the rule stated just
+    above
+  summary: Nothing is buried, separated by distance, or hidden among distractors. The two
+    numbers are adjacent in the reading path and everything needed is within three lines.

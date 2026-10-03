@@ -1,0 +1,150 @@
+axis: target_operation
+factor: algebraic_sensitivity
+axis_frame: Target operation describes the abstract relation from latent input to required
+  answer. The axis is about the kind of computation the task requests, the result orientation,
+  how suboperations compose, how state participates, which algebraic properties matter, and
+  how many valid outputs exist.
+factor_description: Which algebraic properties affect the result. The task may depend on order,
+  grouping, repetition, invertibility, monotonicity, idempotence, nonlocal interactions, or
+  cascading rewrite behavior.
+tasks:
+- task_id: associative_recall
+  value: invariant to the order of the pairs and to repeated digit values
+  summary: Reordering the listing changes nothing, and the fact that several keys carry the
+    same digit changes nothing, because selection is by key alone.
+- task_id: babi_counting
+  value: invariant to order and grouping, but sensitive to repetition
+  summary: Addition means the sentences can be summed in any order or any grouping, while
+    counting one of them twice or none at all changes the answer. Getting the multiset of
+    contributions right is the whole difficulty.
+- task_id: babi_multi_hop
+  value: sensitive to the direction of the join and to possession preceding movement
+  summary: Following the chain the wrong way, from a room back to a person, does not identify
+    the carrier. If the person had moved before picking the object up, the same two sentences
+    would not license the same answer.
+- task_id: babi_single_hop
+  value: order-sensitive, with repeated identical moves having no effect
+  summary: Swapping two sentences about one person changes the answer, while restating the
+    move a person has already made changes nothing.
+- task_id: bounded_tiny_python_execution
+  value: sensitive to order and repetition; grouping is fixed by explicit parentheses; all
+    arithmetic wraps at ten
+  summary: Reordering statements or running one twice changes the answer, so nothing is commutative
+    or idempotent at the statement level. Reducing every result modulo ten means values wrap
+    around, subtraction never goes negative, and large intermediate products collapse back
+    to one digit.
+- task_id: constant_label
+  value: invariant to everything; the mapping is constant
+  summary: Order, grouping, and repetition of anything in the input all leave the answer unchanged,
+    because no property of the input reaches the answer at all.
+- task_id: copy
+  value: order is everything; value repetition and grouping are irrelevant
+  summary: Permuting the input permutes the required answer the same way, so order is fully
+    load-bearing. Repeated digits do not change the rule at all, though they make it harder
+    to notice a lost position, and applying the mapping twice gives the same result.
+- task_id: dyck_balanced_parentheses
+  value: order-sensitive and non-commutative, with cancellation between partners
+  summary: Swapping two symbols generally changes the answer. A completed pair anywhere in
+    the row has no effect on the result, which is the only simplification available.
+- task_id: fictional_ontology_cot
+  value: depends on direction and on chaining through intermediates; insensitive to the printed
+    order of the sentences
+  summary: The whole task rests on the fact that the relation carries through several links
+    at once, and on its being one-way. Shuffling the listed sentences leaves the required
+    answer character for character unchanged.
+- task_id: gridworld_detour_planning
+  value: fully order-dependent; the same moves rearranged walk into walls
+  summary: Nothing about the mapping is commutative or associative, and no move can be dropped
+    or repeated without changing where the walk ends.
+- task_id: horn_forward_chaining
+  value: insensitive to application order and idempotent
+  summary: Applying a rule twice adds nothing the second time, and any order of application
+    reaches the same final set, so only which statements can reach which matters and never
+    when.
+- task_id: iterated_string_replace
+  value: order matters, and matching is one pass, left to right, without overlaps
+  summary: Swapping two instructions generally changes the answer, since one can create or
+    destroy the text the other looks for. Within a step, matches are taken from left to right
+    with no overlapping and the text just substituted in is not searched again, so an instruction
+    whose substitution recreates its own pattern does not fire on it a second time.
+- task_id: label_anchor_feature_match
+  value: invariant to every ordering; sensitive only to exact token identity
+  summary: The result depends on nothing but which four-character strings are equal to which.
+    Repetition matters in one direction only, since the answer is defined by the single token
+    that repeats.
+- task_id: listops_nested_prefix
+  value: grouping decides everything; operand order does not matter
+  summary: Because all four rules ignore the order of their operands, the only structural
+    property that changes the answer is which operands belong to which bracket. Largest and
+    smallest ignore repeated values, the modular sum counts every repeat, and the median depends
+    on how many operands there are.
+- task_id: majority
+  value: commutative and associative; only how many of each symbol matters
+  summary: Reordering or regrouping the sequence changes nothing, and repetition is the entire
+    content of the task, since a symbol's every occurrence counts separately.
+- task_id: markov_first_rewrite
+  value: sensitive to rule order and to occurrence position; insensitive to how many times
+    a pattern occurs
+  summary: Permuting the rules can change which one fires, and taking the leftmost occurrence
+    fixes where the edit lands. A pattern occurring twice makes no difference, since only
+    the first occurrence is touched, and the fact that the edit could create a new match is
+    irrelevant because the process stops after one step.
+- task_id: passkey_retrieval
+  value: invariant to the sentence's position and to the filler contents; sensitive to digit
+    order
+  summary: Moving the sentence anywhere else in the context or redrawing every filler digit
+    leaves the answer unchanged. Only the order of the five digits inside the answer matters.
+- task_id: random_label
+  value: none; no property of the input reaches the answer
+  summary: Order, grouping, and repetition are all irrelevant, because the answer would be
+    distributed the same way whatever the input said.
+- task_id: relabeled_cyclic_row_completion
+  value: rests on each symbol appearing exactly once as a result within a row
+  summary: 'That property is what makes elimination valid, and it holds because the combination
+    can be undone: fixing the left input, distinct right inputs always give distinct results.
+    The operation is otherwise insensitive to the order in which equations are read.'
+- task_id: reverse_sequence
+  value: order-sensitive and self-inverse; repeated items make position the only distinguishing
+    feature
+  summary: Applying the rule twice returns the original sequence. Because only ten distinct
+    items exist, most items recur many times in a long sequence, so two occurrences of the
+    same item can be told apart only by where they sit.
+- task_id: sat_dpll_trace
+  value: the verdict is invariant to reordering and renaming; the required record is not
+  summary: Permuting the clauses, permuting the parts within a clause, or renumbering the
+    variables leaves the formula satisfiable or unsatisfiable exactly as before, but changes
+    the record, because the tie-breaking rules read the printed order and the variable numbers.
+- task_id: scan_command_to_actions
+  value: non-commutative and grouping-sensitive; repetition duplicates whole units
+  summary: Swapping the operands of a joining word changes the answer, which is exactly the
+    difference between the two joining words. Grouping matters because chains associate to
+    the right, and a repetition word copies the turn along with the motion rather than the
+    motion alone.
+- task_id: tfidf_rank_documents
+  value: sums are order- and grouping-insensitive, while repetition and a nonlocal weight
+    both matter
+  summary: The per-token contributions can be added in any order for the same score, and repeated
+    copies of a token inside a document each count separately. Because a token's weight is
+    a property of the whole corpus, no document's score can be computed from that document
+    alone.
+- task_id: tree_next_hop_search
+  value: invariant to edge order and to relabelling, sensitive to edge direction
+  summary: Shuffling the listing or swapping every label for another leaves the task identical
+    in structure. Reversing a single edge changes which subtree the goal sits in and therefore
+    changes the answer.
+- task_id: variable_tracing
+  value: sensitive to the direction of each reference; insensitive to where the unreferenced
+    lines fall
+  summary: Following a reference the wrong way, or applying the steps in the wrong order,
+    gives a different result. Moving an unreferenced line to any other position, or permuting
+    those lines among themselves, changes nothing.
+- task_id: xor_parity
+  value: order- and grouping-invariant, but sensitive to every occurrence
+  summary: The combining rule is commutative and associative, so bits may be combined in any
+    order or in any grouping. It is also self-cancelling, so any two 1s cancel, yet dropping
+    a single 1 flips the answer.
+- task_id: year_span_greater_than
+  value: depends only on the sign of the difference, and flips when the two roles are exchanged
+  summary: How large the difference is makes no difference to the answer, which is exactly
+    why the settings that shrink it do not change what is being computed. Exchanging the start
+    and end years always reverses the label.

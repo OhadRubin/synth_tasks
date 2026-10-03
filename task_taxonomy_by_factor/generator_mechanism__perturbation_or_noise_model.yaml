@@ -1,0 +1,143 @@
+axis: generator_mechanism
+factor: perturbation_or_noise_model
+axis_frame: Generator mechanism describes how benchmark inputs and labels are produced. The
+  axis is about source process, controllable structure, sampling, validity constraints, label
+  oracle, variation scope, and perturbation model.
+factor_description: How the generator introduces controlled surface or semantic variation.
+  Perturbations may alter whitespace, delimiters, spelling, paraphrase, irrelevant context,
+  misleading cues, or other aspects while keeping the intended label relation defined.
+tasks:
+- task_id: associative_recall
+  value: none
+  summary: No spacing changes, misspellings, paraphrases, irrelevant material, or misleading
+    cues are introduced.
+- task_id: babi_counting
+  value: none deliberate beyond the fixed plural form; distractors are drawn from the same
+    templates
+  summary: No spelling, spacing, or phrasing variation is introduced. The plural noun used
+    with a count of one is uniform across every sentence, so it is a property of the surface
+    convention rather than injected noise.
+- task_id: babi_multi_hop
+  value: none deliberate, though distractors can repeat and can restate a move already made
+  summary: No spelling, spacing, or phrasing variation is introduced. Distractors are drawn
+    from the very same templates as the supporting sentences, which is what makes them hard
+    to dismiss on surface grounds.
+- task_id: babi_single_hop
+  value: none deliberate, though the sampler produces repeated and vacuous moves
+  summary: No spelling, spacing, or phrasing variation is introduced. The only irregularity
+    is a by-product of independent sampling - a person may move to the room they are already
+    in, and some people may never be mentioned.
+- task_id: bounded_tiny_python_execution
+  value: none deliberate; statements that do not affect the answer arise by chance
+  summary: No formatting noise, misspellings, or misleading cues are introduced. In the larger
+    settings some assignments happen to write variables whose values never reach the three
+    that are printed, but this is a side effect of random construction rather than an inserted
+    distractor.
+- task_id: constant_label
+  value: none; the varying input is the only variation and it changes nothing
+  summary: No spacing changes, misspellings, paraphrases, or misleading extra material are
+    introduced. The randomized input character is the family's entire source of surface variety.
+- task_id: copy
+  value: none
+  summary: No spacing changes, misspellings, paraphrases, irrelevant material, or misleading
+    cues are introduced anywhere in the input.
+- task_id: dyck_balanced_parentheses
+  value: none
+  summary: No spacing irregularity, corrupted or crossing brackets, filler symbols, or paraphrased
+    labels are introduced anywhere in the surface form.
+- task_id: fictional_ontology_cot
+  value: one deliberate planting; when the verdict is False the asked property is attached
+    to an unrelated category
+  summary: This was confirmed on every False instance sampled at all three settings, so the
+    presence of the asked property in the list carries no information about the answer. There
+    is no spelling, spacing, or wording noise of any kind.
+- task_id: gridworld_detour_planning
+  value: the dead-end corridors are the deliberate misleading material; no surface noise at
+    all
+  summary: Rather than corrupting the text, the generator plants structure that is genuinely
+    misleading, and forces at least one dead end to be attractive to anyone heading straight
+    for the goal.
+- task_id: horn_forward_chaining
+  value: irrelevant rules that genuinely apply and share conditions with the real chain; no
+    surface noise
+  summary: 'The added rules are not nonsense: most of them can be applied and do add new true
+    statements. Their conclusions are fresh names that nothing else depends on, so they lengthen
+    the work without touching the answer.'
+- task_id: iterated_string_replace
+  value: instructions that change nothing are inserted deliberately, at about fifteen percent
+    of steps in all but the smallest bin
+  summary: Such a step is given a pattern checked to be absent from the string as it stands,
+    so it is a genuine instruction that has no effect. Nothing about the surface form is perturbed,
+    and the smallest bin never inserts one on purpose, though a step there can still fail
+    to match by chance.
+- task_id: label_anchor_feature_match
+  value: the fillers are the noise, drawn to be indistinguishable from the token that matters
+  summary: No spelling errors, spacing changes, or paraphrases are introduced. The only controlled
+    interference is the volume of look-alike filler, which the tokens-per- list setting raises
+    directly.
+- task_id: listops_nested_prefix
+  value: none
+  summary: No spacing changes, misspellings, paraphrases, irrelevant operands, or misleading
+    cues are introduced; every instance is the clean rendering of its tree.
+- task_id: majority
+  value: none
+  summary: No spacing changes, misspellings, irrelevant material or misleading cues are introduced;
+    the randomness is entirely in the content being counted.
+- task_id: markov_first_rewrite
+  value: the random letters around the match, plus rules that never fire; no surface perturbation
+    at all
+  summary: Interference is built into the content rather than added to the surface. The filler
+    is full of two-letter near-misses to the patterns, and every instance carries rules that
+    do not apply. Spacing, spelling, and formatting are never altered.
+- task_id: passkey_retrieval
+  value: irrelevant filler only; no misleading or malformed material
+  summary: The generator adds volume rather than confusion. It introduces no paraphrase of
+    the sentence, no second statement of a different value, no misspelling and no spacing
+    irregularity.
+- task_id: random_label
+  value: the answer itself is the noise; the surface text is unperturbed
+  summary: The answer carries one full bit of randomness that is unrelated to anything in
+    the prompt. No spacing changes, misspellings, paraphrases, or misleading extra material
+    are added on top of that.
+- task_id: relabeled_cyclic_row_completion
+  value: unrelated equations from a second table of the same kind, duplicates left in; no
+    surface noise
+  summary: The added equations are perfectly well formed and internally consistent with one
+    another, which makes them harder to dismiss than random junk would be. No spacing, spelling,
+    or phrasing variation is introduced anywhere.
+- task_id: reverse_sequence
+  value: none
+  summary: No spacing changes, misspellings, irrelevant material or misleading cues are introduced;
+    the randomness is entirely in the content to be reproduced.
+- task_id: sat_dpll_trace
+  value: none
+  summary: No spacing variation, no malformed clauses, no irrelevant material, and no misleading
+    markers are introduced anywhere in the instance.
+- task_id: scan_command_to_actions
+  value: none
+  summary: No irrelevant words, spacing changes, misspellings, paraphrases or misleading cues
+    are ever inserted into the command.
+- task_id: tfidf_rank_documents
+  value: padding tokens fill every document; no surface noise of any kind
+  summary: The padding is drawn from the same pool and looks exactly like a query token, which
+    is the only interference introduced. There is no spacing, spelling, or phrasing variation
+    anywhere.
+- task_id: tree_next_hop_search
+  value: no surface noise; the shuffle and the random labelling are the deliberate obfuscation
+  summary: Nothing is misspelled, misaligned, or malformed. What the generator removes instead
+    is the two shortcuts a solver might otherwise take - guessing from the order edges are
+    listed in, and guessing from what the labels are called.
+- task_id: variable_tracing
+  value: irrelevant assignments injected at random positions; no surface noise of any kind
+  summary: The only variation deliberately added is the unreferenced digit lines and where
+    they land. Spacing, spelling, labels, and the statement format are never perturbed.
+- task_id: xor_parity
+  value: none
+  summary: No spacing changes, corrupted symbols, irrelevant filler, paraphrased labels, or
+    misleading cues are introduced into the surface form.
+- task_id: year_span_greater_than
+  value: the choice of noun is the only irrelevant variation; no surface perturbation and
+    no distractor numbers
+  summary: Nothing is misspelt, respaced, or paraphrased, and no third number ever appears
+    that might be mistaken for one of the two being compared. The noun varies purely so that
+    the sentence is not literally identical every time.

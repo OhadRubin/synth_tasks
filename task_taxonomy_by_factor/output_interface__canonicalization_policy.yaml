@@ -1,0 +1,123 @@
+axis: output_interface
+factor: canonicalization_policy
+axis_frame: 'Output interface describes the answer form the task requires. The axis is about
+  how the computed result becomes visible: cardinality, syntax, ordering, process detail,
+  normalization, length, and uncertainty or status channels.'
+factor_description: How semantically equivalent answers are normalized or accepted. This includes
+  textual normalization, tie-breaking, alpha-renaming, set equality, numeric tolerance, semantic
+  equivalence, and the rule for choosing one surface form from many valid answers.
+tasks:
+- task_id: associative_recall
+  value: exact match against a single accepted form
+  summary: Only one rendering of the answer exists, so no normalisation, tolerance, or equivalence
+    between different phrasings is involved.
+- task_id: babi_counting
+  value: exact match on the decimal numeral
+  summary: One written form of the total is accepted. A number spelled out in words, or with
+    the object kind attached, is a different string and is not the answer.
+- task_id: babi_multi_hop
+  value: exact match against one of five fixed room words
+  summary: The room word is copied in the form it takes in the story, so there is no normalisation,
+    tolerance, or alternative phrasing to accept.
+- task_id: babi_single_hop
+  value: exact match against one of five fixed room words
+  summary: The room word is copied from the story in the form it appears there, so there is
+    no normalisation, tolerance, or equivalent phrasing to accept.
+- task_id: bounded_tiny_python_execution
+  value: exact match against a single accepted string
+  summary: Because every result is reduced to a single digit, there is one and only one way
+    to write the answer, so no rounding, tolerance, or alternative phrasing arises.
+- task_id: constant_label
+  value: exact match against a single accepted character
+  summary: Only one rendering of the answer exists, so no normalisation, tolerance, or equivalence
+    between different phrasings ever comes up.
+- task_id: copy
+  value: exact character match against one accepted string
+  summary: There is a single correct rendering, including its spacing, so no normalisation,
+    tolerance, or equivalence between different surface forms applies.
+- task_id: dyck_balanced_parentheses
+  value: exact match against a single accepted string
+  summary: Only one sequence of characters completes the row, so no normalisation, alternative
+    spacing, or equivalence between different forms comes into play.
+- task_id: fictional_ontology_cot
+  value: one accepted wording; the listed sentences copied verbatim, alternating with derived
+    sentences of the same shape
+  summary: Many other ways of writing sound reasoning about the same chain exist, but only
+    this exact sequence of sentences counts. There is no paraphrase tolerance and no equivalence
+    between differently worded derivations.
+- task_id: gridworld_detour_planning
+  value: exact match against the one shortest walk
+  summary: Because the generator guarantees the shortest walk is unique, there is no tie-break
+    between equally short routes and no alternative rendering of the same plan to accept.
+- task_id: horn_forward_chaining
+  value: exact match against one of two fixed characters
+  summary: Neither the wording nor the spacing varies between instances, and there is no accepted
+    alternative such as an English word for yes or no.
+- task_id: iterated_string_replace
+  value: exact character match against one accepted string
+  summary: Only one rendering counts. There is no spacing to normalise, no alternative spelling,
+    and no notion of a nearly correct string being accepted.
+- task_id: label_anchor_feature_match
+  value: exact match against a single accepted letter
+  summary: Only one rendering of the answer exists, so no normalisation, tolerance, or equivalence
+    between different surface forms is involved.
+- task_id: listops_nested_prefix
+  value: exact match against a single digit
+  summary: Every operator returns a value between 0 and 9, including the modular sum, so exactly
+    one surface form exists and no normalisation or tolerance is involved.
+- task_id: majority
+  value: exact match against one of two accepted forms
+  summary: Each symbol has a single rendering and there is nothing to normalise, no tolerance
+    and no equivalence between different ways of writing the same answer.
+- task_id: markov_first_rewrite
+  value: exact character match against a single accepted form
+  summary: There is one correct string and no normalisation, tolerance, or notion of being
+    nearly right. A single wrong character makes the whole answer wrong.
+- task_id: passkey_retrieval
+  value: exact match against one accepted form
+  summary: Only one rendering exists, and the full stop that closes the sentence in the context
+    is not part of it, so the answer differs slightly from the span it was copied from.
+- task_id: random_label
+  value: exact match against the one character that was drawn
+  summary: The other character in the pool was equally likely and is still scored wrong. No
+    tolerance, alternative phrasing, or partial credit softens that.
+- task_id: relabeled_cyclic_row_completion
+  value: exact match against one name, which appears verbatim in the prompt
+  summary: The answer is always one of the names already printed, so there is no spelling
+    question, no normalisation, and no alternative rendering that could also be right.
+- task_id: reverse_sequence
+  value: exact match against one accepted string
+  summary: There is one spacing convention and one correct arrangement, so nothing is normalised
+    and no tolerance or equivalence between renderings applies.
+- task_id: sat_dpll_trace
+  value: one accepted sequence per formula, pinned by fixed tie-breaking rules
+  summary: 'Many different search orders reach the same verdict, but only one record counts:
+    clauses are scanned from the first one for a forced part and the scan restarts from the
+    top after each one found; the guessed variable is the lowest-numbered one still unset
+    that occurs in a clause not yet holding; and it is guessed true before false.'
+- task_id: scan_command_to_actions
+  value: exact match against one accepted string
+  summary: Action names have one fixed spelling, single spaces separate them, and each command
+    denotes exactly one sequence, so no normalisation or tolerance is involved.
+- task_id: tfidf_rank_documents
+  value: one accepted string; the smaller-identifier rule collapses each tied group to a single
+    order
+  summary: Without the tie-break many orderings would be equally consistent with the scores,
+    so the rule exists to make the answer unique. There is no whitespace tolerance, no set
+    equality, and no credit for producing the right documents in the wrong order.
+- task_id: tree_next_hop_search
+  value: exact match on the label, with letter case significant
+  summary: Labels are built from both letter cases and digits, so a case difference is a different
+    label. No normalisation, tolerance, or equivalent form is accepted.
+- task_id: variable_tracing
+  value: exact match against a single accepted form
+  summary: One rendering of the digit exists, so no normalisation, tolerance, or equivalence
+    between phrasings is involved in scoring.
+- task_id: xor_parity
+  value: exact match against one of two accepted characters
+  summary: There is a single way to write each of the two possible answers, so no normalisation,
+    rounding, tolerance, or equivalence rule is involved.
+- task_id: year_span_greater_than
+  value: exact match against one of two accepted characters
+  summary: The rule names the two permitted outputs in the prompt itself, so no normalisation,
+    synonym, or alternative phrasing such as a word for yes or no is involved.

@@ -1,0 +1,132 @@
+axis: generalization_regime
+factor: shift_distance
+axis_frame: Generalization regime describes the relationship between training and evaluation
+  distributions. The axis is about which dimension shifts, how train and evaluation relate,
+  what is held out, how much support overlaps, how primitives recombine, how nuisance factors
+  are controlled, and how far evaluation moves from training.
+factor_description: How far evaluation lies from the training support or dominant training
+  patterns. Distance may reflect edge-of-support tests, mild out-of-distribution cases, far
+  extrapolation, combinatorial novelty, adversarial boundaries, or stress-test extremes.
+tasks:
+- task_id: associative_recall
+  value: none between training and evaluation; the bins form a graded ladder
+  summary: Since both sides are drawn identically, the only distance that exists is the designed
+    gap between 4, 16, and 64 pairs.
+- task_id: babi_counting
+  value: none between training and evaluation; the two settings form a graded pair
+  summary: Both sides are drawn identically, so the only designed distance is the gap between
+    the five-sentence and twenty-sentence settings.
+- task_id: babi_multi_hop
+  value: none between training and evaluation; the two settings form a graded pair
+  summary: Both sides are drawn identically, so the only designed distance is the gap between
+    the five-sentence and twenty-sentence settings.
+- task_id: babi_single_hop
+  value: none between training and evaluation; the two settings form a graded pair
+  summary: Both sides are drawn identically, so the only distance in the design is the gap
+    between the five-sentence and twenty-sentence settings.
+- task_id: bounded_tiny_python_execution
+  value: none between training and evaluation; a large designed gap between settings
+  summary: Both sides of a setting are drawn the same way, so no distance exists there. The
+    step from a straight-line program to one with loops inside loops multiplies the amount
+    of executed work several times over.
+- task_id: constant_label
+  value: none; evaluation sits inside the training support
+  summary: With both sides drawn identically from a support of two instances, evaluation is
+    not out of distribution in any respect.
+- task_id: copy
+  value: none between training and evaluation; the bins form a graded ladder
+  summary: Both sides of a bin are drawn identically, so the only designed distance is the
+    eightfold span from 16 digits to 128.
+- task_id: dyck_balanced_parentheses
+  value: none between training and evaluation; the settings form a doubling ladder
+  summary: Both sides are drawn the same way at a given depth, so the only designed distance
+    is the step from two to four to eight.
+- task_id: fictional_ontology_cot
+  value: none between training and evaluation; the settings form a graded ladder
+  summary: 'Both sides are drawn identically, so the only distance in play is the designed
+    one: the largest setting has more than twice the chain and four times the unrelated sentences
+    of the smallest.'
+- task_id: gridworld_detour_planning
+  value: none between training and evaluation; the settings roughly triple the plan length
+  summary: Both sides come from the same construction at a given setting, so the only designed
+    distance is the ladder from eight to sixteen to twenty-eight moves.
+- task_id: horn_forward_chaining
+  value: none between training and evaluation; the settings form a graded ladder
+  summary: Both sides are drawn identically, so the only designed distance is the gap from
+    one application among five rules to six applications among twenty-two.
+- task_id: iterated_string_replace
+  value: none between training and evaluation; the bins form a ladder in both program size
+    and rewrite difficulty
+  summary: Both sides of a bin are drawn identically, so the only designed distance is between
+    bins, and it spans a fourfold rise in instruction count together with qualitatively new
+    instruction behaviour in the two largest.
+- task_id: label_anchor_feature_match
+  value: none between training and evaluation; the settings form a graded ladder
+  summary: Both sides are drawn identically, so the only distance in play is the designed
+    one, and the largest setting carries fifteen times the tokens of the smallest.
+- task_id: listops_nested_prefix
+  value: none between training and evaluation; the bins form a ladder from two to six levels
+  summary: Both sides of a bin are drawn identically, so the only designed distance is the
+    threefold span in depth between the smallest and largest bins.
+- task_id: majority
+  value: none between training and evaluation; the settings form a graded ladder
+  summary: Since both sides are drawn identically, the only distance in the design is the
+    deliberate step from 16 to 64 to 128 symbols.
+- task_id: markov_first_rewrite
+  value: none between training and evaluation; the settings form a graded ladder, each doubling
+    both knobs
+  summary: Both sides are drawn identically at every setting, so the only designed distance
+    is between the three settings themselves, spanning a fourfold change in both quantities
+    from end to end.
+- task_id: passkey_retrieval
+  value: a graded ladder whose top rung is shorter than its label suggests
+  summary: Both sides are drawn identically, so the only distance is the designed step from
+    127 to 511 characters and then to about 944, the last being smaller than the nominal request
+    because of the cap.
+- task_id: random_label
+  value: none; evaluation sits inside the training support
+  summary: With both sides drawn identically from a support of four instances, evaluation
+    is not out of distribution in any respect, and performance still cannot exceed one half.
+- task_id: relabeled_cyclic_row_completion
+  value: none between training and evaluation; the settings form a graded ladder
+  summary: Both sides are drawn identically, so the only designed distance is the gap from
+    a three-equation listing over four symbols to a thirty-five-equation listing over twelve.
+- task_id: reverse_sequence
+  value: none between training and evaluation; the settings form a graded ladder
+  summary: Since both sides are drawn identically, the only distance in the design is the
+    deliberate step from 16 to 64 to 128 items.
+- task_id: sat_dpll_trace
+  value: none between training and evaluation; the settings form a graded ladder
+  summary: Since both sides are drawn identically, the only distance in play is the designed
+    gap between the three sizes, roughly a doubling of record length from the smallest to
+    the largest.
+- task_id: scan_command_to_actions
+  value: none between training and evaluation; the settings form a graded ladder
+  summary: Both sides are drawn the same way, so the only distance in the design is the deliberate
+    step from one or two segments, to two or three, to three to five.
+- task_id: tfidf_rank_documents
+  value: none between training and evaluation; the settings form a graded ladder
+  summary: Both sides are drawn identically, so the only distance that exists is the designed
+    gap between the four settings, the largest of which triples the corpus and more than doubles
+    the token pool of the smallest.
+- task_id: tree_next_hop_search
+  value: none between training and evaluation; the settings form a ladder of two, four, and
+    five steps
+  summary: Both sides are drawn identically, so the only designed distance is the gap between
+    the three depths, which more than doubles the route and multiplies the listing tenfold
+    from the first setting to the last.
+- task_id: variable_tracing
+  value: none between training and evaluation; the settings form a graded ladder of 1, 2,
+    and 4 references
+  summary: Both sides are drawn identically, so the only distance in the design is the gap
+    between the three chain lengths, each roughly doubling the one before.
+- task_id: xor_parity
+  value: none between training and evaluation; the settings span an eightfold range
+  summary: Both sides are drawn the same way, so the only designed distance is the ladder
+    from 16 to 64 to 128 bits.
+- task_id: year_span_greater_than
+  value: none between training and evaluation; the settings sit at increasing distances from
+    the decision boundary
+  summary: Both sides are drawn identically at every setting. The designed distance runs the
+    other way from the usual ladder, since the hardest setting is the one closest to where
+    the answer would flip, at a difference of a single year.

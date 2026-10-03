@@ -1,0 +1,152 @@
+axis: generalization_regime
+factor: nuisance_control
+axis_frame: Generalization regime describes the relationship between training and evaluation
+  distributions. The axis is about which dimension shifts, how train and evaluation relate,
+  what is held out, how much support overlaps, how primitives recombine, how nuisance factors
+  are controlled, and how far evaluation moves from training.
+factor_description: How non-target factors are matched, balanced, or intentionally shifted
+  across splits. This captures whether the regime isolates one intended change, lets several
+  factors move together, removes shortcuts, matches controls, or inverts nuisance cues.
+tasks:
+- task_id: associative_recall
+  value: uncontrolled; one setting moves several properties at once
+  summary: Changing the number of pairs changes how many competitors exist, how long the prompt
+    is, and how wide the keys are, so a difference between bins cannot be attributed to any
+    one of these.
+- task_id: babi_counting
+  value: uncontrolled; one setting moves several properties at once
+  summary: Going from five sentences to twenty raises prompt length, distractor count, the
+    number of contributions, and the magnitude and digit width of the answer together, so
+    a difference between settings cannot be attributed to any one of them.
+- task_id: babi_multi_hop
+  value: partly controlled; chain length is pinned while distractor count and separation move
+    together
+  summary: Holding the number of supporting sentences at two isolates distraction from depth.
+    Within that, prompt length, distractor count, and the distance between the two links still
+    rise together, so those three cannot be told apart.
+- task_id: babi_single_hop
+  value: uncontrolled; one setting moves several properties at once
+  summary: Going from five sentences to twenty raises the prompt length, the number of competing
+    people, and the number of stale rooms for the asked person together, so a difference between
+    settings cannot be attributed to any one of them.
+- task_id: bounded_tiny_python_execution
+  value: uncontrolled; five settings move at once between bins
+  summary: A difference in performance between the first and third settings cannot be traced
+    to nesting alone, since the variable count, statement count, iteration count, and conditional
+    rate all changed with it.
+- task_id: constant_label
+  value: the input is randomized while the answer is held fixed, which is what makes this
+    a control
+  summary: 'Exactly one factor moves — the input character — and it is arranged to have no
+    effect. That isolation is the point of the family: performance here reflects only how
+    quickly a fixed answer is adopted.'
+- task_id: copy
+  value: one setting, but reading length and answer length move together
+  summary: Since the answer is the input, raising the length raises how much has to be taken
+    in and how much has to be produced at once, so a gap between bins cannot be attributed
+    to reading or to generating alone.
+- task_id: dyck_balanced_parentheses
+  value: uncontrolled; one setting moves depth, row length, and answer length together
+  summary: A difference in behaviour between settings cannot be attributed to nesting alone,
+    since the longer input and longer required output move with it.
+- task_id: fictional_ontology_cot
+  value: uncontrolled; chain length, unrelated-sentence count, input length, and answer length
+    all move together
+  summary: A gap between settings cannot be attributed to reasoning depth as opposed to having
+    more material to filter or more text to produce, since the ladder raises all four at once.
+- task_id: gridworld_detour_planning
+  value: uncontrolled by design; four properties move at once between settings
+  summary: Because map size, route length, dead-end count and dead-end length all rise together,
+    a difference in behaviour between settings cannot be attributed to any one of them.
+- task_id: horn_forward_chaining
+  value: uncontrolled, and one shortcut is deliberately left in place
+  summary: Depth and distraction move together, so their effects on accuracy cannot be separated.
+    Across every setting the never-reachable condition appears exactly when the answer is
+    no, so accuracy can climb without any chaining happening at all.
+- task_id: iterated_string_replace
+  value: uncontrolled; a bin changes seven or more properties at once
+  summary: Moving up a bin lengthens the program, lengthens the string, widens the letter
+    set, lengthens the patterns, and raises the deleting, lengthening, and dependency rates
+    together, so a difference between bins cannot be attributed to any one of them.
+- task_id: label_anchor_feature_match
+  value: uncontrolled; three settings move at once
+  summary: Number of labels, lists per label, and tokens per list all rise together, so a
+    difference between settings cannot be attributed to having more possible answers rather
+    than to a longer prompt or to the shift from one demonstration per label to two.
+- task_id: listops_nested_prefix
+  value: uncontrolled; depth, length, and operator count move together
+  summary: Raising the depth setting also raises how many tokens must be read, how many brackets
+    must be matched, and how many operator applications are required, so a gap between bins
+    cannot be attributed to depth by itself.
+- task_id: majority
+  value: uncontrolled; the length knob moves several properties at once
+  summary: A longer sequence means more updates to keep straight, a longer prompt, and a narrower
+    relative margin, so a difference between settings cannot be attributed to any one of them.
+- task_id: markov_first_rewrite
+  value: uncontrolled across settings, but four properties are held fixed within the ladder
+  summary: Because the rule count and the string length rise together, a gap between settings
+    cannot be split between deeper priority selection and longer copying. Pattern length,
+    replacement lengths, the alphabet, and the share of unchanged answers are constant, so
+    those cannot explain a gap.
+- task_id: passkey_retrieval
+  value: format held fixed across settings, but length and separation distance move together
+  summary: The sentence, question and answer format are deliberately identical across settings,
+    which isolates the length change. Within that change, however, more filler also means
+    a larger typical gap between the sentence and the question, so the two cannot be told
+    apart.
+- task_id: random_label
+  value: everything is randomized and nothing is a target; the answer is drawn independently
+    of the input on purpose
+  summary: The family deliberately removes every relation an instance could have between what
+    is shown and what is scored. That absence is the controlled quantity, and it makes the
+    family the reference point for data with no learnable signal.
+- task_id: relabeled_cyclic_row_completion
+  value: uncontrolled; size and interference move together, and the smallest setting alone
+    has no interference at all
+  summary: The smallest setting differs from the next in kind as well as in degree, since
+    it contains no unrelated equations whatsoever. A drop in accuracy between them therefore
+    mixes a longer row with the first appearance of interference.
+- task_id: reverse_sequence
+  value: uncontrolled; the length knob moves several properties at once
+  summary: A longer sequence means more to store, a longer prompt, more items to emit, and
+    a longer stretch over which the position count must stay aligned, so a difference between
+    settings cannot be attributed to any one of them.
+- task_id: sat_dpll_trace
+  value: partly controlled; constraint density is held fixed while size and record length
+    move together
+  summary: Clauses per variable stay near 4.3 and occurrences per variable stay near 13 at
+    every setting, so a formula is about equally constrained regardless of size and the verdict
+    stays about equally hard to guess. Record length is not separately controlled and grows
+    with size, so a difference between settings cannot be pinned on size rather than on how
+    much output is required.
+- task_id: scan_command_to_actions
+  value: uncontrolled; one setting moves three properties together
+  summary: Raising the word count simultaneously raises the number of segments to evaluate,
+    the depth of the joining chain, and the number of action names to emit, so a gap between
+    settings cannot be attributed to any one of them.
+- task_id: tfidf_rank_documents
+  value: uncontrolled; four settings move together and the answer length moves with them
+  summary: A difference between two settings cannot be attributed to corpus size rather than
+    to document length, token-pool size, query width, or the number of identifiers that must
+    be produced, because all five change at the same time.
+- task_id: tree_next_hop_search
+  value: partly controlled; the branching factor is pinned at two while depth moves several
+    sizes together
+  summary: Holding branching at two keeps the number of candidate answers, and so the chance
+    rate, identical at every setting. Within that, depth raises route length, listing length,
+    and node count together, so those three cannot be told apart.
+- task_id: variable_tracing
+  value: uncontrolled; one setting moves three properties at once
+  summary: Chain length, the count of irrelevant lines, and the total prompt length all rise
+    together, so a difference between settings cannot be attributed to any one of them alone.
+- task_id: xor_parity
+  value: clean; length is isolated as the only moving property
+  summary: Because the alphabet, answer format, and rule are fixed across settings, a difference
+    in behaviour between settings can be attributed to length alone.
+- task_id: year_span_greater_than
+  value: tightly controlled; the difference is nearly the only thing that moves across settings
+  summary: Prompt length, sentence wording, noun list, century list, and the equal split between
+    the two answers are all held constant, which is unusual in this family of tasks and means
+    a gap between settings is attributable to the closeness of the two numbers. The one property
+    that follows along is the first year's range, which narrows toward the middle of a century
+    as the difference widens.

@@ -1,0 +1,138 @@
+axis: input_realization
+factor: ordering_policy
+axis_frame: Input realization describes the concrete textual form used to present an underlying
+  task instance to the model. The axis is about how the same latent task structure can be
+  rendered as text, including choices about format, serialization, boundaries, order, linguistic
+  style, and surface regularity.
+factor_description: The rule used to order serialized pieces relative to the latent structure.
+  The ordering may follow time, topology, sorted keys, grouping by entity or relation, randomization,
+  curriculum-like progression, or deliberate interleaving. This factor describes how order
+  changes the reading path while preserving the underlying task instance.
+tasks:
+- task_id: associative_recall
+  value: uniformly random pair order, unrelated to which key is asked
+  summary: The listing order carries no information about the answer, so the position of the
+    relevant pair gives no shortcut.
+- task_id: babi_counting
+  value: chronological presentation, but the answer does not depend on the order
+  summary: The story reads as a sequence of events, yet the target is a sum, so permuting
+    the sentences leaves the answer unchanged. Order is presentation here rather than meaning.
+- task_id: babi_multi_hop
+  value: chronological, with the picking-up sentence always placed before the moving sentence
+  summary: The generator always puts the object into the person's hands before that person
+    moves, which is what makes the object travel with them. This ordering is guaranteed rather
+    than incidental.
+- task_id: babi_single_hop
+  value: chronological, and the order carries the answer
+  summary: Later sentences override earlier ones about the same person, so permuting the story
+    generally changes the correct answer. Position is meaning here rather than presentation.
+- task_id: bounded_tiny_python_execution
+  value: program order, which is also the order of execution
+  summary: Statements appear in the order they run. The only departures are that a loop body's
+    lines are run once per iteration and that only one side of a conditional runs.
+- task_id: constant_label
+  value: a fixed template order that never varies
+  summary: Tag, then input, then answer, in that order in every instance. Since there is only
+    one piece of content, no ordering choice could carry information anyway.
+- task_id: copy
+  value: the order the digits were drawn, preserved exactly in both lines
+  summary: No sorting, grouping, or interleaving is applied. Position is the whole content
+    of the instance, and the answer must follow the same reading path as the input.
+- task_id: dyck_balanced_parentheses
+  value: left to right in the order the row was generated
+  summary: Reading order is also the order in which brackets must be processed, so the text
+    position of a symbol is exactly its position in the computation.
+- task_id: fictional_ontology_cot
+  value: all sentences shuffled uniformly, so reading order carries no information
+  summary: The chain sentences are placed at random among the unrelated ones and are not kept
+    in chain order relative to one another. The required derivation is in chain order, so
+    the answer reorders the input.
+- task_id: gridworld_detour_planning
+  value: top row first, left to right within a row, unrelated to the route
+  summary: The plan visits cells in an order that has nothing to do with reading order, so
+    following the correct route means jumping around the text rather than reading it straight
+    through.
+- task_id: horn_forward_chaining
+  value: rules shuffled uniformly, starting statements shuffled uniformly
+  summary: The printed order bears no relation to the order in which rules must be applied,
+    so the derivation cannot be followed by reading top to bottom. In the six-step example
+    the rule that must be applied first is printed fifteenth and the one applied last is printed
+    second.
+- task_id: iterated_string_replace
+  value: execution order; reading order and application order are the same
+  summary: 'No sorting or interleaving is applied, so a reader meets the instructions in the
+    order they run. The order is load-bearing rather than cosmetic: the same instructions
+    in another order generally give another answer.'
+- task_id: label_anchor_feature_match
+  value: records shuffled uniformly, and tokens shuffled uniformly inside each record
+  summary: The relevant token sits at a random position within a randomly placed record, so
+    neither its position in its list nor the position of that list carries information. At
+    the largest setting the two labelled lists sharing a label are not adjacent.
+- task_id: listops_nested_prefix
+  value: prefix order, so an operator is read before the operands it consumes
+  summary: 'Reading order is the opposite of evaluation order: the outermost operator appears
+    first while the group that must be computed first sits deepest inside. Operands appear
+    in the order the expression was built, which carries no information.'
+- task_id: majority
+  value: uniformly random order, which the answer does not depend on
+  summary: The sequence is a shuffled arrangement of its own contents, so position carries
+    no information at all and the reading path is irrelevant to the result.
+- task_id: markov_first_rewrite
+  value: rule order is the priority order and is load-bearing; the string is a uniform random
+    sequence
+  summary: Permuting the rule list can change the answer, since the earliest applicable rule
+    wins, which makes the listed order part of the task rather than a presentation choice.
+    Which rule ends up firing is unrelated to its position.
+- task_id: passkey_retrieval
+  value: the sentence sits at a uniformly random offset; the filler order carries nothing
+  summary: The split of filler between the part before the sentence and the part after it
+    is drawn at random, so the sentence has been observed starting at the very beginning of
+    the context and as late as twenty characters from its end.
+- task_id: random_label
+  value: a fixed template order that never varies
+  summary: Tag, then input, then answer, in that order in every instance. With one piece of
+    content, ordering could not carry information in any case.
+- task_id: relabeled_cyclic_row_completion
+  value: every equation shuffled uniformly, relevant and unrelated interleaved
+  summary: The row's entries appear in no natural order and are not grouped together, so the
+    reading path crosses back and forth between the queried table and the other one throughout.
+- task_id: reverse_sequence
+  value: random content order, and the required output order is the reverse of the reading
+    order
+  summary: The digits themselves are drawn independently so their arrangement carries no pattern,
+    yet that arrangement is precisely what has to be reproduced, backwards.
+- task_id: sat_dpll_trace
+  value: clauses in the arbitrary order they were drawn; the record in strict execution order
+  summary: 'The printed clause order is not sorted or grouped, and it is load-bearing: the
+    procedure scans clauses from the first one each time it looks for a forced part, so permuting
+    the clauses usually changes the required record. Permuting the clauses of an instance
+    at the middle setting changed the record in 175 out of 200 trials.'
+- task_id: scan_command_to_actions
+  value: segments are written in generation order, which is not the order they are performed
+    in
+  summary: The joining word "after" makes the answer put a segment's actions later than segments
+    written to its right, so reading order and answer order come apart whenever it appears.
+- task_id: tfidf_rank_documents
+  value: documents listed in increasing identifier number; tokens shuffled inside each document
+  summary: The listing order happens to coincide with the tie-break order, so tied documents
+    can be emitted in reading order. Inside a line, repeated copies of a query token are scattered
+    rather than adjacent, so counting cannot be done by spotting a run.
+- task_id: tree_next_hop_search
+  value: uniformly random edge order, unrelated to the shape of the tree
+  summary: Sibling edges are not adjacent, a parent's edge may appear after its child's, and
+    the route's edges are scattered, so reading position gives no help in finding the next
+    step.
+- task_id: variable_tracing
+  value: chain lines in dependency order, irrelevant lines shuffled uniformly among them
+  summary: The digit line comes first among the chain lines and each reference line comes
+    after the line it refers to, so no name is used before it is defined. The unreferenced
+    assignments are placed at uniformly random positions in the listing, before, between,
+    or after the chain lines.
+- task_id: xor_parity
+  value: bits appear in the order drawn, and the order does not matter
+  summary: Since the answer counts 1s, permuting the row leaves it unchanged. Reading order
+    is therefore just a presentation choice with no information in it.
+- task_id: year_span_greater_than
+  value: fixed; the start year is always written first and the end year second
+  summary: Reading order always matches the order in which the rule names the two roles, so
+    the roles never have to be recovered against the grain of the sentence.

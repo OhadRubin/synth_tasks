@@ -1,0 +1,155 @@
+axis: generator_mechanism
+factor: validity_constraints
+axis_frame: Generator mechanism describes how benchmark inputs and labels are produced. The
+  axis is about source process, controllable structure, sampling, validity constraints, label
+  oracle, variation scope, and perturbation model.
+factor_description: The conditions an emitted instance must satisfy to be usable. Constraints
+  can enforce well-formed syntax, reachable goals, unique or intentionally multiple solutions,
+  satisfiability status, loop bounds, deterministic traces, or other answer-property guarantees.
+tasks:
+- task_id: associative_recall
+  value: keys are distinct and the asked key is always one of them
+  summary: Distinct keys guarantee the answer is unique, and choosing the question from the
+    listed keys guarantees it exists.
+- task_id: babi_counting
+  value: a distractor pick-up must use both a different person and a different object kind,
+    and the contributions must fit in the story
+  summary: Requiring both to differ means no distractor can be mistaken for a contribution
+    on either key alone, so the total is a function of the reserved sentences only. Movement
+    sentences are unconstrained and may name the asked person.
+- task_id: babi_multi_hop
+  value: no distractor may mention the carrier or the asked object
+  summary: Distractor sentences use a different person and a different object, so the answer
+    cannot be reached from any single sentence and cannot be disturbed by any sentence outside
+    the reserved pair.
+- task_id: babi_single_hop
+  value: the person asked about must have moved at least once
+  summary: Restricting the question to people the story mentions guarantees the answer exists.
+    With five sentences it can happen that only one person moved at all, which still satisfies
+    this.
+- task_id: bounded_tiny_python_execution
+  value: every program is syntactically valid, terminating, and deterministic
+  summary: Loops carry fixed iteration counts so nothing can run forever, every variable is
+    given a value before it is read, arithmetic is always reduced so values stay single digits,
+    and there is no reading of input and no call to anything outside the program. The two
+    operands of a sum, difference, or product are always different variables, and a loop is
+    only opened when at least one statement is left over to place outside it.
+- task_id: constant_label
+  value: the answer must be a single text label; nothing constrains the input
+  summary: The only requirement is that the family's answer is a text label rather than some
+    other kind of value. No property of the drawn input has to be checked, because none of
+    them could make an instance unusable.
+- task_id: copy
+  value: none beyond having the required length
+  summary: Every digit sequence has a well-defined answer, so no candidate ever has to be
+    rejected and redrawn for solvability, uniqueness, or well-formedness.
+- task_id: dyck_balanced_parentheses
+  value: never closes more than it has opened, peak nesting equal to the setting, and at least
+    one bracket left open
+  summary: Together these guarantee the row is a genuine unfinished fragment with a determinate
+    completion, and that the answer is never empty.
+- task_id: fictional_ontology_cot
+  value: unrelated sentences never touch the chain, so the walk is unique
+  summary: No unrelated sentence has a chain word as its subject and none has a chain category
+    as its object, which guarantees exactly one path leaves the person and therefore exactly
+    one correct derivation.
+- task_id: gridworld_detour_planning
+  value: shortest route length equal to the setting, exactly one shortest route, and at least
+    one tempting dead end
+  summary: These are verified on the finished map rather than assumed from the construction,
+    so the answer is guaranteed unique and the trap guaranteed present in every instance.
+- task_id: horn_forward_chaining
+  value: a positive instance must reach the query at exactly the requested depth and a negative
+    one must not reach it at all
+  summary: Both are verified by working out the reachable set before the instance is emitted,
+    so an accidental shorter route cannot make a nominally six-step instance solvable in two,
+    and a broken chain cannot be repaired by an irrelevant rule.
+- task_id: iterated_string_replace
+  value: length bounds, a minimum number of steps that change the string, a minimum number
+    of distinct states, and a finish different from the start; the two largest bins additionally
+    require a deletion, a lengthening, and a dependency
+  summary: A candidate failing any of these is discarded and redrawn, so no instance is trivially
+    the identity and no bin is filled with programs whose instructions all miss. The largest
+    bins are guaranteed to contain at least one instruction that deletes, one whose substitution
+    is longer than what it replaces, and one that fires only because an earlier instruction
+    created its pattern.
+- task_id: label_anchor_feature_match
+  value: every token distinct except the ones deliberately repeated
+  summary: The fillers are taken from disjoint stretches of the shuffled pool, so no token
+    ever repeats by accident and exactly one token of the final list occurs earlier. At the
+    two smaller settings that token is the only token repeated anywhere in the prompt; at
+    the largest setting all eight label-carrying tokens repeat, and the relevant one is distinguished
+    by also occurring in the final list.
+- task_id: listops_nested_prefix
+  value: the deepest nesting must equal the setting exactly
+  summary: A candidate whose longest chain of groups falls short of the configured depth is
+    discarded and redrawn, so a six-level bin cannot be filled with wide but shallow expressions
+    and the bins stay honestly ordered.
+- task_id: majority
+  value: one symbol must occur strictly more often than the other
+  summary: This is the single condition an emitted sequence must satisfy, and it is what guarantees
+    the answer is unique rather than a matter of convention.
+- task_id: markov_first_rewrite
+  value: patterns distinct and never equal to their own replacement; the intended rule really
+    is the first that applies
+  summary: On instances built to change, candidates are rejected until no earlier pattern
+    occurs anywhere, so the planted rule is genuinely the highest-priority match. On instances
+    built not to change, candidates are rejected until no pattern occurs at all.
+- task_id: passkey_retrieval
+  value: the sentence must fit inside the requested length
+  summary: The only condition is room for the sentence; when the request is too tight for
+    both sentence and filler the filler is dropped. Uniqueness of the answer needs no enforcement
+    because there is only one statement.
+- task_id: random_label
+  value: the answer pool must hold at least two distinct text labels
+  summary: 'That requirement is what keeps the answer genuinely unpredictable: a pool of one
+    would make the family constant instead. Each label in the pool must be a text label rather
+    than some other kind of value.'
+- task_id: relabeled_cyclic_row_completion
+  value: the two tables must use separate names, and exactly the queried entry is withheld
+    from the row
+  summary: Keeping the name sets apart is what stops the unrelated equations from ever changing
+    what the row implies. Withholding exactly one entry is what leaves the answer determined,
+    since withholding two would leave it open.
+- task_id: reverse_sequence
+  value: none beyond having the required length
+  summary: Every draw is usable as it stands. There is no uniqueness, well-formedness or solvability
+    condition to check, because the rule applies to any sequence.
+- task_id: sat_dpll_trace
+  value: clauses distinct, three distinct variables each, and the verdict confirmed against
+    every possible assignment
+  summary: Before an instance is emitted, its verdict is checked against a direct evaluation
+    of all 16, 64, or 256 assignments of the variables, so a bug in the search would surface
+    as a mismatch rather than as a silently wrong label.
+- task_id: scan_command_to_actions
+  value: word count inside the window and action list within the cap
+  summary: Well-formedness needs no checking because commands are built from the rules rather
+    than filtered into them. The two live constraints are the length window and the fifty-action
+    ceiling.
+- task_id: tfidf_rank_documents
+  value: every query token appears somewhere, weights are whole numbers, and every document
+    is exactly the required length
+  summary: A token in no document would leave its weight undefined, so that is excluded. Forcing
+    the number of holding documents to divide the corpus size keeps every weight a whole number,
+    and padding brings every document to the same length.
+- task_id: tree_next_hop_search
+  value: the tree must be complete and the labels distinct within an instance
+  summary: Completeness guarantees the goal is reachable and the route unique, and distinct
+    labels guarantee that no lookup is ambiguous. The label pool is far larger than the largest
+    tree, so distinctness is never in doubt.
+- task_id: variable_tracing
+  value: names distinct, every name introduced before it is referenced, and the unreferenced
+    names kept off the chain
+  summary: Distinct names make each resolution step unambiguous, the ordering rule prevents
+    a reference to a name that has not appeared yet, and using disjoint names for the unreferenced
+    lines guarantees they can neither extend the chain nor create a second path to the asked
+    name.
+- task_id: xor_parity
+  value: none beyond having the requested length
+  summary: Every drawn row is usable, including all-zero and all-one rows, because the answer
+    is defined for any sequence of bits.
+- task_id: year_span_greater_than
+  value: both years in the same century, both within the century, and never equal
+  summary: Keeping the pair inside one century is what makes the leading two digits always
+    match, and requiring a difference of at least 1 is what guarantees one of the two labels
+    is correct.

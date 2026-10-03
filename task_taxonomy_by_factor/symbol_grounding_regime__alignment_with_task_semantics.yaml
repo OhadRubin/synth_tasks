@@ -1,0 +1,147 @@
+axis: symbol_grounding_regime
+factor: alignment_with_task_semantics
+axis_frame: Symbol grounding regime describes how tokens, labels, and symbols in an instance
+  get their task-local meaning. The axis is about the relationship between external associations,
+  visible type cues, local remappings, semantic alignment, and the unit at which meaning attaches.
+factor_description: How external symbol associations relate to task-local rules. They may
+  reinforce the task rule, remain neutral, point toward a competing interpretation, reverse
+  expected meanings, or mix helpful and misleading cues within the same instance.
+tasks:
+- task_id: associative_recall
+  value: neutral; no external association points toward or away from the answer
+  summary: Digits are assigned to keys independently of the key, so alphabetical order or
+    any other intuition about letters is uninformative.
+- task_id: babi_counting
+  value: aligned; the everyday meaning of picking things up and of carrying them gives exactly
+    the intended addition
+  summary: The question asks what somebody is carrying and the story only ever says what they
+    picked up, so the two are connected by ordinary meaning. Since nothing is ever put down,
+    that reading is never contradicted.
+- task_id: babi_multi_hop
+  value: aligned and load-bearing; the commonsense rule that a carried object travels with
+    its carrier is required but never stated
+  summary: The prompt never says that picking something up means keeping it, or that the object
+    ends up wherever the carrier goes. That inference has to come from the everyday meanings
+    of the words, which point in exactly the right direction.
+- task_id: babi_single_hop
+  value: aligned; the everyday reading of "went to" is exactly the rule the answer follows
+  summary: Ordinary understanding of movement gives the intended semantics, including that
+    arriving somewhere means no longer being where you were. No word points toward a competing
+    reading.
+- task_id: bounded_tiny_python_execution
+  value: reinforcing; the ordinary meaning of the code is exactly the required meaning
+  summary: No symbol is given a task-local meaning that fights its usual one. Anyone who reads
+    the code the way the language defines it arrives at the right answer.
+- task_id: constant_label
+  value: mildly misleading; the input is drawn from the same two characters as the answer
+  summary: Because the input can be either 0 or 1 and the answer is always 0, the input matches
+    the answer about half the time. A reader looking for a relation between them will find
+    an apparent one on half the instances.
+- task_id: copy
+  value: neutral; outside associations neither help nor mislead
+  summary: Because no digit is compared with another and no arithmetic happens, knowing that
+    9 is larger than 3 contributes nothing and cannot point toward a wrong answer either.
+- task_id: dyck_balanced_parentheses
+  value: reinforcing; conventional bracket matching is exactly the required rule
+  summary: Prior familiarity with brackets points at the correct answer rather than away from
+    it, and no character behaves contrary to how it usually behaves.
+- task_id: fictional_ontology_cot
+  value: mostly neutral, with one placement that points the wrong way
+  summary: The invented words carry no external associations that could help or hurt, and
+    the word "is" behaves here exactly as it usually does, chaining through intermediate categories.
+    The one cue that misleads is that the asked property always appears somewhere in the listed
+    sentences, which suggests True even when the correct answer is False.
+- task_id: gridworld_detour_planning
+  value: the notation agrees with the rule, while the goal marker invites a strategy that
+    is wrong
+  summary: 'No character behaves contrary to how it looks, so at the symbol level the instance
+    is entirely cooperative. The misleading pull is strategic: the visible goal invites heading
+    straight for it, which is precisely what the dead ends punish.'
+- task_id: horn_forward_chaining
+  value: the naming scheme points straight at the answer and offers a shortcut past the reasoning
+  summary: An instance whose answer is no is made by replacing one condition of one chain
+    rule with a statement that is never given and never concluded, and that statement is the
+    only one carrying its leading letter. Its presence anywhere in the listing settles the
+    answer, so a reader who notices the letter never has to chain.
+- task_id: iterated_string_replace
+  value: aligned with the familiar convention, with three details that must be exact
+  summary: 'The usual reading is correct: every occurrence is substituted, not just the first.
+    The details that decide answers are that matches are taken left to right without overlapping,
+    that text just substituted in is not searched again during the same instruction, and that
+    an empty second argument deletes.'
+- task_id: label_anchor_feature_match
+  value: neutral by design; no external association reaches the answer
+  summary: The labels were deliberately made arbitrary letters rather than category names,
+    so no meaningful reading of a label could suggest which list it belongs to. The alphabetical
+    order of the letters is uninformative, since which letters appear and which token each
+    attaches to are both random.
+- task_id: listops_nested_prefix
+  value: aligned, with one rule narrower than its name suggests
+  summary: Three of the four operators do exactly what a reader would assume. The median rule
+    fixes the tie in the low direction, so with two operands it returns the smaller of them,
+    which the name alone does not settle.
+- task_id: majority
+  value: neutral; no external association points toward either answer
+  summary: Both symbols are drawn with equal probability and neither is favoured by the rule,
+    so any intuition about the marks themselves is uninformative.
+- task_id: markov_first_rewrite
+  value: neutral; nothing in a pattern points toward or away from firing
+  summary: The letters give no hint about whether a pattern occurs in the string or whether
+    an earlier rule outranks it. The only useful signal is literal occurrence.
+- task_id: passkey_retrieval
+  value: reinforcing; the statement and the question use the same word
+  summary: Nothing in the input points toward a competing interpretation. The only place the
+    questioned word occurs in the context is the sentence that answers it.
+- task_id: random_label
+  value: misleading by construction; the answer is drawn from the same two characters as the
+    input
+  summary: Copying the input agrees with the answer about half the time, and so does always
+    writing the same character. Neither rule is better than the other, and neither beats a
+    coin flip.
+- task_id: relabeled_cyclic_row_completion
+  value: neutral on the names, mildly misleading on the operator, which invites arithmetic
+    that cannot be performed
+  summary: The sign between the two inputs is the one ordinarily used for multiplying numbers,
+    but the symbols are not numbers and the combination is not multiplication, so a reader
+    who tries to compute finds nothing to compute and must fall back on the row's pattern.
+    No name carries any hint toward or away from the answer, so the only misdirection is in
+    the notation.
+- task_id: reverse_sequence
+  value: neutral; no external association bears on the answer
+  summary: Numeric order, magnitude and any other intuition about digits are uninformative,
+    since the rule refers only to positions.
+- task_id: sat_dpll_trace
+  value: neutral to mildly helpful; nothing points away from the answer
+  summary: The minus sign behaves like ordinary negation and the outcome words match their
+    usual meaning, so background familiarity with the notation helps rather than misleads.
+    No symbol is redefined against its conventional reading.
+- task_id: scan_command_to_actions
+  value: everyday meaning matches the rules, including the order reversal
+  summary: A reader who takes "walk after jump" to mean jump first and walk second gets the
+    right answer, and taking a direction word to mean turn then move is also right. The prior
+    helps rather than misleads throughout.
+- task_id: tfidf_rank_documents
+  value: mostly reinforcing, with one point where the familiar formula differs from the stated
+    one
+  summary: The stated weight is the corpus size divided by the number of documents holding
+    the token, with no logarithm and no adjustment for document length. A reader who substitutes
+    the version this notation usually stands for weighs the query tokens differently and can
+    produce a different ordering.
+- task_id: tree_next_hop_search
+  value: neutral; labels are assigned independently of position, and lookalikes occur
+  summary: Alphabetical or numeric intuition about labels is uninformative because the assignment
+    is a shuffle. Since labels mix letter case with digits, an instance can contain pairs
+    that differ only in case or in one character, which are easy to confuse and carry no relationship.
+- task_id: variable_tracing
+  value: neutral; no letter suggests a value, a role, or a position in the chain
+  summary: Names are drawn by shuffling the alphabet, so alphabetical order, letter shape,
+    and letter frequency are all uninformative about the answer.
+- task_id: xor_parity
+  value: reinforcing; the ordinary reading of the symbols is the task rule
+  summary: Counting 1s and ignoring 0s follows directly from what the digits usually mean,
+    so no external association pulls against the required computation.
+- task_id: year_span_greater_than
+  value: mildly misleading; the phrasing suggests forward-running time in every instance
+  summary: Saying that something lasted from one year to another implies the second is later,
+    and that implication is present in every instance, yet it is wrong in half of them. The
+    pull of the wording therefore points at answer 1 regardless of the actual numbers.

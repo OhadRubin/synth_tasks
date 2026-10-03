@@ -1,0 +1,184 @@
+axis: diagnostic_capability
+factor: failure_signature
+axis_frame: Diagnostic capability describes the model ability or failure mode that a task
+  is meant to expose. The axis is about what kind of competence the instance probes, what
+  information that competence depends on, and what kind of pressure makes the competence succeed
+  or fail.
+factor_description: The characteristic pattern of mistakes that would show the capability
+  has broken down. The description captures the shape of the error across task formats and
+  benchmark families.
+tasks:
+- task_id: associative_recall
+  value: returning the digit of a key that resembles the asked key, or a digit favoured by
+    position or frequency
+  summary: A model that has not bound keys separately answers with the digit of a neighbouring
+    pair, of a key sharing a letter with the asked key, or with whichever digit is most common
+    or most recent in the listing.
+- task_id: babi_counting
+  value: a total off by one contribution, or a total that includes numbers from sentences
+    about other people or other objects
+  summary: The characteristic errors are arithmetic near-misses rather than wild guesses -
+    missing one qualifying sentence, adding one twice, adding every number in the story, or
+    reporting the last number seen instead of the sum.
+- task_id: babi_multi_hop
+  value: naming the room from somebody else's move, typically the last move in the story or
+    the move nearest the question
+  summary: A model that reaches for a room without first identifying who was carrying the
+    object answers with whichever room is most recent, most frequent, or closest to the question,
+    since several other people move during the story.
+- task_id: babi_single_hop
+  value: naming a room the asked person left earlier, or the room in the nearest sentence
+    regardless of who it names
+  summary: A model that stores locations without keeping them per person and up to date answers
+    with a stale room for the right person, or with the most recent room in the story even
+    though somebody else moved there.
+- task_id: bounded_tiny_python_execution
+  value: three digits in the right shape but wrong, from a stale value, a skipped iteration,
+    or a wrong branch
+  summary: A model that cannot carry state reports a value the variable held earlier, runs
+    a loop body once instead of the stated number of times, takes the branch the condition
+    rules out, or forgets to reduce a result so a number outside zero through nine or a negative
+    number appears.
+- task_id: constant_label
+  value: echoing the input character instead of emitting the fixed one
+  summary: Since the input and the answer are drawn from the same two characters, the natural
+    wrong behaviour is to copy the input, which agrees with the answer on about half of all
+    instances and disagrees on the rest.
+- task_id: copy
+  value: dropped, duplicated, or shifted digits, and early stopping partway through a long
+    sequence
+  summary: 'A model that cannot hold its place emits a prefix correctly and then slips: it
+    skips a digit inside a run of repeats, repeats a stretch it already emitted, or stops
+    before the sequence is finished. Errors cluster late rather than at the start.'
+- task_id: dyck_balanced_parentheses
+  value: right number of closers but the wrong kinds, or the right kinds in the wrong order,
+    or the wrong number entirely
+  summary: Characteristic errors are closing in the order the openings appeared instead of
+    reversed, substituting a round bracket where a square one is pending, and stopping one
+    short or one long because the pending count drifted.
+- task_id: fictional_ontology_cot
+  value: answering True whenever the asked property appears somewhere in the listed sentences
+  summary: The asked property is deliberately present in the list whether the answer is True
+    or False, so this shortcut scores exactly at chance. Other characteristic errors are stopping
+    the chain one link early, splicing in an unrelated sentence as if it continued the chain,
+    and reciting the sentences in the order they were printed instead of chain order.
+- task_id: gridworld_detour_planning
+  value: stepping into the tempting dead end, walking through walls, or a plan that stops
+    somewhere other than the goal
+  summary: The signature error is taking the move that shortens the straight-line gap to the
+    goal and then being stranded in a corridor that leads nowhere. Related failures are plans
+    that pass through wall cells, plans longer than the shortest route, and plans of the right
+    length that end on the wrong cell.
+- task_id: horn_forward_chaining
+  value: answering yes whenever the queried statement appears as some rule's conclusion, or
+    losing the thread past two or three applications
+  summary: The queried statement is the conclusion of a listed rule in every instance, including
+    in the ones whose answer is no, so a solver keying on its mere presence says yes every
+    time. A solver that does chain but drops one step falls back toward chance as the chain
+    lengthens.
+- task_id: iterated_string_replace
+  value: applying instructions to the original text, changing only the first occurrence, or
+    missing matches an earlier step created
+  summary: Typical errors are running each instruction against the starting string instead
+    of the running result, substituting at one occurrence and leaving the others, overlooking
+    an occurrence that a previous instruction produced, and drift or truncation partway through
+    a long answer.
+- task_id: label_anchor_feature_match
+  value: answering with a label favoured by position or frequency, or matching a token that
+    differs by one digit
+  summary: Characteristic breakdowns are copying the label of the nearest or last labelled
+    list, choosing whichever label appeared most often, and treating two tokens with the same
+    digits in a different arrangement as the same token.
+- task_id: listops_nested_prefix
+  value: ignoring the grouping, or applying an operator's rule loosely
+  summary: Characteristic errors are applying the outermost operator to all the digits at
+    once as if the brackets were absent, reporting the value of one inner group as the final
+    answer, attaching an operand to the wrong group, or taking the median as the middle digit
+    in written order rather than the middle of the sorted operands.
+- task_id: majority
+  value: answering with the most recent symbol, a locally dense symbol, or the wrong side
+    of a narrow margin
+  summary: 'A model that has not counted falls back on what is nearby: the last few symbols
+    before the answer, or a stretch where one symbol happened to cluster. Errors concentrate
+    on sequences where the two counts are nearly equal.'
+- task_id: markov_first_rewrite
+  value: firing a later rule over an earlier one, editing the wrong occurrence, or corrupting
+    the copied remainder
+  summary: Characteristic errors are applying a rule whose pattern occurs while an earlier
+    one also occurred, replacing a second occurrence rather than the leftmost, replacing every
+    occurrence rather than one, drifting during the copy with dropped or duplicated characters
+    far from the edit, and rewriting something when the correct answer was the string unchanged.
+- task_id: passkey_retrieval
+  value: emitting five digits drawn from the surrounding filler, or getting the leading digits
+    right and drifting
+  summary: A model that has not held the sentence answers with digits that occur near the
+    question or near the start of the input, since those are locally available and of the
+    right character class. A partial failure reproduces the first two or three digits correctly
+    and then diverges.
+- task_id: random_label
+  value: committing confidently to one of the two characters, or appearing to improve on a
+    run of instances
+  summary: 'There is no correct behaviour to break down. The revealing failure is treating
+    the family as learnable: settling on one character with high confidence, or reading a
+    stretch where one character happened to come up more often as progress.'
+- task_id: relabeled_cyclic_row_completion
+  value: answering with a symbol the row has already produced, or with one belonging to the
+    other table
+  summary: The correct symbol is visible elsewhere in the prompt as an input rather than as
+    a result, so a solver copying a nearby plausible name usually lands on one that the row
+    has already given as a result. Ignoring the left symbol pulls in names from the second
+    table, which can never be right.
+- task_id: reverse_sequence
+  value: copying the input in its original order, or staying correct at the ends and degrading
+    in the middle
+  summary: The most telling error is emitting the sequence unreversed, which shows the positional
+    rule was not applied at all. Partial failures reproduce the first few and last few items
+    correctly while scrambling, dropping or duplicating items in between, which then shifts
+    everything after the error.
+- task_id: sat_dpll_trace
+  value: a plausible-looking record containing an unforced number, a missed conflict, or a
+    return to the wrong guess
+  summary: Characteristic breakdowns are writing a bare number when two parts of the clause
+    were still open, continuing past a clause whose three parts are all false, undoing back
+    to a shallower or deeper guess than the last open one, and announcing SAT while some clause
+    still fails. Producing the correct final word with an incorrect record is also a failure
+    here.
+- task_id: scan_command_to_actions
+  value: emitting segments in reading order when the joining word calls for the opposite,
+    or mishandling a repetition
+  summary: The two characteristic errors are laying out segment results in the order the words
+    appear even where the joining word reverses them, and getting a repeated segment wrong
+    by emitting the turn once instead of before each copy, or by producing two copies where
+    three are required.
+- task_id: tfidf_rank_documents
+  value: ranking by raw occurrence count, or emitting a sequence that drops, repeats, or misorders
+    identifiers
+  summary: A solver that ignores the weights puts a document holding many copies of a widespread
+    token above one holding a single copy of a token nothing else has. A solver that gets
+    the scores right can still fail by omitting a document from the sequence or by ordering
+    tied documents as text rather than as numbers.
+- task_id: tree_next_hop_search
+  value: naming the other child of the start, or naming the goal or one of its neighbours
+    instead of the first step
+  summary: Because the start has exactly two children, guessing without following the route
+    is right half the time, so systematic wrong-branch answers are the telling signal. A different
+    breakdown emits a label near the goal, which shows the route was traced but not projected
+    back to its first step.
+- task_id: variable_tracing
+  value: stopping the chain early, or emitting a digit taken from an unrelated assignment
+  summary: A model that resolves one reference and stops emits a letter instead of a digit,
+    or the digit of whatever name is nearby. A model that does not follow references at all
+    emits the digit from the line closest to the question or the most recent digit seen.
+- task_id: xor_parity
+  value: accuracy collapsing toward coin-flipping as the row lengthens
+  summary: A model that tracks only part of the row, or that answers from a local statistic
+    such as the last bit or the more frequent symbol, is right about half the time, because
+    both statistics are uninformative about the answer.
+- task_id: year_span_greater_than
+  value: answering 1 by default because the phrasing runs forwards, or comparing the wrong
+    digits
+  summary: The sentence says an event lasted from one year to another, which in ordinary usage
+    implies the second is later, yet half of all instances end earlier than they start. A
+    model leaning on that phrasing answers 1 throughout. A model comparing digits carelessly
+    is wrong exactly when the two years agree on their leading digits and the decision falls
+    to the last one.

@@ -1,0 +1,131 @@
+axis: input_realization
+factor: noise_and_wellformedness
+axis_frame: Input realization describes the concrete textual form used to present an underlying
+  task instance to the model. The axis is about how the same latent task structure can be
+  rendered as text, including choices about format, serialization, boundaries, order, linguistic
+  style, and surface regularity.
+factor_description: The extent to which the input follows its intended surface convention
+  cleanly. Variations can include spacing differences, delimiter issues, duplicated or missing
+  fields, typos, paraphrases, recoverable malformed syntax, or other irregularities that affect
+  parsing the surface form while preserving a determinate task instance.
+tasks:
+- task_id: associative_recall
+  value: clean; spacing and punctuation are uniform in every instance
+  summary: There are no typos, no missing or duplicated pairs, no spacing variation, and no
+    paraphrases of the labels.
+- task_id: babi_counting
+  value: one systematic irregularity, otherwise clean and uniform
+  summary: The number-and-noun agreement is never applied, which is the only departure from
+    ordinary writing. There are no typos, spacing differences, or missing fields, and the
+    irregularity never makes a sentence ambiguous.
+- task_id: babi_multi_hop
+  value: clean, though the same distractor sentence can appear more than once
+  summary: There are no typos, spacing differences, or broken sentences. Because distractors
+    are drawn independently, one person may be described as picking the same object up several
+    times or moving to the room they already occupy.
+- task_id: babi_single_hop
+  value: clean, though redundant moves occur
+  summary: There are no typos, spacing differences, or malformed sentences. A person may be
+    described as going to the room they already occupy, which is uninformative but well formed.
+- task_id: bounded_tiny_python_execution
+  value: clean; every instance is syntactically valid and uniformly formatted
+  summary: Spacing around operators, indentation width, and the layout of the wrapper are
+    identical in every instance. There are no typos, no missing colons, and no formatting
+    variation to recover from.
+- task_id: constant_label
+  value: clean; every instance is formatted identically
+  summary: Spacing, punctuation, and line breaks are the same in every instance. Nothing is
+    misspelled, duplicated, missing, or paraphrased.
+- task_id: copy
+  value: clean; spacing and layout are identical in every instance
+  summary: Single spaces separate every digit, the labels never vary, and there are no typos,
+    missing digits, or paraphrases. Nothing has to be repaired before the sequence can be
+    read.
+- task_id: dyck_balanced_parentheses
+  value: clean and always well formed as far as it goes; incomplete, never broken
+  summary: A closing bracket never appears without a matching earlier opening one, kinds never
+    cross, spacing is uniform, and no symbol outside the four brackets occurs. The one intended
+    irregularity is that the row ends unfinished.
+- task_id: fictional_ontology_cot
+  value: clean; every sentence follows the same three-part shape
+  summary: There are no typos, no missing full stops, no paraphrased sentence patterns, and
+    no spacing irregularities anywhere in the list.
+- task_id: gridworld_detour_planning
+  value: clean; a perfect square with uniform spacing, one start and one goal
+  summary: Every row has the same number of cells, spacing never varies, only four characters
+    ever appear, and the start and goal each occur exactly once.
+- task_id: horn_forward_chaining
+  value: clean; every rule has the same shape and spacing never varies
+  summary: No rule is malformed, no arrow or condition is missing, and every statement name
+    is one letter followed by two digits. Two rules may share the same pair of conditions
+    and differ only in their conclusion, which is well formed but easy to misread as a repeat.
+- task_id: iterated_string_replace
+  value: clean; every instruction line has the same shape and quoting is uniform
+  summary: There are no typos, spacing variations, missing arguments, or malformed lines.
+    The only line that looks unusual is one whose second argument is empty, and that is a
+    real instruction meaning delete every occurrence.
+- task_id: label_anchor_feature_match
+  value: clean; every list has exactly the same number of tokens and every token the same
+    four-character shape
+  summary: There is no spacing variation, no truncated list, no missing label line, and no
+    token written in a different form from the others.
+- task_id: listops_nested_prefix
+  value: clean; brackets are always balanced and spacing is always uniform
+  summary: Every group opens and closes properly, every token is separated by one space, and
+    there are no typos, missing operands, or malformed groups to repair before reading.
+- task_id: majority
+  value: clean; spacing and format are uniform in every instance
+  summary: There are no typos, no missing or doubled separators, no spacing variation and
+    no alternative renderings of the two symbols.
+- task_id: markov_first_rewrite
+  value: clean; identical formatting in every rule and every instance
+  summary: Spacing around the arrow, the numbering style, and the labels never vary, and no
+    rule or line is ever malformed, duplicated, or missing.
+- task_id: passkey_retrieval
+  value: cleanly formatted throughout; the noise is meaningless content, not broken syntax
+  summary: Spacing is uniform, the labels never vary, and the sentence is never misspelled
+    or truncated. The difficulty is the volume of irrelevant material rather than any irregularity
+    in how it is written.
+- task_id: random_label
+  value: clean surface; the randomness is in the answer, not the formatting
+  summary: Spacing, punctuation, and line breaks are identical in every instance, and nothing
+    is misspelled or malformed. What is unpredictable is the answer itself.
+- task_id: relabeled_cyclic_row_completion
+  value: formatting is clean, but the same equation can be printed more than once
+  summary: Spacing and punctuation never vary and no equation is malformed. The unrelated
+    equations are drawn independently of one another, so duplicates appear routinely; the
+    largest example prints four of them twice.
+- task_id: reverse_sequence
+  value: clean; spacing and format are uniform in every instance
+  summary: There are no typos, no missing or doubled separators, no spacing variation and
+    no alternative renderings of any digit.
+- task_id: sat_dpll_trace
+  value: clean; every clause is exactly three signed numbers and one closing zero
+  summary: Spacing is uniform, no clause is truncated or duplicated, no number is malformed,
+    and the same two markers are spelled the same way throughout.
+- task_id: scan_command_to_actions
+  value: clean; every command is well formed and spacing is uniform
+  summary: Words are separated by single spaces, no command is ungrammatical under the rules,
+    and no typos, paraphrases or alternative spellings occur.
+- task_id: tfidf_rank_documents
+  value: clean; identical spacing everywhere and every document exactly the same length
+  summary: There are no typos, missing fields, delimiter variations, or paraphrases of the
+    labels. The one irregularity a reader can meet is that two documents may happen to hold
+    exactly the same tokens in the same order.
+- task_id: tree_next_hop_search
+  value: clean and perfectly uniform
+  summary: Every edge has exactly three tokens, every label exactly two characters, and every
+    separator a single space. There are no typos, no missing or duplicated edges, and no spacing
+    variation.
+- task_id: variable_tracing
+  value: clean; every line follows the same spacing and punctuation
+  summary: No typos, no missing or duplicated statements, no spacing variation, and no alternative
+    phrasings of the labels appear in any instance.
+- task_id: xor_parity
+  value: clean; uniform single spacing and only the characters 0 and 1
+  summary: There are no typos, no stray or missing separators, no spacing variation, and no
+    characters outside the two-symbol alphabet.
+- task_id: year_span_greater_than
+  value: clean; one sentence pattern, correct grammar and punctuation everywhere
+  summary: No typos, no paraphrases of the sentence or the rule, no spacing variation, and
+    no extra clauses ever appear. The years are always written as four digits with no separators.

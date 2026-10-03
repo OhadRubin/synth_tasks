@@ -1,0 +1,151 @@
+axis: generator_mechanism
+factor: generation_source
+axis_frame: Generator mechanism describes how benchmark inputs and labels are produced. The
+  axis is about source process, controllable structure, sampling, validity constraints, label
+  oracle, variation scope, and perturbation model.
+factor_description: The process that creates candidate instances. Sources may include random
+  samplers, templates, grammars, program generators, graph or table builders, simulators,
+  empirical corpora, or combinations that define the generator's support.
+tasks:
+- task_id: associative_recall
+  value: random draws over a fixed letter-key alphabet and the ten digits
+  summary: Keys are taken in order from "a" through "z" and then "aa", "ab", onward as needed,
+    so the set of keys used by an instance is determined by how many pairs it has. Each key
+    is then given a digit drawn at random.
+- task_id: babi_counting
+  value: a template sampler that reserves a handful of positions for the contributing sentences
+    and fills the rest with distractors
+  summary: A person and an object kind are chosen first, then a number of slots is set aside
+    for their pick-up sentences, then every remaining slot is filled independently.
+- task_id: babi_multi_hop
+  value: a template sampler that reserves two positions for the supporting sentences and fills
+    the rest with distractors
+  summary: The chain is decided first - an object, a person, and a room - then two slots are
+    set aside for it, and every remaining slot is filled independently with a sentence about
+    somebody else.
+- task_id: babi_single_hop
+  value: independent random draws; each sentence picks a person and a room from fixed small
+    sets
+  summary: There is no plan behind the story. Each event is drawn on its own, so who moves
+    and where is uncorrelated across sentences.
+- task_id: bounded_tiny_python_execution
+  value: a random program builder that assembles statements from a small fixed set of shapes
+    and renders them as source text
+  summary: 'Each statement is drawn from a short menu: assign a sum, a difference, a product
+    plus a variable, or an accumulation onto the target using a loop counter; open a two-way
+    conditional; or open a counted loop. Initial values are drawn at random.'
+- task_id: constant_label
+  value: a fair coin choosing the input character, and a fixed answer taken from the setting
+  summary: The generator draws one of the two characters 0 and 1 for the input line and fills
+    the answer in from the family's setting without consulting the draw.
+- task_id: copy
+  value: independent uniform draws from the ten decimal digits
+  summary: Each position is filled by its own draw with replacement, so runs and repeats occur
+    at whatever rate chance produces and no sequence is assembled from templates or corpora.
+- task_id: dyck_balanced_parentheses
+  value: a random walk that opens or closes at each step under a depth ceiling
+  summary: At every position the generator opens a randomly chosen kind of bracket or closes
+    the most recent pending one, choosing between the two at random whenever both are allowed
+    by the ceiling.
+- task_id: fictional_ontology_cot
+  value: a chain is built first from shuffled word pools, then unrelated sentences are added
+    around it, then everything is shuffled
+  summary: Category words are drawn without replacement from 280 invented words formed by
+    pairing 35 syllable beginnings with 8 endings, properties from a pool of 16, and the person
+    from a pool of 12 given names.
+- task_id: gridworld_detour_planning
+  value: a wandering walk lays down the correct route, then dead-end corridors are carved
+    off it
+  summary: The route is drawn first as a walk that never touches itself or comes alongside
+    itself, which is what stops any shortcut existing; every other open cell belongs to a
+    side corridor added afterwards, and everything untouched becomes wall.
+- task_id: horn_forward_chaining
+  value: a planted chain of the requested length plus randomly built irrelevant rules, then
+    shuffled
+  summary: Each chain step consumes the previous chain statement and one helper statement
+    that is given from the start. Each irrelevant rule takes two conditions drawn at random
+    from statements already known to be available and concludes a fresh name nothing else
+    uses.
+- task_id: iterated_string_replace
+  value: a random starting string over three to five letters, plus a program built one instruction
+    at a time against the running text
+  summary: The start is drawn character by character from the bin's letters. Each instruction
+    is then chosen with knowledge of the string as it stands at that point, so the program
+    is composed against a simulated execution rather than drawn blind.
+- task_id: label_anchor_feature_match
+  value: tokens drawn without replacement from a pool of one thousand, labels drawn without
+    replacement from a pool of eight
+  summary: One token is set aside for each label, and the rest of the pool supplies fillers.
+    Each list is then built from one label-carrying token plus fresh fillers and shuffled.
+- task_id: listops_nested_prefix
+  value: a random tree builder that picks an operator and an operand count at each group
+  summary: 'Groups are created top down: an operator is drawn from the four, an operand count
+    is drawn from two or three, and each operand is then filled with a digit or with another
+    group built the same way.'
+- task_id: majority
+  value: independent fair draws over the two symbols
+  summary: Each position is filled by an independent draw with equal probability, so the sequence
+    carries no structure beyond what chance produces.
+- task_id: markov_first_rewrite
+  value: random letter strings for the patterns and replacements, and a string built around
+    a chosen match
+  summary: 'Rules are drawn first, then the string is constructed rather than drawn freely:
+    either random filler with a chosen pattern planted at a random position, or random filler
+    resampled until it contains no pattern at all.'
+- task_id: passkey_retrieval
+  value: random single digits joined by spaces, plus one fixed sentence template with a random
+    value
+  summary: The filler is drawn digit by digit and the sentence is produced by substituting
+    five independently drawn digits into a template that never otherwise changes.
+- task_id: random_label
+  value: two independent fair draws, one for the input character and one for the answer
+  summary: The generator picks one of the two characters 0 and 1 for the input line, then
+    picks the answer from the family's pool without looking at what it just drew.
+- task_id: relabeled_cyclic_row_completion
+  value: a fixed pool of interchangeable names is shuffled, the first several become the table's
+    symbols, and one row is written out with one entry withheld
+  summary: Where unrelated equations are wanted, the next several names build a second table
+    the same way and randomly chosen pairs from it are printed alongside the row.
+- task_id: reverse_sequence
+  value: independent uniform draws over the ten digits
+  summary: Each position is filled by an independent draw with equal probability, so the sequence
+    carries no pattern, no repetition structure and no bias a solver could exploit.
+- task_id: sat_dpll_trace
+  value: uniformly random three-variable clauses, redrawn until all are distinct
+  summary: Each clause takes three distinct variables drawn without replacement, sorts them
+    ascending, and negates each independently with probability one half. A clause identical
+    to one already chosen is thrown away and another drawn.
+- task_id: scan_command_to_actions
+  value: random sampling from a small hand-written grammar, with an interpreter supplying
+    the answer
+  summary: A first segment is drawn, then further segments and joining words are appended
+    until the command reaches the required length. Rules are then applied to compute the action
+    list.
+- task_id: tfidf_rank_documents
+  value: a random query, then a corpus built around it under a repeated-attempt loop
+  summary: A query of the required width is drawn from the token pool, each query token is
+    planted in a randomly chosen number of documents with one to three copies in each, and
+    the remaining slots in every document are filled with tokens the query does not name.
+    Every document is then shuffled.
+- task_id: tree_next_hop_search
+  value: a complete tree of the requested shape, then a random labelling, then a shuffle of
+    the edges
+  summary: The structure is built deterministically from the two settings and all the randomness
+    sits in which labels are attached, which leaf is the goal, and what order the edges are
+    written in.
+- task_id: variable_tracing
+  value: random draws over the 26 lowercase letters and the ten digits, assembled into a chain
+    plus unreferenced lines
+  summary: The letters are shuffled and split into the names that form the chain and the names
+    used for the unreferenced assignments, so the two groups never share a name. One digit
+    is drawn for the start of the chain and one for each unreferenced line.
+- task_id: xor_parity
+  value: independent even draws from the two symbols
+  summary: Each position is filled by an independent coin flip between 0 and 1, so the generator's
+    support is every row of the requested length.
+- task_id: year_span_greater_than
+  value: one fixed sentence pattern filled by a noun from a list of sixteen, a century from
+    eight, and a constructed pair of years
+  summary: 'The prose is a template with a single slot for the noun. The numbers are built
+    rather than drawn freely: a century, a difference, a direction, and a first year that
+    leaves room for that difference on either side.'

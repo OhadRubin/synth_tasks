@@ -1,0 +1,163 @@
+axis: composition_and_interference_pattern
+factor: interference_source
+axis_frame: Composition and interference pattern describes how relevant pieces combine within
+  one instance and how competing pieces affect that combination. The axis is about dependency
+  shape, depth, distractor source, evidence placement, conflict resolution, coupling among
+  subproblems, and query structure.
+factor_description: The source of irrelevant, misleading, or competing information. Interference
+  may come from random distractors, semantic neighbors, similar aliases, stale state, overlapping
+  rules, decoy paths, misleading templates, shortcut features, or other confusable material.
+tasks:
+- task_id: associative_recall
+  value: the unasked pairs, which look exactly like the relevant one
+  summary: Every other pair has the same shape, is built from the same letters, and often
+    carries the same digit as some other key, so nothing but the key match separates the relevant
+    pair from the rest.
+- task_id: babi_counting
+  value: pick-ups by other people of other object kinds, and movement sentences that often
+    name the asked person
+  summary: The competing pick-up sentences are identical in form and carry numbers of the
+    same size, so only two words separate them from the ones that count. The movement sentences
+    are a second kind of decoy - they name the right person and carry nothing to add.
+- task_id: babi_multi_hop
+  value: other people's movements, which supply plausible rooms, and other people's pick-ups,
+    which supply plausible carriers
+  summary: Both halves of the chain have look-alike competitors written in the identical template.
+    In a twenty-sentence story most sentences name a room, and any of them could be answered
+    by mistake.
+- task_id: babi_single_hop
+  value: the asked person's own earlier rooms, plus every move made by the other three people
+  summary: Two kinds of competitor exist and they fail differently - a stale sentence names
+    the right person and the wrong room, while another person's sentence may name the room
+    most recently written in the story.
+- task_id: bounded_tiny_python_execution
+  value: overwritten values, the branch not taken, and assignments whose results never reach
+    the printed variables
+  summary: Each variable's earlier values remain visible in the program text long after they
+    stop being current, both sides of every conditional are written out though only one runs,
+    and in the larger settings some variables are updated without ever feeding the answer.
+- task_id: constant_label
+  value: the input character, which varies while the answer does not
+  summary: The one competing signal in the family is the changing input, which invites a copy
+    rule that happens to agree with the answer about half the time.
+- task_id: copy
+  value: the other digits, drawn from the same ten characters and repeating constantly
+  summary: No material in the input is irrelevant, but with ten characters spread over up
+    to 128 slots the same digit recurs many times, and two occurrences of a digit are told
+    apart only by position.
+- task_id: dyck_balanced_parentheses
+  value: the completed pairs, which look exactly like the brackets that still matter
+  summary: Most openings in the row are already closed and must be ignored, yet nothing distinguishes
+    them locally. The two kinds are also easy to swap, and the symbols nearest the answer
+    are usually part of finished pairs, which rewards copying the wrong thing.
+- task_id: fictional_ontology_cot
+  value: unrelated sentences written in exactly the same shape, one of which carries the asked
+    property whenever the verdict is False
+  summary: The unrelated sentences use words drawn from the same pools and the same three-part
+    shape, so nothing about how one is written marks it as off the chain. The planted one
+    is the sharpest trap, since it makes the asked property visible in the list in both cases.
+- task_id: gridworld_detour_planning
+  value: dead-end corridors, at least one of which starts with a move that looks like progress
+  summary: Two to eight passages branch off the correct route and lead nowhere, and the construction
+    guarantees that at least one opens at a cell where entering it shortens the straight-line
+    gap to the goal more than the correct move does.
+- task_id: horn_forward_chaining
+  value: rules that do apply and consume statements from the real chain, plus repeated condition
+    pairs with different conclusions
+  summary: Because the irrelevant rules draw their conditions from the same pool the chain
+    uses, they look exactly like real steps. Two of them can share a condition pair and differ
+    only in the name they conclude.
+- task_id: iterated_string_replace
+  value: instructions that match nothing, and short patterns that occur in places they seem
+    unrelated to
+  summary: Because patterns are one to four characters over an alphabet of three to five letters,
+    a short pattern occurs many times by chance, including inside stretches the instruction
+    was never aimed at. Some instructions are built to match nothing at all, so both changing
+    too much and changing too little are live errors.
+- task_id: label_anchor_feature_match
+  value: 16 to 269 filler tokens identical in shape to the relevant one
+  summary: Fillers are drawn from the same pool as the token that matters and are written
+    the same way, so the only thing separating them is that they occur once. Tokens differing
+    by a single digit are common in every prompt.
+- task_id: listops_nested_prefix
+  value: digits attached at the wrong level, and side branches that resemble the deep chain
+  summary: 'Nothing in the expression is irrelevant, so the competing material is structural:
+    a digit written between two groups is easily attached to the inner one instead of the
+    outer, and shallow side branches look exactly like the chain that carries the depth.'
+- task_id: majority
+  value: occurrences of the minority symbol, especially where they cluster
+  summary: Because the symbols are drawn independently, the minority symbol forms runs and
+    dense stretches by chance. Any window read on its own can point to the wrong answer, and
+    the shorter the window the more often it does.
+- task_id: markov_first_rewrite
+  value: rules that do not fire, lower-priority rules whose pattern does occur, and near-misses
+    among the random filler
+  summary: Up to seven listed rules are irrelevant to a given instance and look exactly like
+    the one that matters. A later rule may genuinely occur in the string and still lose to
+    an earlier one. The filler contains many places where two of a pattern's three letters
+    line up.
+- task_id: passkey_retrieval
+  value: filler made of the same digit characters as the answer, in large quantity
+  summary: Each of the ten digits occurs about six times in the filler in the smallest setting
+    and about forty-five times in the largest, so every character of the answer is also available
+    in many wrong places. The filler never forms an unbroken five-digit run, since filler
+    digits are always separated by spaces, and never contains letters, so it cannot imitate
+    the marker phrase.
+- task_id: random_label
+  value: the input character, which looks as though it should determine the answer, and stretches
+    where one answer happens to repeat
+  summary: The layout invites reading the answer as a response to the input, which it never
+    is. Short runs in which one character comes up several times in a row also suggest a pattern
+    that does not exist.
+- task_id: relabeled_cyclic_row_completion
+  value: equations from a second table with the same format and separate names, plus exact
+    duplicates
+  summary: The unrelated equations cannot be told apart from the relevant ones by format,
+    and being internally consistent they look like genuine evidence; they can only be excluded
+    by checking the left symbol. At the largest setting they outnumber the relevant equations
+    by more than two to one.
+- task_id: reverse_sequence
+  value: the other items, drawn from the same ten digits and therefore repeating often
+  summary: At 128 items each digit occurs about thirteen times on average, so nothing distinguishes
+    one occurrence from another except position. Long runs of the same digit are the worst
+    case, since they give no landmark for keeping the count.
+- task_id: sat_dpll_trace
+  value: clauses that already hold and clauses still two parts away from forcing
+  summary: At any moment most clauses are irrelevant, either satisfied already or with more
+    than one part still open. Reading a forced part off one of those produces a number that
+    looks entirely ordinary in the record but is not entailed.
+- task_id: scan_command_to_actions
+  value: no irrelevant material; the pressure comes from reading order contradicting answer
+    order
+  summary: Nothing in the command is a distractor. What competes is the pull to write actions
+    in the order their words were read, which is wrong wherever the reversing joining word
+    appears, and the fact that the same motion word often recurs in several segments.
+- task_id: tfidf_rank_documents
+  value: padding tokens that look exactly like query tokens, and documents busy with tokens
+    that carry no weight
+  summary: Every document is filled to length from the same pool, so a document can look crowded
+    with repeated tokens and still score zero. At the largest setting only three of eighteen
+    tokens count for anything.
+- task_id: tree_next_hop_search
+  value: the edges of the branches the route does not take, plus labels that look alike
+  summary: Every distractor edge is written in exactly the same form as a route edge, and
+    at the deepest setting fifty-seven of the sixty-two edges are irrelevant. Because labels
+    mix letter case with digits, an instance can hold pairs that differ by one character or
+    by case alone.
+- task_id: variable_tracing
+  value: unreferenced assignments that look identical in form and carry the kind of value
+    the answer must be
+  summary: Every irrelevant line is a name, an equals sign, and a digit, which is exactly
+    the shape of the line that holds the answer. One of them may carry the same digit as the
+    correct answer, and none of them can be ruled out without following the chain.
+- task_id: xor_parity
+  value: no irrelevant material; the pressure comes from tempting shortcut statistics
+  summary: Nothing in the row is a distractor, since every bit counts. What competes is the
+    pull of cheaper summaries such as the last bit or the more common symbol, neither of which
+    predicts the answer.
+- task_id: year_span_greater_than
+  value: the digits the two years share, and the wording that implies time runs forwards
+  summary: The leading two digits are always identical and, at the closest setting, the third
+    usually is too, so most characters of the two numbers are the same and carry no information.
+    Alongside that, saying an event lasted from one year to another suggests the second is
+    the later one in every instance.

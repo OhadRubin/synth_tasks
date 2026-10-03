@@ -1,0 +1,127 @@
+axis: composition_and_interference_pattern
+factor: composition_topology
+axis_frame: Composition and interference pattern describes how relevant pieces combine within
+  one instance and how competing pieces affect that combination. The axis is about dependency
+  shape, depth, distractor source, evidence placement, conflict resolution, coupling among
+  subproblems, and query structure.
+factor_description: The shape by which subresults, evidence, or operations combine. Patterns
+  may include flat aggregation, chains, recursive nesting, joins, fan-in and fan-out graphs,
+  pipelines, closures, search-tree composition, or other structures that define how partial
+  results meet.
+tasks:
+- task_id: associative_recall
+  value: flat; one question resolved against one supporting pair
+  summary: No partial results have to meet, because a single step produces the answer. The
+    listed pairs contribute nothing that is later combined.
+- task_id: babi_counting
+  value: fan-in; several sentences feed one total
+  summary: Every contributing sentence produces a partial result and all of them meet at a
+    single addition. Nothing chains, so no partial result is the input to another.
+- task_id: babi_multi_hop
+  value: a chain of two, joined on a shared person
+  summary: One partial result, the carrier's name, has to meet the second sentence for the
+    answer to exist. Nothing fans in or out beyond that single meeting point.
+- task_id: babi_single_hop
+  value: flat; one question resolved against the latest matching sentence
+  summary: No partial results have to be combined. Every sentence about the asked person is
+    a candidate for one slot, and only the latest occupies it.
+- task_id: bounded_tiny_python_execution
+  value: a pipeline; loops fold a sub-pipeline repeatedly and conditionals select between
+    two continuations
+  summary: 'Partial results meet through the shared state rather than through explicit combination:
+    whatever a statement leaves behind is what the next one starts from.'
+- task_id: constant_label
+  value: none; nothing combines with anything
+  summary: There are no partial results to meet, no aggregation, and no pipeline, since a
+    single fixed character is the whole answer.
+- task_id: copy
+  value: flat and parallel; each answer position is settled by one input position
+  summary: No partial results ever meet. The instance decomposes into as many independent
+    one-step problems as there are digits, and none of them feeds another.
+- task_id: dyck_balanced_parentheses
+  value: nested; each completed pair cancels inside the span that encloses it
+  summary: Partial results do not meet in a flat sum; a finished inner span disappears and
+    leaves the enclosing span exactly as it was.
+- task_id: fictional_ontology_cot
+  value: a single chain; each step's conclusion is the next step's input
+  summary: Nothing fans out or joins back together. There is one line of reasoning and it
+    must be followed end to end.
+- task_id: gridworld_detour_planning
+  value: a search over branching alternatives that yields one chain of moves
+  summary: Solving fans out over the junctions of the map, but the answer is a single dependent
+    chain in which each move follows from where the last one landed.
+- task_id: horn_forward_chaining
+  value: a chain in which each conclusion is the next rule's condition, with irrelevant rules
+    fanning out to dead ends
+  summary: The relevant structure is a single line of dependencies with no branching and no
+    joins beyond the always-given helper at each step. Everything else branches off that line
+    and terminates immediately.
+- task_id: iterated_string_replace
+  value: a pipeline in which each step's output is the next step's entire input
+  summary: 'Partial results never meet side by side: there is one line of computation with
+    two to eight stages, and each stage consumes everything the previous one produced.'
+- task_id: label_anchor_feature_match
+  value: flat; one match resolved against one label
+  summary: No partial results have to be combined, since finding the shared token immediately
+    determines the answer without any further computation over the other lists.
+- task_id: listops_nested_prefix
+  value: a tree of partial results narrowing to one value
+  summary: 'Two or three values meet at every group and produce one, so the whole instance
+    is fan-in with no fan-out: each value is consumed exactly once and nothing is reused.'
+- task_id: majority
+  value: flat aggregation; every element feeds one total
+  summary: Contributions do not meet pairwise or in stages. They all arrive at the same accumulator,
+    and only at the very end does anything happen to it.
+- task_id: markov_first_rewrite
+  value: a pipeline; rule selection feeds match location, which feeds the spliced copy
+  summary: Nothing branches and no partial results have to be merged. Each stage narrows the
+    problem for the next, and the last stage does the bulk of the work.
+- task_id: passkey_retrieval
+  value: flat; one question resolved against one sentence
+  summary: No partial results have to meet, because a single span produces the entire answer
+    and nothing else in the input contributes to it.
+- task_id: random_label
+  value: none; nothing combines with anything
+  summary: There are no partial results to meet, no aggregation, and no pipeline, since a
+    single drawn character is the whole answer.
+- task_id: relabeled_cyclic_row_completion
+  value: flat aggregation; every entry of the row feeds one elimination
+  summary: No partial result feeds another. The contributions are gathered independently and
+    then a single subtraction is performed over what was gathered.
+- task_id: reverse_sequence
+  value: parallel and one-to-one; no partial results ever meet
+  summary: Each answer position is settled by its own input position and by nothing else,
+    so there is no aggregation, no chaining and no join anywhere in the instance.
+- task_id: sat_dpll_trace
+  value: a search tree whose branches are chains of forced deductions
+  summary: Between two guesses sits a run of deductions, each one enabled by the values set
+    just before it, and the tree joins those runs at the points where a guess is undone and
+    retried the other way.
+- task_id: scan_command_to_actions
+  value: a chain nested to the right, each segment's result meeting the combined result of
+    everything after it
+  summary: 'Partial results meet one at a time and always in the same shape: one segment''s
+    action list against the action list already assembled from the rest of the command.'
+- task_id: tfidf_rank_documents
+  value: fan-in twice, once from every document into each weight and once from every score
+    into one ordering
+  summary: Each query token's weight aggregates evidence from the whole corpus, and each document's
+    score then feeds a single global comparison, so information travels corpus-wide at both
+    stages.
+- task_id: tree_next_hop_search
+  value: a chain of edges, each lookup keyed by the previous one's result
+  summary: Partial results meet nowhere. The route is a strict sequence in which the label
+    reached at one step is the only thing the next step needs, and the final projection reads
+    back to the first step.
+- task_id: variable_tracing
+  value: a chain; each step's output is the next step's input
+  summary: Partial results do not meet or merge anywhere. The whole mapping is one line of
+    dependency running from the asked name to the digit.
+- task_id: xor_parity
+  value: flat fan-in; every bit feeds one aggregate
+  summary: All positions contribute directly to a single result with no intermediate groupings,
+    joins, or partial answers that later meet.
+- task_id: year_span_greater_than
+  value: flat; one comparison over two values
+  summary: No partial results have to meet, because a single step produces the answer and
+    nothing in the sentence contributes anything to be combined later.

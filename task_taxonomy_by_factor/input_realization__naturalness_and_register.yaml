@@ -1,0 +1,135 @@
+axis: input_realization
+factor: naturalness_and_register
+axis_frame: Input realization describes the concrete textual form used to present an underlying
+  task instance to the model. The axis is about how the same latent task structure can be
+  rendered as text, including choices about format, serialization, boundaries, order, linguistic
+  style, and surface regularity.
+factor_description: The degree to which the input resembles ordinary language, formal notation,
+  domain documentation, benchmark templates, or hybrids of these styles. This factor captures
+  linguistic register, naturalness, and familiarity of the surface form, while leaving the
+  latent structure and target operation open.
+tasks:
+- task_id: associative_recall
+  value: symbolic payload inside plain English section labels
+  summary: '"Pairs", "Question", and "Answer" are ordinary words; everything they introduce
+    is short symbol notation with no sentences.'
+- task_id: babi_counting
+  value: ordinary English sentences from two fixed templates, with the plural form used even
+    for a count of one
+  summary: Every sentence would read naturally except that the object word is always plural,
+    so a story can say that somebody picked up one apples. This is systematic rather than
+    occasional.
+- task_id: babi_multi_hop
+  value: ordinary English sentences generated from two fixed templates
+  summary: Every sentence is grammatical and reads naturally on its own, but the story is
+    built by repeating two patterns with only the names, objects, and rooms varying.
+- task_id: babi_single_hop
+  value: ordinary English sentences generated from one fixed template
+  summary: Every sentence is grammatical and would read naturally on its own, but the story
+    repeats a single pattern with only two words varying, so it reads as a drill rather than
+    as writing.
+- task_id: bounded_tiny_python_execution
+  value: real programming-language syntax with one plain English sentence around it
+  summary: The program uses genuine and widely familiar syntax rather than invented notation,
+    so the standard reading of the code is the correct reading. The surrounding wrapper is
+    two labels and one instruction sentence.
+- task_id: constant_label
+  value: two ordinary English labels around a single character
+  summary: The words "Input" and "Answer" are plain English used as field names. There are
+    no sentences, no domain vocabulary, and no notation beyond one character.
+- task_id: copy
+  value: bare digit payload inside plain English section labels
+  summary: '"Input" and "Answer" are ordinary words; everything they introduce is digits and
+    spaces, with no sentences, notation, or domain vocabulary.'
+- task_id: dyck_balanced_parentheses
+  value: bare punctuation between two ordinary English labels
+  summary: '"Input" and "Answer" are the only words present; the payload is pure notation
+    with no sentences, instructions, or domain vocabulary.'
+- task_id: fictional_ontology_cot
+  value: ordinary English grammar carrying invented content words
+  summary: Every sentence is a well-formed English clause and the question is phrased the
+    way a comprehension question would be, but the nouns and adjectives are made-up syllable
+    combinations.
+- task_id: gridworld_detour_planning
+  value: an ordinary instruction sentence over a symbolic diagram
+  summary: The rules line reads as normal written English and is repeated verbatim in every
+    instance; everything below it is a bare character diagram.
+- task_id: horn_forward_chaining
+  value: plain English framing sentences wrapped around compact symbolic lines
+  summary: The meaning of a rule is spelled out in ordinary words and the question is a full
+    sentence, while between them sit lines that contain nothing but names and two punctuation
+    marks.
+- task_id: iterated_string_replace
+  value: code-like instruction lines in a familiar programming style, with English section
+    headings
+  summary: Each instruction reads as a call with two quoted arguments, a spelling widely used
+    for replacing every occurrence of one piece of text with another. The headings are ordinary
+    words and no sentences appear anywhere.
+- task_id: label_anchor_feature_match
+  value: a bare demonstration layout with no ordinary language content
+  summary: The only English in the instance is the two section words and the task tag; everything
+    else is a letter followed by three digits, or a single capital letter.
+- task_id: listops_nested_prefix
+  value: uppercase operator words inside symbolic notation, with English section labels
+  summary: The operator names are short uppercase words standing for largest, smallest, median,
+    and sum with a remainder; everything around them is brackets, digits, and spaces. No sentences
+    appear.
+- task_id: majority
+  value: symbolic payload inside plain English section labels
+  summary: '"Input" and "Answer" are ordinary words; everything they introduce is a bare two-symbol
+    notation with no sentences, punctuation or domain vocabulary.'
+- task_id: markov_first_rewrite
+  value: symbolic; unpronounceable letter strings under plain English labels
+  summary: Nothing in the payload resembles ordinary language. The only words present are
+    the labels, and every letter sequence is drawn at random from the alphabet.
+- task_id: passkey_retrieval
+  value: two ordinary English sentences inside meaningless digit noise
+  summary: The embedded statement and the question are both plain everyday English and are
+    phrased to match each other. Everything else is unpronounceable digit filler.
+- task_id: random_label
+  value: two ordinary English labels around a single character
+  summary: The words "Input" and "Answer" are plain English field names. There are no sentences,
+    no domain vocabulary, and no notation beyond one character.
+- task_id: relabeled_cyclic_row_completion
+  value: arithmetic-looking notation inside plain English labels
+  summary: The equations read like a multiplication table written out one entry at a time,
+    although the symbols are opaque names rather than numbers. "Facts", "Question", and "Answer"
+    are ordinary words.
+- task_id: reverse_sequence
+  value: symbolic payload inside plain English section labels
+  summary: '"Input" and "Answer" are ordinary words; everything they introduce is bare digit
+    notation with no sentences, punctuation or domain vocabulary.'
+- task_id: sat_dpll_trace
+  value: formal numeric notation under two English section labels
+  summary: '"Formula" and "Trace" are ordinary words; everything they introduce is signed
+    integers plus two short markers and two outcome words. There are no sentences anywhere
+    in the instance.'
+- task_id: scan_command_to_actions
+  value: ordinary imperative English from a ten-word vocabulary; answer in uppercase symbols
+  summary: The command reads as something a person could say, but only ten word types ever
+    occur and there are no articles or punctuation. The answer side abandons English for fixed
+    uppercase names.
+- task_id: tfidf_rank_documents
+  value: symbolic payload wrapped in ordinary section labels, with a compact half-notation
+    half-English formula block
+  summary: '"Corpus", "Query", "Rule", and "Answer" are ordinary words, and two of the formula
+    lines are English sentences, while the documents and the query are pure symbol lists with
+    no sentences at all.'
+- task_id: tree_next_hop_search
+  value: symbolic notation with two English keywords and no sentences
+  summary: Apart from the words "start" and "goal" and the three section labels, the whole
+    prompt is opaque two-character tokens, so there is no prose to lean on.
+- task_id: variable_tracing
+  value: bare program notation with two English section labels
+  summary: There are no sentences and no domain vocabulary. Everything except the words "Question"
+    and "Answer" is single letters, digits, and equals signs.
+- task_id: xor_parity
+  value: two ordinary English labels wrapped around a bare digit string
+  summary: '"Input" and "Answer" are the only words in the instance; everything else is symbols,
+    with no sentences, instructions, or domain vocabulary.'
+- task_id: year_span_greater_than
+  value: ordinary English throughout, one fixed sentence pattern with a swapped-in everyday
+    noun
+  summary: The wording is what a history text might use, and the noun is drawn from a list
+    of sixteen common ones such as war, treaty, voyage, and marriage. This is the most natural
+    surface form in the family, with no symbols beyond the digits.

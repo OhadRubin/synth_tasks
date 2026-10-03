@@ -1,0 +1,138 @@
+axis: latent_topology
+factor: direction_and_order
+axis_frame: Latent topology describes the abstract structure that exists before an input is
+  rendered as text. The axis is about how entities, relations, events, states, and constraints
+  are arranged, connected, ordered, nested, shared, or evolved.
+factor_description: How relationships carry order, direction, time, or reversibility. This
+  factor records whether dependencies are positional, chronological, precedence-based, directed,
+  bidirectional, partially ordered, or unordered.
+tasks:
+- task_id: associative_recall
+  value: unordered; permuting the listing leaves the answer unchanged
+  summary: Neither time nor precedence relates the pairs; the listing order is an arbitrary
+    presentation choice.
+- task_id: babi_counting
+  value: presented chronologically, but the target relation is unordered
+  summary: Events carry positions and could be read as a history, yet addition is insensitive
+    to that history, so no precedence, direction, or reversibility matters to the answer.
+- task_id: babi_multi_hop
+  value: directed along the chain, with the possession link required to come before the movement
+    link
+  summary: The chain is read from object to person to room and never the other way. The fixed
+    placement of the possession link before the movement link is what makes the inference
+    sound.
+- task_id: babi_single_hop
+  value: chronological and directed; later events supersede earlier ones
+  summary: Events are totally ordered by position and the relation between two events about
+    one person is that the later one cancels the earlier one.
+- task_id: bounded_tiny_python_execution
+  value: strictly ordered in time and directed; nothing is reversible
+  summary: A statement can only be affected by statements before it. Swapping two adjacent
+    assignments generally changes the printed values, and an overwritten value cannot be recovered
+    from anything later in the program.
+- task_id: constant_label
+  value: none; a single element carries no order or direction
+  summary: Neither time, precedence, nor position relates anything here, because there is
+    only one piece of content and one answer.
+- task_id: copy
+  value: positional order, read and written left to right
+  summary: The sequence is ordered and that order must be respected, but the order carries
+    no time, precedence, or causality; it is simply which slot comes first.
+- task_id: dyck_balanced_parentheses
+  value: strictly ordered and directed; an opening bracket always precedes its partner
+  summary: Reversing the row destroys it. Order is the carrier of the whole structure, and
+    no pairing may run backwards.
+- task_id: fictional_ontology_cot
+  value: directed and one-way; the chain must be walked from the person outward
+  summary: '"X is Y." licenses moving from X to Y and not the reverse, so a sentence found
+    by matching on its object rather than its subject leads nowhere.'
+- task_id: gridworld_detour_planning
+  value: neighbour links run both ways, so any step can be retraced, but the answer is an
+    ordered walk
+  summary: The map itself carries no direction, and the ordering that matters exists only
+    in the plan, where each move is taken from wherever the previous one landed.
+- task_id: horn_forward_chaining
+  value: directed from conditions to conclusion, with a precedence order the listing does
+    not show
+  summary: A rule can only be applied after both of its conditions hold, which imposes a partial
+    order on the applications that has nothing to do with the printed order.
+- task_id: iterated_string_replace
+  value: strictly chronological and one-way
+  summary: 'The instruction order fixes the sequence of states and steps are not in general
+    reversible: deleting text or collapsing two pieces into one destroys information, so the
+    finished string does not determine what came before it.'
+- task_id: label_anchor_feature_match
+  value: unordered in every respect
+  summary: Permuting the labelled records, or the tokens inside any list, leaves the required
+    answer unchanged. Nothing is chronological, directed, or precedence-based.
+- task_id: listops_nested_prefix
+  value: values flow from the leaves up to the root; operand order does not matter
+  summary: Each group's value is determined before its parent's and passes one way, upward.
+    All four operator rules are insensitive to the order of their operands, so permuting siblings
+    leaves the answer unchanged.
+- task_id: majority
+  value: unordered; shuffling the sequence leaves the answer unchanged
+  summary: Neither time nor precedence relates the symbols, and the line order is an arbitrary
+    presentation choice rather than part of the structure.
+- task_id: markov_first_rewrite
+  value: 'two directed orders decide the answer: earliest rule in the list, leftmost occurrence
+    in the string'
+  summary: Both selections scan from the beginning and stop at the first hit, so both the
+    rule list and the string are read with a definite direction. Neither choice is reversible
+    or symmetric.
+- task_id: passkey_retrieval
+  value: positional only, and the position does not affect the answer
+  summary: The sole ordering fact is where the sentence sits among the filler. That offset
+    is drawn at random and the same sentence yields the same answer wherever it lands.
+- task_id: random_label
+  value: none; a single drawn element carries no order or direction
+  summary: Neither time, precedence, nor position relates anything, because the instance holds
+    one piece of content and one independently drawn answer.
+- task_id: relabeled_cyclic_row_completion
+  value: the combination is symmetric and the symbols form a closed cycle; printed order is
+    meaningless
+  summary: Swapping the two inputs of any equation leaves the result unchanged. The table
+    is built so that there is a symbol which, combined with itself over and over, steps through
+    every symbol of the table in turn and returns to where it started.
+- task_id: reverse_sequence
+  value: strictly positional, with the required direction opposite to the reading direction
+  summary: Order is the whole content of the task, and the direction in which the items must
+    be produced is exactly the reverse of the direction in which they arrive.
+- task_id: sat_dpll_trace
+  value: the formula is order-free in meaning but order-sensitive in the required record;
+    the record itself is strictly chronological
+  summary: Whether the formula can be satisfied does not depend on the order the clauses are
+    printed in, nor on the order of parts within a clause. The record does, because the procedure
+    resolves ties by reading from the first clause onward.
+- task_id: scan_command_to_actions
+  value: ordered and directed; the two joining words differ only by which side comes first
+  summary: Positions matter throughout. "and" and "after" carry exactly the same pair of operands
+    and differ solely in the order their action lists are laid out, so direction is the entire
+    content of that choice.
+- task_id: tfidf_rank_documents
+  value: unordered; permuting documents or tokens leaves every score and the answer unchanged
+  summary: Token order inside a document does not affect counting, and reordering the lines
+    would not affect the answer either, because the tie-break reads the identifier rather
+    than the position in the listing.
+- task_id: tree_next_hop_search
+  value: directed from parent to child, recoverable from the order of the two labels in an
+    edge
+  summary: Direction is carried entirely by which label comes first, since nothing else distinguishes
+    the two. No time, precedence, or reversibility is involved, and reading an edge backwards
+    silently inverts its meaning.
+- task_id: variable_tracing
+  value: directed references that can only be followed one way, laid out so definitions precede
+    uses
+  summary: Each reference points from a newly bound name back to a name bound earlier, and
+    resolving must run in that direction. The listing respects that direction, so the chain
+    is read backwards relative to the order the lines appear in.
+- task_id: xor_parity
+  value: unordered; reversing or shuffling the row leaves the answer unchanged
+  summary: No bit precedes, causes, or scopes over another. Position exists in the text but
+    carries no meaning for the result.
+- task_id: year_span_greater_than
+  value: directed; the comparison runs from the start year to the end year and swapping them
+    flips the answer
+  summary: The relation is antisymmetric, so which number occupies which role is the whole
+    of the question. The sentence also describes a span in time, but that chronology is only
+    a restatement of the same comparison.

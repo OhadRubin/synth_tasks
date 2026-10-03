@@ -1,0 +1,128 @@
+axis: target_operation
+factor: composition_form
+axis_frame: Target operation describes the abstract relation from latent input to required
+  answer. The axis is about the kind of computation the task requests, the result orientation,
+  how suboperations compose, how state participates, which algebraic properties matter, and
+  how many valid outputs exist.
+factor_description: How primitive operations combine into the full mapping. Composition may
+  be atomic, sequential, recursive, join-based, parse-then-execute, search-then-project, closure-based,
+  or otherwise structured so earlier subresults feed later steps.
+tasks:
+- task_id: associative_recall
+  value: atomic; a single step with no intermediate results
+  summary: Match the asked key, then emit the digit beside it. There is no first stage whose
+    result a second stage consumes.
+- task_id: babi_counting
+  value: sequential accumulation; each qualifying sentence extends a total carried forward
+  summary: Steps compose by feeding one growing value, so there is no separate later stage
+    consuming an earlier stage's output, but there are as many steps as contributions.
+- task_id: babi_multi_hop
+  value: sequential join; the first lookup supplies the key for the second
+  summary: The two steps cannot be reordered or run independently, since the person's name
+    is unknown until the possession sentence has been found.
+- task_id: babi_single_hop
+  value: sequential; a filter feeds a recency choice
+  summary: Two steps that must happen in order - first restrict to the asked person, then
+    choose the last of those. Neither step alone determines the answer.
+- task_id: bounded_tiny_python_execution
+  value: sequential; each statement transforms the state the previous one left
+  summary: Steps chain end to end, a loop repeats a chain of steps a fixed number of times,
+    and a conditional chooses which of two steps joins the chain.
+- task_id: constant_label
+  value: atomic; there are no steps to compose
+  summary: One character is emitted directly. There is no first stage whose result a second
+    stage would consume.
+- task_id: copy
+  value: atomic; one step applied uniformly at every position
+  summary: There is no first stage whose result a second stage consumes. Reading a digit and
+    emitting it is a single step, repeated once per position with no interaction between repetitions.
+- task_id: dyck_balanced_parentheses
+  value: sequential reduction followed by a reversing read-out
+  summary: 'Two stages, the second consuming the first: first the row is folded down to the
+    pending items, then those items are converted and emitted in reverse.'
+- task_id: fictional_ontology_cot
+  value: sequential; each conclusion about the person is the key for the next lookup
+  summary: The output of one step is exactly the input of the next, and the steps cannot be
+    reordered or carried out in parallel.
+- task_id: gridworld_detour_planning
+  value: search first, then project the found route into moves
+  summary: 'Two stages, the second consuming the first: locate the sequence of cells, then
+    convert each step between consecutive cells into the letter for its direction.'
+- task_id: horn_forward_chaining
+  value: iteration to a fixed point, followed by a single lookup
+  summary: The lookup cannot be done early, because a rule printed anywhere in the listing
+    may still add the queried statement on a later sweep.
+- task_id: iterated_string_replace
+  value: sequential; each step consumes the previous step's whole result
+  summary: There is one pipeline with two to eight stages and no branching. A stage cannot
+    be evaluated until the one before it has produced its complete output.
+- task_id: label_anchor_feature_match
+  value: two steps, where the first step's output selects what the second reads
+  summary: Locating the shared token comes first, and its identity determines which label
+    line to copy. Neither step can be carried out without the other.
+- task_id: listops_nested_prefix
+  value: recursive; each group's value becomes an operand of the group above
+  summary: One rule is applied over and over at different levels, with the results of deeper
+    applications feeding shallower ones. The depth setting is exactly how many times that
+    feeding happens along the longest chain.
+- task_id: majority
+  value: repeated accumulation followed by a single comparison at the end
+  summary: One primitive step is applied once per symbol, all feeding the same tally, and
+    exactly one further step turns the tally into an answer. There is no chain of distinct
+    stages.
+- task_id: markov_first_rewrite
+  value: 'a pipeline of three stages: filter the rules, locate the leftmost match, then splice
+    and copy'
+  summary: Each stage consumes the previous one's result, and the last stage cannot start
+    until both earlier decisions are settled. Exactly one rewrite is performed, so no output
+    ever feeds back to the beginning.
+- task_id: passkey_retrieval
+  value: two steps in sequence, locate then copy
+  summary: The second step consumes the output of the first, in that the copy starts where
+    the match ended, but there is no branching, recursion or third stage.
+- task_id: random_label
+  value: atomic; there are no steps to compose
+  summary: One character is produced in a single move, with no first stage whose result a
+    second stage would consume.
+- task_id: relabeled_cyclic_row_completion
+  value: two stages, first narrowing the listing to the row and then taking the symbol the
+    row has not produced
+  summary: The second stage cannot begin before the whole listing has been read, since a later
+    equation may supply the only occurrence of a symbol as an input or as a result.
+- task_id: reverse_sequence
+  value: atomic; one index rule applied independently at every position
+  summary: There is no first stage whose result a second stage consumes. Each answer position
+    is determined directly by one input position and by nothing else.
+- task_id: sat_dpll_trace
+  value: recursive; deduce to a standstill, test, guess, recurse, undo, guess the opposite
+  summary: Each guess opens a subproblem of exactly the same shape, so the record is the in-order
+    flattening of a recursion that can be several levels deep before it returns.
+- task_id: scan_command_to_actions
+  value: parse into segments, evaluate each, then fold the results together from the right
+  summary: Each segment independently becomes an action list. Those lists are then combined
+    one joining word at a time, starting from the rightmost, so each step consumes the result
+    of the step before. Because grouping is to the right, a joining word's second operand
+    is the entire remainder of the command rather than just the next segment.
+- task_id: tfidf_rank_documents
+  value: a four-stage pipeline where each stage needs the previous one finished
+  summary: Document frequencies must be complete before any weight exists, weights before
+    any score, and every score before the sort can start. The stages cannot be interleaved
+    or reordered.
+- task_id: tree_next_hop_search
+  value: search then project
+  summary: Two stages that cannot be collapsed - establish the connection between start and
+    goal, then discard everything about it except the first move. The second stage is trivial
+    and the first carries all the work.
+- task_id: variable_tracing
+  value: sequential; each lookup's result is the next lookup's key
+  summary: The mapping is the same primitive composed with itself as many times as there are
+    references. The number of compositions is exactly what the settings vary.
+- task_id: xor_parity
+  value: sequential fold, each bit updating the running result
+  summary: The same one-step update is applied once per position, with each step consuming
+    the previous result. No separate stages or subresults exist.
+- task_id: year_span_greater_than
+  value: atomic; one comparison, which reduces in practice to the last two digits
+  summary: There is no first stage whose result a second stage consumes. Because both years
+    always share their first two digits, the comparison can be settled on the remaining two
+    without ever forming the full numbers.

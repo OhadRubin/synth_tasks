@@ -1,0 +1,146 @@
+axis: latent_topology
+factor: relation_arity_and_sharing
+axis_frame: Latent topology describes the abstract structure that exists before an input is
+  rendered as text. The axis is about how entities, relations, events, states, and constraints
+  are arranged, connected, ordered, nested, shared, or evolved.
+factor_description: How many arguments a relation connects and how much structure is reused
+  across relations. This includes unary labels, binary edges, higher-arity relations, hyperedges,
+  shared premises, many-to-many links, and coupled factors where one element participates
+  in several constraints.
+tasks:
+- task_id: associative_recall
+  value: binary key-to-digit links, keys unique, digits reused freely
+  summary: Every key appears exactly once, while only ten digits exist, so at 16 and 64 pairs
+    many keys necessarily share the same digit. Sharing a digit does not make two keys interchangeable,
+    since only the key is matched.
+- task_id: babi_counting
+  value: three-argument pick-up events linking a person, a number, and an object kind
+  summary: Selecting the contributing events needs two of those three arguments at once, the
+    person and the object kind, while the third is the value being summed. Movement events
+    are a separate two-argument relation that shares only the person.
+- task_id: babi_multi_hop
+  value: two binary relations sharing one person as the hinge between them
+  summary: The person appears as an argument of both the possession link and the movement
+    link, and that shared argument is the only thing that joins them. Rooms and objects are
+    reused freely across people without creating any connection.
+- task_id: babi_single_hop
+  value: binary person-to-room links ordered by position, with rooms shared freely
+  summary: Each person occupies one room at a time while a room may hold any number of people,
+    so knowing who else is in a room says nothing about who is asked about.
+- task_id: bounded_tiny_python_execution
+  value: each assignment relates one written variable to one or two read variables and a constant;
+    conditions relate two
+  summary: 'Arities are small and fixed, but sharing is heavy: the same few names appear throughout,
+    so most statements are tied to most others through the variables they have in common.'
+- task_id: constant_label
+  value: a unary constant; no relation holds between any two things
+  summary: The answer is attached to the family rather than to any argument, so there are
+    no edges, no shared premises, and no coupled constraints.
+- task_id: copy
+  value: unary; one digit per position, with digit values repeating freely
+  summary: Each position carries a single label and no relation joins two positions. Since
+    ten values are spread over up to 128 slots, the same digit occurs many times, and two
+    occurrences differ only in where they sit.
+- task_id: dyck_balanced_parentheses
+  value: binary pairing, with each opening bracket claimed at most once
+  summary: One closing bracket discharges exactly one opening bracket and no bracket is shared
+    between pairs. The unmatched openings are precisely those left without a partner when
+    the row ends.
+- task_id: fictional_ontology_cot
+  value: one two-argument relation; each intermediate category is used exactly twice, once
+    on each side
+  summary: Every category on the chain is the object of one sentence and the subject of another,
+    and no other word in the instance is both. That pattern is a reliable structural signature
+    of chain membership, independent of the person or the question.
+- task_id: gridworld_detour_planning
+  value: two-place adjacency between neighbouring open cells, each cell shared by up to four
+    such links
+  summary: Every relation in the instance joins two cells that touch edge to edge, and a cell
+    in the middle of the corridor takes part in several of them, which is what makes a junction
+    a decision point.
+- task_id: horn_forward_chaining
+  value: exactly two conditions and one conclusion per rule, with conditions reused across
+    rules
+  summary: Each always-given helper statement is a condition of one chain rule and often of
+    irrelevant rules as well, and the chain's own statements are freely reused as conditions
+    of irrelevant rules, so the relevant and irrelevant parts share material rather than sitting
+    apart.
+- task_id: iterated_string_replace
+  value: each instruction pairs a piece of text to find with a piece to substitute, all acting
+    on one shared string
+  summary: The pair is fixed literal text, but the object every instruction acts on is the
+    same running string, so each step's output is the next step's input and nothing is ever
+    applied in isolation.
+- task_id: label_anchor_feature_match
+  value: a list-to-label link plus a token-to-label link; the relevant token is shared by
+    two lists, or three at the largest setting
+  summary: At the two smaller settings each label has one list, so the relevant token occurs
+    twice in total. At the largest setting each label has two lists, so it occurs three times.
+- task_id: listops_nested_prefix
+  value: each operator takes two or three operands; no group is shared
+  summary: A group serves exactly one parent, so no value is used in two places and nothing
+    can be reused or memoised. Arity is capped at three so that a six-level expression still
+    fits comfortably on one line.
+- task_id: majority
+  value: one-argument labels only; no relations at all
+  summary: Each position carries a single mark and participates in no relation with any other
+    position, so there is nothing shared, joined or reused.
+- task_id: markov_first_rewrite
+  value: binary pattern-to-replacement pairs, patterns distinct within an instance, no sharing
+    between rules
+  summary: Each rule connects exactly two letter strings and stands alone. No two rules share
+    a pattern, no rule maps a pattern to itself, and nothing is reused across rules.
+- task_id: passkey_retrieval
+  value: a single two-part binding of a name to a value
+  summary: One name is bound to one digit string and no element participates in a second relation,
+    so nothing is shared or reused across the instance.
+- task_id: random_label
+  value: a unary label with no relation to anything
+  summary: The answer attaches to the instance without taking an argument, so there are no
+    edges, no shared premises, and no coupled constraints.
+- task_id: relabeled_cyclic_row_completion
+  value: three-place facts joining two inputs to a result, with the row's left input shared
+    by all of them
+  summary: The shared left symbol is precisely what marks an equation as part of the row.
+    Each symbol of the table turns up many times across the row in different positions, as
+    a right input in one equation and as a result in another.
+- task_id: reverse_sequence
+  value: one-argument items, plus a one-to-one mapping between input and answer positions
+  summary: Each item carries a single mark. The only relation is between a position and its
+    mirror, which pairs every position with exactly one other and shares nothing.
+- task_id: sat_dpll_trace
+  value: three-argument clauses with heavy variable sharing
+  summary: Each clause constrains three variables jointly, and each variable participates
+    in roughly thirteen clauses, so one assignment can complete several clauses and push several
+    others toward forcing or toward conflict simultaneously.
+- task_id: scan_command_to_actions
+  value: two-argument joining words and one-argument modifiers, with no shared parts
+  summary: Each joining word takes a segment and a remainder; each modifier attaches to exactly
+    one motion word. No segment is an argument to two joining words and nothing is reused
+    across the command.
+- task_id: tfidf_rank_documents
+  value: count relations tying a document and a token to a number, with tokens shared across
+    many documents
+  summary: A query token shared by many documents weighs little and one held by a single document
+    weighs the whole corpus size. That sharing is exactly what sets the weight, so whether
+    one document holds a token changes the score of every other document.
+- task_id: tree_next_hop_search
+  value: binary edges only, with each node having exactly one parent and internal nodes sharing
+    themselves between two children
+  summary: The single-parent property is what makes the route unique and what makes walking
+    upward from the goal deterministic. The only sharing is a parent reached by both of its
+    children from below.
+- task_id: variable_tracing
+  value: binary bindings, each name bound once, each chain name referenced by at most one
+    later line
+  summary: No two lines bind the same name and no two lines refer to the same name, so the
+    reference structure is a single path with no fan-in or fan-out. Digits may repeat across
+    the unreferenced lines, since only ten exist.
+- task_id: xor_parity
+  value: a single relation whose arguments are the whole row at once
+  summary: Rather than many small relations, there is one constraint tying all 16, 64, or
+    128 bits to the answer, and every bit participates in it exactly once.
+- task_id: year_span_greater_than
+  value: one binary relation over two numbers, with nothing reused
+  summary: A single comparison connects exactly two values, neither of which participates
+    in any other constraint, so there are no shared premises or coupled factors.

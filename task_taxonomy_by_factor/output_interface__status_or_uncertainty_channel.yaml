@@ -1,0 +1,124 @@
+axis: output_interface
+factor: status_or_uncertainty_channel
+axis_frame: 'Output interface describes the answer form the task requires. The axis is about
+  how the computed result becomes visible: cardinality, syntax, ordering, process detail,
+  normalization, length, and uncertainty or status channels.'
+factor_description: How the interface expresses abstention, insufficiency, confidence, distributions,
+  multiple valid answers, or mandatory-answer constraints. This factor describes auxiliary
+  answer states beyond the primary content channel.
+tasks:
+- task_id: associative_recall
+  value: none; an answer always exists and is always required
+  summary: The asked key is always one of the listed keys, so there is no "not present" case
+    and no way to abstain.
+- task_id: babi_counting
+  value: none; a total always exists and is always required
+  summary: The person asked about always picked the asked object up at least twice, so there
+    is no zero-or-unknown case, no way to abstain, and no confidence to express.
+- task_id: babi_multi_hop
+  value: none; the object is always placed and an answer is always required
+  summary: Both supporting sentences are guaranteed to be present, so there is no case where
+    the object's room is unknown, and no way to abstain or express doubt.
+- task_id: babi_single_hop
+  value: none; a correct room always exists and is always required
+  summary: The person asked about always moved at least once in the story, so there is no
+    unknown case, no way to abstain, and no confidence to express.
+- task_id: bounded_tiny_python_execution
+  value: none; the program always terminates and always prints
+  summary: Loops have fixed iteration counts and nothing can fail, so there is no error case,
+    no non-termination case, and no way to abstain.
+- task_id: constant_label
+  value: none; an answer always exists and is always required
+  summary: The answer is defined for every instance and there is no way to abstain, flag insufficiency,
+    or express a distribution over answers.
+- task_id: copy
+  value: none; an answer always exists and is always required
+  summary: Every sequence has a well-defined reproduction, so there is no missing case, no
+    partial-credit channel, and no way to abstain or flag uncertainty.
+- task_id: dyck_balanced_parentheses
+  value: none; a completion always exists and is always unique
+  summary: The generator guarantees at least one bracket is left open and that the row is
+    completable, so there is no empty answer, no impossible case, and no abstention.
+- task_id: fictional_ontology_cot
+  value: two verdict words, with False meaning simply that the claim does not follow
+  summary: Nothing in an instance ever contradicts the asked claim; when the answer is False
+    it is because the chain reaches a different property. There is no "cannot tell" option
+    and no way to abstain.
+- task_id: gridworld_detour_planning
+  value: none; the goal is always reachable and a plan is always required
+  summary: There is no unreachable case to report, no way to express doubt, and no option
+    to answer that no route exists.
+- task_id: horn_forward_chaining
+  value: none; the negative verdict is a definite claim rather than an admission of not knowing
+  summary: There is no way to abstain and no confidence channel. Answering no asserts that
+    the statement cannot be reached at all, which requires having exhausted the rules rather
+    than merely having failed to find a route.
+- task_id: iterated_string_replace
+  value: none; the program always finishes and an answer is always required
+  summary: Every program terminates after its listed instructions and the finished string
+    is required to be non-empty, so there is no undefined case, no empty answer, and no way
+    to abstain.
+- task_id: label_anchor_feature_match
+  value: none; exactly one label is correct and it always exists
+  summary: The final list always shares a token with the labelled ones, so there is no "no
+    match" case, no confidence figure, and no way to abstain.
+- task_id: listops_nested_prefix
+  value: none; every expression evaluates and an answer is always required
+  summary: All four rules are defined for every operand list that can occur, so there is no
+    undefined case, no abstention, and no way to signal partial confidence.
+- task_id: majority
+  value: none; ties are excluded by construction so an answer always exists
+  summary: Sequences with equal counts are discarded when the instance is built, so there
+    is no "no majority" case to report, no confidence to express and no way to abstain.
+- task_id: markov_first_rewrite
+  value: none as a separate channel; the nothing-applies case is signalled by copying the
+    input out unchanged
+  summary: There is no way to say that no rule matched other than reproducing the string,
+    so recognising that case and executing the long copy cannot be separated in the output.
+    Abstention is not available and an answer is always required.
+- task_id: passkey_retrieval
+  value: none; the sentence is always present and an answer is always required
+  summary: Every instance contains the statement exactly once, so there is no missing-value
+    case, no contradiction to report, and no way to abstain.
+- task_id: random_label
+  value: none; one character must be produced even though nothing determines it
+  summary: The format has no way to abstain, to flag that the answer is undetermined, or to
+    report both characters as equally likely, which is the honest description of the situation.
+- task_id: relabeled_cyclic_row_completion
+  value: none; the missing entry always exists and is always determined
+  summary: Exactly one entry of the row is withheld and the remaining entries pin it down,
+    so there is no abstention, no ambiguity to report, and no instance where the question
+    has no answer.
+- task_id: reverse_sequence
+  value: none; an answer always exists and is always required
+  summary: Every sequence has a reversal, so there is no ill-formed case to report, no confidence
+    to express and no way to abstain or answer partially.
+- task_id: sat_dpll_trace
+  value: two verdict words and nothing else; no abstention
+  summary: UNSAT is a substantive answer meaning no assignment satisfies the formula, not
+    a refusal to answer. There is no confidence figure, no "unknown", and no case where the
+    record may be left incomplete.
+- task_id: scan_command_to_actions
+  value: none; every command has an answer and it is always required
+  summary: Commands are always well formed under the rules, so there is no ill-formed case
+    to report and no way to abstain or express doubt.
+- task_id: tfidf_rank_documents
+  value: none; a complete ranking always exists and is always required
+  summary: Every query token is guaranteed to sit in at least one document, so no weight is
+    ever undefined. There is no way to abstain, to express doubt, or to report a tie as unresolved.
+- task_id: tree_next_hop_search
+  value: none; the goal is always reachable and an answer is always required
+  summary: The goal is drawn from the tree the edges describe, so there is no unreachable
+    case, no way to abstain, and no confidence to express.
+- task_id: variable_tracing
+  value: none; the asked name always resolves to a digit
+  summary: Every chain ends at a digit and the asked name is always the end of the chain,
+    so there is no unresolvable case, no missing-name case, and no way to abstain.
+- task_id: xor_parity
+  value: none; the answer is always defined and always required
+  summary: Every row has a determinate count of 1s, so there is no tie, no undefined case,
+    no confidence to express, and no way to abstain.
+- task_id: year_span_greater_than
+  value: none; the two years are never equal, so one of the two labels is always right
+  summary: The difference between the years is at least 1 at every setting, which removes
+    the case where neither answer applies. There is no confidence channel and no way to abstain.

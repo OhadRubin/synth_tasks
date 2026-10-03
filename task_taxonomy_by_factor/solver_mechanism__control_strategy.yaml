@@ -1,0 +1,134 @@
+axis: solver_mechanism
+factor: control_strategy
+axis_frame: Solver mechanism describes the machinery an exact solution would use under the
+  task assumptions. The axis is about memory form, control flow, access pattern, update discipline,
+  primitive routines, search policy, optimization policy, and resource scaling.
+factor_description: The high-level flow of solver execution. A solver may stream, revisit
+  the input, recurse, maintain an agenda, iterate to a fixed point, simulate transitions,
+  branch over alternatives, or backtrack through choices.
+tasks:
+- task_id: associative_recall
+  value: one pass over the listing, or a second look after reading the question
+  summary: No recursion, iteration to convergence, or simulation is involved; the listing
+    is scanned and the match reported.
+- task_id: babi_counting
+  value: a single forward pass adding as it goes
+  summary: Nothing recurses, revisits, backtracks, or iterates to convergence. Each sentence
+    is examined once and either adds to the total or is dropped.
+- task_id: babi_multi_hop
+  value: two passes over the story, or one forward pass building both maps
+  summary: Nothing recurses, iterates to convergence, or backtracks. The only demand is that
+    the story be traversable twice, or that both relations be recorded during a single traversal.
+- task_id: babi_single_hop
+  value: one forward pass writing each event, or a backward scan from the question
+  summary: Reading forwards, each sentence overwrites a slot. Reading backwards from the question,
+    the first sentence naming the asked person is the answer and the rest can be skipped.
+- task_id: bounded_tiny_python_execution
+  value: simulate the statements in order, repeating loop bodies and following the selected
+    branch
+  summary: The solver walks the program, re-entering a loop body once per iteration and entering
+    exactly one side of each conditional. No backtracking or exploration of alternatives is
+    involved.
+- task_id: constant_label
+  value: emit immediately, without reading the input
+  summary: There is no scanning, revisiting, recursion, or simulation. The answer can be produced
+    before the input has been looked at.
+- task_id: copy
+  value: a single streaming pass from left to right
+  summary: Nothing is revisited, recursed into, or iterated to convergence. The input is consumed
+    once and the answer is emitted as it goes.
+- task_id: dyck_balanced_parentheses
+  value: one streaming pass over the row, then an unwinding pass over what remains
+  summary: Nothing is revisited, no branch is explored, and no fixed point is iterated to;
+    the row determines every step as it is read.
+- task_id: fictional_ontology_cot
+  value: read all the sentences, then walk forward from the person until a property is reached
+  summary: Two phases with no branching, no revisiting, and no iteration to convergence. The
+    stopping condition is recognisable from the word itself, since only properties end the
+    chain.
+- task_id: gridworld_detour_planning
+  value: expand outwards from the start until the goal is met, or explore and back out of
+    dead ends
+  summary: Either discipline works, and both require revisiting the map many times; what neither
+    can do is walk forward committing to one move at a time.
+- task_id: horn_forward_chaining
+  value: sweep the whole rule listing repeatedly until a full sweep adds nothing new
+  summary: One pass is not sufficient, because a rule may become applicable only after a rule
+    printed below it has fired. An agenda keyed on newly added statements reaches the same
+    result with less rereading.
+- task_id: iterated_string_replace
+  value: simulate the program step by step, rescanning the whole string at each step
+  summary: The answer cannot be streamed while the instructions are being read, since a later
+    instruction may change text that an earlier one already settled. Each step is a fresh
+    full pass over the current string.
+- task_id: label_anchor_feature_match
+  value: one pass to build the map, then one pass over the final list to find the hit
+  summary: No recursion, backtracking, or iteration to convergence is involved. A solver allowed
+    to re-read the prompt after seeing the final list could instead hold the 16 query tokens
+    and scan back.
+- task_id: listops_nested_prefix
+  value: recursive descent, or one pass that folds each group when its closing bracket arrives
+  summary: 'Either formulation works: descend into a group and return its value, or stream
+    the tokens and collapse the topmost group as soon as it closes. No revisiting or iteration
+    to convergence is needed.'
+- task_id: majority
+  value: one streaming pass, then one comparison
+  summary: The input can be consumed left to right without ever looking back, and nothing
+    is revisited, recursed over or iterated to convergence.
+- task_id: markov_first_rewrite
+  value: scan the rules in order until the first that matches, then make one pass emitting
+    the string with a single splice
+  summary: The first stage stops at the first hit, and the second stage streams through the
+    string once. There is no recursion, no iteration to convergence, and no revisiting of
+    a decision once made.
+- task_id: passkey_retrieval
+  value: a single streaming pass that latches the value when the marker appears
+  summary: There is no recursion, iteration to convergence or simulation. A solver able to
+    look back could equally postpone the search until after reading the question.
+- task_id: random_label
+  value: guess; no procedure beats answering with either character
+  summary: There is no scanning, revisiting, recursion, or simulation that improves on chance,
+    because there is nothing in the instance to process.
+- task_id: relabeled_cyclic_row_completion
+  value: one pass over the listing once the question is known, or hold the listing and look
+    back
+  summary: The question comes last, so a reader going strictly left to right does not learn
+    which left symbol matters until every equation has already gone by and must therefore
+    retain all of them.
+- task_id: reverse_sequence
+  value: read to the end, then emit backwards
+  summary: Output cannot begin until the input is exhausted, so a solver either buffers everything
+    or repeatedly looks back at earlier positions from the end inwards.
+- task_id: sat_dpll_trace
+  value: repeated passes to a standstill, then branch, then undo and branch the other way
+  summary: The solver alternates between deducing everything that follows from the current
+    values and making one guess when nothing more follows, unwinding whenever a clause comes
+    out entirely false.
+- task_id: scan_command_to_actions
+  value: one pass to split into segments, then a right-to-left fold over the joining words
+  summary: A left-to-right reader cannot begin emitting, since a joining word may send the
+    first segment's actions to the end. The command must be taken in whole before the first
+    action name is known.
+- task_id: tfidf_rank_documents
+  value: read the query, pass over the corpus for the weights, pass again for the scores,
+    then sort
+  summary: Two aggregation passes are needed because a weight cannot be known before the last
+    document is seen. No recursion, simulation, or iteration to convergence is involved.
+- task_id: tree_next_hop_search
+  value: walk upward from the goal to the root, or search downward from the start with backtracking
+  summary: The two directions are not equally hard. Upward there is exactly one choice at
+    each level and the walk finishes in as many steps as the depth. Downward there are two
+    branches at every level, so a wrong guess must be detected and undone.
+- task_id: variable_tracing
+  value: one pass to collect the bindings, then follow references until a digit turns up
+  summary: The second stage repeats a fixed step and halts on the type of what it finds, rather
+    than after a known number of iterations. There is no branching, convergence test, or backtracking.
+- task_id: xor_parity
+  value: one streaming pass, never revisiting a position
+  summary: The row is consumed left to right in a single sweep, with no recursion, backtracking,
+    iteration to convergence, or second look.
+- task_id: year_span_greater_than
+  value: a single streaming pass with no revisiting
+  summary: The two numbers arrive in the order the comparison needs them, so the sentence
+    can be read once and the label emitted at the end. There is no recursion, iteration, branching
+    over alternatives, or backtracking.

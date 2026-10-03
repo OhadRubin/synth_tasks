@@ -1,0 +1,117 @@
+axis: solver_mechanism
+factor: update_discipline
+axis_frame: Solver mechanism describes the machinery an exact solution would use under the
+  task assumptions. The axis is about memory form, control flow, access pattern, update discipline,
+  primitive routines, search policy, optimization policy, and resource scaling.
+factor_description: How intermediate values and world states change during solving. This factor
+  captures pure accumulation, overwrites, append-only histories, scoped bindings, reversible
+  updates, rollback, destructive mutation, and related state-management choices.
+tasks:
+- task_id: associative_recall
+  value: entries are added once and then only read
+  summary: No binding is replaced, retracted, or rolled back at any point.
+- task_id: babi_counting
+  value: pure accumulation; nothing is replaced or undone
+  summary: Values are only ever added to the running total. No earlier contribution is revised,
+    retracted, or rolled back at any point in the story.
+- task_id: babi_multi_hop
+  value: append only; nothing relevant is replaced
+  summary: The carrier's single move and single pick-up are written once and never revised,
+    so no overwrite, rollback, or scoped binding is involved.
+- task_id: babi_single_hop
+  value: destructive overwrite; the earlier room is discarded
+  summary: No history is retained, nothing is appended, and nothing is rolled back; each write
+    replaces what was there.
+- task_id: bounded_tiny_python_execution
+  value: destructive overwrite; no history, no rollback
+  summary: Writing a variable discards its previous value permanently. The one bookkeeping
+    rule is that a loop counter is removed from the state when its loop ends.
+- task_id: constant_label
+  value: none; nothing changes during solving
+  summary: There are no intermediate values to accumulate, overwrite, scope, or roll back,
+    since the answer is produced in one step.
+- task_id: copy
+  value: append-only; each emitted digit is final
+  summary: No output is revised, retracted, or rolled back, and no intermediate value is overwritten
+    during solving.
+- task_id: dyck_balanced_parentheses
+  value: destructive; removed items are gone and are never rolled back
+  summary: There is no history of past states to consult, no undo, and no scoped binding that
+    could restore a discarded item.
+- task_id: fictional_ontology_cot
+  value: one register overwritten at each step; the map is read only
+  summary: No listed sentence is ever modified or removed, and the only thing that changes
+    during solving is which word the walk currently stands on.
+- task_id: gridworld_detour_planning
+  value: cells are marked reached once and not revised; the way back is written once per cell
+  summary: Nothing has to be retracted during a breadth-first exploration. Exploring by hand
+    instead means undoing moves on leaving a dead end, which is the one place rollback appears.
+- task_id: horn_forward_chaining
+  value: append-only; once a statement is added it stays
+  summary: No overwrite, retraction, or rollback happens at any point, so a solver never has
+    to remember a previous version of its state.
+- task_id: iterated_string_replace
+  value: destructive; the buffer is rebuilt at each step and the old contents dropped
+  summary: No history has to be kept to produce the answer and no step is ever undone, so
+    a solver that tracks only the current string loses nothing.
+- task_id: label_anchor_feature_match
+  value: entries added once and then only read
+  summary: No token's label is ever revised or retracted, and no record supersedes an earlier
+    one.
+- task_id: listops_nested_prefix
+  value: an open group accumulates operands, then collapses to one value and is discarded
+  summary: Values are written once and never revised, and a group's frame is released as soon
+    as its result has been handed to its parent.
+- task_id: majority
+  value: pure accumulation; the tally only ever advances
+  summary: No value is overwritten, retracted or rolled back, and there is no point at which
+    an earlier update would have to be undone.
+- task_id: markov_first_rewrite
+  value: a single destructive splice on the copy; everything else is copied verbatim
+  summary: One window of three characters is dropped and a replacement written in its place,
+    which relocates the tail of the string. Nothing is rolled back, revised, or revisited
+    afterwards.
+- task_id: passkey_retrieval
+  value: written once and then only read
+  summary: The value is captured at the single point where the marker matches and it is never
+    revised, since no later statement can contradict it.
+- task_id: random_label
+  value: none; nothing changes during solving
+  summary: There are no intermediate values to accumulate, overwrite, scope, or roll back,
+    since no derivation runs at all.
+- task_id: relabeled_cyclic_row_completion
+  value: pure accumulation; a name once recorded is never removed
+  summary: Both collections are append-only, so no revision, rollback, or scoped binding is
+    involved at any point.
+- task_id: reverse_sequence
+  value: written once and read once; nothing is revised
+  summary: No stored item is replaced, retracted or rolled back, and each is consumed exactly
+    once as it is emitted.
+- task_id: sat_dpll_trace
+  value: extend along a branch, restore the saved snapshot on failure
+  summary: Values are never revised in place while a branch runs. They are only added, and
+    then dropped in a block when the guess that introduced them is abandoned.
+- task_id: scan_command_to_actions
+  value: pure accumulation; lists are joined and never edited
+  summary: Once a segment's action list is computed it is never revised. Combination creates
+    a new longer list rather than modifying an existing one in place.
+- task_id: tfidf_rank_documents
+  value: append-only tallies; no value is retracted or revised
+  summary: Counters only rise, and each score is written once and then read repeatedly during
+    the comparison.
+- task_id: tree_next_hop_search
+  value: the map is built once and then only read
+  summary: No entry is replaced, retracted, or rolled back. The only thing that changes while
+    solving is which label the walk currently sits on.
+- task_id: variable_tracing
+  value: pure accumulation; a binding is written once and afterwards only read
+  summary: No value is replaced, retracted, or rolled back at any point, and no bookkeeping
+    beyond the growing map is required.
+- task_id: xor_parity
+  value: in-place overwrite of the one held value
+  summary: Each step replaces the accumulator with its update; no history is kept, and no
+    rollback or scoped binding ever occurs.
+- task_id: year_span_greater_than
+  value: none; both values are read once and never revised
+  summary: No intermediate value is written, replaced, or rolled back, since the answer is
+    produced directly from the two numbers as they are read.

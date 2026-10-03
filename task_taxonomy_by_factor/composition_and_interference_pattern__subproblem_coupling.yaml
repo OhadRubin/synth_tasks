@@ -1,0 +1,137 @@
+axis: composition_and_interference_pattern
+factor: subproblem_coupling
+axis_frame: Composition and interference pattern describes how relevant pieces combine within
+  one instance and how competing pieces affect that combination. The axis is about dependency
+  shape, depth, distractor source, evidence placement, conflict resolution, coupling among
+  subproblems, and query structure.
+factor_description: How strongly intermediate subproblems affect one another. Coupling may
+  be independent, shared through variables or premises, accumulated through counters, shaped
+  by destructive updates, connected by feedback loops, or cascaded so early results alter
+  later operations.
+tasks:
+- task_id: associative_recall
+  value: independent; the pairs do not affect one another
+  summary: Each binding stands alone, and getting one wrong says nothing about the rest.
+- task_id: babi_counting
+  value: independent contributions accumulated into one value
+  summary: Each sentence can be judged on its own without reference to any other, but they
+    all land in the same total, so a single missed or double-counted sentence corrupts the
+    answer.
+- task_id: babi_multi_hop
+  value: cascaded; the second lookup depends entirely on the first
+  summary: The name found in the first step is the key used in the second, so getting the
+    carrier wrong makes the room wrong even if the second lookup is performed perfectly.
+- task_id: babi_single_hop
+  value: independent across people, cancelling within a person
+  summary: Tracking one person tells you nothing about another. Within one person's chain
+    each event completely erases the effect of the one before it.
+- task_id: bounded_tiny_python_execution
+  value: tightly coupled; one wrong intermediate value corrupts everything downstream
+  summary: Because the same few variables are read and rewritten throughout, a single slip
+    early on propagates into the printed values through every later statement that touches
+    that variable, and can also flip a branch.
+- task_id: constant_label
+  value: none; there are no subproblems
+  summary: The task is not divisible into parts, so nothing can share a variable with, accumulate
+    into, or cascade onto anything else.
+- task_id: copy
+  value: independent by rule, coupled through place-keeping
+  summary: No digit's value affects any other's, so the subproblems are logically independent.
+    In practice a solver that loses count at one position shifts every position after it,
+    so errors propagate through the shared read pointer rather than through the data.
+- task_id: dyck_balanced_parentheses
+  value: tightly coupled; one mistake changes every state that follows
+  summary: Because the pile is threaded through the whole row, a wrongly handled symbol leaves
+    the pending items wrong for the rest of the instance and corrupts the entire answer.
+- task_id: fictional_ontology_cot
+  value: fully cascaded; one wrong step sends the whole remaining chain elsewhere
+  summary: Since each lookup uses the result of the previous one, a single mis-selected sentence
+    makes every later derivation sentence wrong as well as the verdict.
+- task_id: gridworld_detour_planning
+  value: every move constrains the next; one wrong turn invalidates all that follows
+  summary: Because moves are taken from wherever the previous ones ended, an early mistake
+    leaves the rest of the plan describing a walk from the wrong cell, so partial credit does
+    not survive it.
+- task_id: horn_forward_chaining
+  value: the chain steps are strictly sequential while the irrelevant rules are independent
+    of everything
+  summary: Getting one chain step wrong destroys every later step and therefore the answer,
+    whereas any irrelevant rule can be applied or skipped with no effect on the verdict.
+- task_id: iterated_string_replace
+  value: fully cascaded; one wrong step corrupts every state after it
+  summary: Steps are not independent, since a step can create or destroy the text a later
+    step looks for, and the two largest bins are required to contain at least one such dependency.
+    Getting an early step wrong therefore usually changes what the later ones do rather than
+    leaving a local error.
+- task_id: label_anchor_feature_match
+  value: independent; the labelled records do not affect one another
+  summary: Each record contributes its own binding and nothing else, so misreading one says
+    nothing about the rest and only matters if it is the one that shares a token with the
+    final list.
+- task_id: listops_nested_prefix
+  value: cascaded; every group's value is consumed by the group above it
+  summary: A mistake deep inside propagates upward through every enclosing group, though the
+    largest and smallest rules can absorb it when the wrong value is not the one that survives,
+    which makes errors intermittent rather than uniformly fatal.
+- task_id: majority
+  value: coupled through a single shared tally
+  summary: Each symbol's contribution is independent of the others' in isolation, yet all
+    of them meet in one number, so a single miscount anywhere is indistinguishable from a
+    different input.
+- task_id: markov_first_rewrite
+  value: the copy depends entirely on the selection; a wrong rule or position makes the answer
+    wrong throughout
+  summary: The selection decides what is inserted and where, and because a replacement can
+    change the string's length it also shifts the position of every character after the edit.
+    There is no way to be partly right about the selection.
+- task_id: passkey_retrieval
+  value: none; there is only one subproblem
+  summary: The instance decomposes into a single find-and-copy step, so no intermediate result
+    influences another.
+- task_id: random_label
+  value: none; there are no subproblems
+  summary: The task is not divisible into parts, so nothing can share a variable with, accumulate
+    into, or cascade onto anything else.
+- task_id: relabeled_cyclic_row_completion
+  value: tightly coupled; every entry of the row is load-bearing for the single conclusion
+  summary: The entries are individually independent facts, but the elimination consumes all
+    of them at once, so overlooking a single equation leaves at least two symbols consistent
+    with what is shown and the answer undetermined.
+- task_id: reverse_sequence
+  value: independent per position, but coupled through keeping the count aligned
+  summary: Getting one item wrong does not change what belongs in any other slot, yet an omitted
+    or doubled item shifts every remaining item by one and so spoils the rest of the answer.
+- task_id: sat_dpll_trace
+  value: tightly cascaded; one value can force a chain of others or turn a distant clause
+    into a conflict
+  summary: A single guess frequently triggers several deductions in a row, and each of those
+    can complete or break a clause printed far away from it, so an error at one step invalidates
+    everything after it.
+- task_id: scan_command_to_actions
+  value: segment results are computed independently and coupled only through placement
+  summary: Getting one segment's action list wrong does not corrupt any other segment's, but
+    a joining word misread anywhere in the chain relocates a whole block of actions, so errors
+    in assembly propagate widely.
+- task_id: tfidf_rank_documents
+  value: tightly coupled; whether one document holds a token changes every other document's
+    score
+  summary: A token's weight is the corpus size divided by how many documents hold it, so adding
+    it to one more document lowers what it is worth everywhere. The final ordering then compares
+    all the scores at once.
+- task_id: tree_next_hop_search
+  value: cascaded; one wrong step puts the rest of the walk in the wrong subtree
+  summary: The steps are not independently checkable. An error early on leads to a route that
+    is entirely consistent edge by edge yet ends nowhere near the goal, and the output gives
+    no place to show that.
+- task_id: variable_tracing
+  value: fully coupled along the chain; one wrong step invalidates all later ones
+  summary: Each lookup consumes the previous lookup's result, so an error at any step carries
+    through to the end and cannot be recovered by the remaining steps.
+- task_id: xor_parity
+  value: fully coupled through one running value
+  summary: Each prefix result feeds the next step, so a single mistake anywhere propagates
+    through to the final answer and cannot be corrected later.
+- task_id: year_span_greater_than
+  value: none; there is a single step
+  summary: With one comparison and no intermediate results, there is nothing for a subproblem
+    to be coupled to and no error that could propagate.

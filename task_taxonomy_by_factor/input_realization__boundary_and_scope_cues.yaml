@@ -1,0 +1,157 @@
+axis: input_realization
+factor: boundary_and_scope_cues
+axis_frame: Input realization describes the concrete textual form used to present an underlying
+  task instance to the model. The axis is about how the same latent task structure can be
+  rendered as text, including choices about format, serialization, boundaries, order, linguistic
+  style, and surface regularity.
+factor_description: The cues that mark where units begin and end, which pieces belong together,
+  and how far a variable, group, field, or subexpression extends. These cues may be carried
+  by punctuation, whitespace, indentation, labels, quoting, line breaks, tags, layout, or
+  other surface conventions that make grouping and scope recoverable from text.
+tasks:
+- task_id: associative_recall
+  value: equals sign inside a pair, single space between pairs, question mark after the asked
+    key, newlines between labelled lines
+  summary: A key is recognisable as the text left of an equals sign, and its value as the
+    single digit right of it. Keys are letters only and values are digits only, so the two
+    roles never look alike.
+- task_id: babi_counting
+  value: a line break per event, a full stop per sentence, and one numeral per pick-up sentence
+  summary: The person is the first word, the object kind is the last word before the full
+    stop, and the number sits between the verb and the object. A pick-up sentence is the only
+    kind containing a digit, so the digit itself is a cue to which template is in play.
+- task_id: babi_multi_hop
+  value: a line break per event, a full stop per sentence, and the verb marking which template
+    a sentence follows
+  summary: The person is the first word and the object or room is the last word before the
+    full stop. The verb in the middle is the only cue to which of the two relations a sentence
+    asserts, and reading it wrongly means reading the whole sentence wrongly.
+- task_id: babi_single_hop
+  value: a line break per event, a full stop per sentence, and the section words "Story",
+    "Question" and "Answer"
+  summary: The person is the first word of a sentence and the room is the last word before
+    the full stop, so both roles are recoverable from position alone.
+- task_id: bounded_tiny_python_execution
+  value: line breaks between statements, four extra spaces per nesting level, a colon ending
+    each block header, parentheses grouping arithmetic
+  summary: A block's extent is recoverable only from indentation, since nothing marks where
+    it closes. The word "else" written back at the header's indentation is what ends the first
+    branch, and parentheses fix the grouping of every expression so no operator-precedence
+    judgement is needed.
+- task_id: constant_label
+  value: newlines between the lines, a colon after each label, one space before the value
+  summary: 'The boundaries are as simple as they can be: everything after the colon and the
+    space on a line is that line''s value, and the line ends it.'
+- task_id: copy
+  value: single spaces between digits, labels and line breaks between the sections
+  summary: The unit is one character wide and nothing spans more than one character, so no
+    bracket, quote, or indentation is needed. The labels and newlines are the only markers
+    that say where the input ends and the answer begins.
+- task_id: dyck_balanced_parentheses
+  value: the brackets themselves are the only scope cue, with single spaces between them
+  summary: A scope opens at an opening bracket and closes at the matching closing bracket
+    of the same kind; there are no labels, tags, or indentation, and the row deliberately
+    stops before all scopes have closed.
+- task_id: fictional_ontology_cot
+  value: a full stop closes each sentence, a capital letter opens the person's name, and section
+    labels with newlines split the block
+  summary: Sentences run together on a single line, so the full stop is the only separator
+    between them. Capitalisation marks the person, who is the subject of exactly one sentence.
+- task_id: gridworld_detour_planning
+  value: line breaks end map rows, spaces separate cells, and each cell's meaning is its single
+    character
+  summary: Because every cell occupies the same width, cells in the same column line up vertically,
+    and that alignment is the only thing that makes a cell's neighbour above or below recoverable
+    from the text.
+- task_id: horn_forward_chaining
+  value: line breaks between rules, an ampersand between the two conditions, an arrow before
+    the conclusion, and section labels
+  summary: Everything left of the arrow is a condition and the single name right of it is
+    the conclusion. Every rule has exactly two conditions, so the shape never varies and there
+    is nothing to parse beyond the two marks.
+- task_id: iterated_string_replace
+  value: one instruction per line, its two arguments quoted and comma-separated inside parentheses
+  summary: Quoting is what makes the extent of a piece of text recoverable, since a pattern
+    is otherwise indistinguishable from surrounding letters, and it is what makes a deletion
+    visible as two adjacent quote marks with nothing between them. Blank lines and headings
+    separate the sections.
+- task_id: label_anchor_feature_match
+  value: line breaks separate records, a section word and colon open every line, and a different
+    section word marks the final list
+  summary: A reader tells a list from a label by which word opens the line, and tells the
+    question from the examples by the word being different. Nothing inside a line marks any
+    token as special.
+- task_id: listops_nested_prefix
+  value: square brackets around every group, single spaces between all tokens
+  summary: How far a group extends is recoverable only by pairing its opening bracket with
+    the matching closing one, since all brackets look alike and nothing else marks depth.
+    Spaces make each operator name and each digit a separate token.
+- task_id: majority
+  value: single spaces between symbols; newlines separate the labelled lines
+  summary: Every symbol is one character wide and separated identically from its neighbours,
+    so there is nothing to parse and no unit larger than a single symbol.
+- task_id: markov_first_rewrite
+  value: a heading for the rules, a number and a dot per rule, an arrow inside a rule, labels
+    before the string and before the answer
+  summary: Line breaks separate rules, the arrow separates the pattern from its replacement,
+    and the numbering makes the priority order explicit rather than merely implied by layout.
+    Inside the string there are no cues whatsoever.
+- task_id: passkey_retrieval
+  value: the phrase "The passkey is" opens the relevant span and a full stop closes it
+  summary: The sentence is set off by being the only run of letters in the context and by
+    ending in a full stop, and its value is the only group of digits written without spaces
+    between them. Newlines separate the labelled parts.
+- task_id: random_label
+  value: newlines between the lines, a colon after each label, one space before the value
+  summary: Everything after the colon and the space on a line is that line's value, and the
+    line break ends it. No other grouping or scoping convention is used.
+- task_id: relabeled_cyclic_row_completion
+  value: a semicolon and space between equations, an operator sign between the two inputs,
+    an equals sign before the result
+  summary: Those three marks are the only structure present. There are no line breaks, brackets,
+    or headers inside the listing, so equations are separated purely by punctuation.
+- task_id: reverse_sequence
+  value: single spaces between items; newlines separate the labelled lines
+  summary: Every item is one character wide and separated identically from its neighbours,
+    so item boundaries are unambiguous while positions are not marked at all.
+- task_id: sat_dpll_trace
+  value: zero ends a clause, a minus sign negates, single spaces separate items, newlines
+    separate the labelled lines
+  summary: 'These are the only cues available. The depth reached in the search is never written
+    down: it has to be reconstructed by counting guesses against undo markers, since nothing
+    brackets or indents a branch.'
+- task_id: scan_command_to_actions
+  value: joining words end a segment; modifiers attach to the motion word immediately before
+    them
+  summary: There are no brackets, commas or other separators. A segment starts at a motion
+    word and runs up to the next joining word, and a direction or repetition word belongs
+    to the closest motion word on its left.
+- task_id: tfidf_rank_documents
+  value: colon after a document identifier, single spaces between tokens, one document per
+    line, blank lines between sections
+  summary: A token belongs to whichever document's line it sits on, so the line break is the
+    only thing that separates one document's contents from another's. Blank lines separate
+    the corpus from the query and the query from the formula.
+- task_id: tree_next_hop_search
+  value: a repeated single-character marker starting each edge, single spaces between tokens,
+    and line breaks between sections
+  summary: There is no bracketing, comma, or per-edge delimiter. An edge is recognisable only
+    because the marker appears every third token, and every label is exactly two characters,
+    so the grouping has to be recovered by counting rather than by punctuation.
+- task_id: variable_tracing
+  value: one statement per line, an equals sign with a space either side, a question mark
+    after the asked name
+  summary: The newline is the only statement separator, and the equals sign separates the
+    name being bound from the value it gets. A value written as a digit is a literal and a
+    value written as a letter is a reference, so the character class alone says which kind
+    of line it is.
+- task_id: xor_parity
+  value: single spaces between bits, line breaks between the labelled lines
+  summary: Each bit is one character wide, so the space separators are redundant; there are
+    no delimiters marking where a group of bits begins or ends because no such groups exist.
+- task_id: year_span_greater_than
+  value: the phrases "from the year" and "to the year", which say which number is the start
+    and which the end
+  summary: The roles are marked by prepositions rather than by punctuation or position alone,
+    and the same two prepositions are used in the rule statement, so the rule and the sentence
+    share their vocabulary for the two roles.

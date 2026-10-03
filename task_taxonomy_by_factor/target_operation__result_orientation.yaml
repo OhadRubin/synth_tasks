@@ -1,0 +1,127 @@
+axis: target_operation
+factor: result_orientation
+axis_frame: Target operation describes the abstract relation from latent input to required
+  answer. The axis is about the kind of computation the task requests, the result orientation,
+  how suboperations compose, how state participates, which algebraic properties matter, and
+  how many valid outputs exist.
+factor_description: The role the answer plays with respect to the input. The operation may
+  ask for recognition, labeling, extraction, construction, completion, transformation, scoring,
+  sorting, selection, or optimization.
+tasks:
+- task_id: associative_recall
+  value: extraction; the answer is copied out of the input
+  summary: The emitted digit appears verbatim in the listing; nothing is computed, combined,
+    or rewritten.
+- task_id: babi_counting
+  value: construction; the answer is computed and generally appears nowhere in the story
+  summary: Unlike a copying task the emitted number is produced by arithmetic. Any match between
+    the total and a number written in the story is a coincidence.
+- task_id: babi_multi_hop
+  value: extraction of a word, construction of the claim behind it
+  summary: The room word is copied verbatim from a sentence in the story, but the statement
+    that the object is in that room appears nowhere and has to be derived.
+- task_id: babi_single_hop
+  value: extraction; the answer word is copied out of the story
+  summary: The emitted room word appears verbatim in the deciding sentence. Nothing is computed,
+    counted, or rewritten to produce it.
+- task_id: bounded_tiny_python_execution
+  value: construction; the answer is computed and appears nowhere in the input
+  summary: The three printed digits are generally not present anywhere in the program text,
+    so nothing can be copied out. They exist only after the whole program has been run.
+- task_id: constant_label
+  value: labelling with a fixed label
+  summary: The answer neither extracts anything from the input nor computes anything from
+    it; it labels the instance with a character decided before the instance existed.
+- task_id: copy
+  value: reproduction; the answer is the input itself
+  summary: Nothing is labelled, scored, selected, or constructed from parts. The required
+    output is the very object that was presented, which makes the answer fully determined
+    by the surface of the input.
+- task_id: dyck_balanced_parentheses
+  value: completion; the answer continues the input into a finished whole
+  summary: Nothing is copied out of the input; the emitted characters are the partners of
+    input characters, produced in an order the input never displays.
+- task_id: fictional_ontology_cot
+  value: constructing the derivation, with the verdict as its final word
+  summary: Half the derivation sentences are copied from the input and half are built by combining
+    the person with a word found further along the chain; the verdict is the only genuinely
+    new content.
+- task_id: gridworld_detour_planning
+  value: construction; the plan is built, not extracted from the input
+  summary: The move letters never appear anywhere in the map, so every emitted character is
+    produced by the solving process rather than copied.
+- task_id: horn_forward_chaining
+  value: recognition; the answer labels the queried statement as reachable or not
+  summary: Nothing is extracted from the input and nothing is constructed. The output is a
+    verdict about the input as a whole.
+- task_id: iterated_string_replace
+  value: transformation; the answer is the input after the rewrites
+  summary: The answer is built from the starting string by successive substitutions and usually
+    contains stretches that no instruction wrote and stretches that were inserted by the program,
+    so it is neither copied nor computed from scratch.
+- task_id: label_anchor_feature_match
+  value: extraction; the answer is copied out of the prompt
+  summary: The emitted letter already appears earlier in the prompt as the label of some record;
+    nothing is computed, combined, or rewritten.
+- task_id: listops_nested_prefix
+  value: construction; a value computed rather than located
+  summary: Under the largest, smallest, and median rules the answer happens to equal some
+    digit that appears in the expression, but which one is only known after evaluating; under
+    the modular sum the answer can be a digit that appears nowhere in the input.
+- task_id: majority
+  value: selection; the answer names one of the two symbols already present
+  summary: Nothing new is constructed. The emitted character occurs many times in the input,
+    and the task is deciding which of the two it should be.
+- task_id: markov_first_rewrite
+  value: transformation; the answer is a modified copy of the input
+  summary: The answer is neither a label about the input nor a fragment extracted from it.
+    It is the input restated with one local change.
+- task_id: passkey_retrieval
+  value: extraction; the answer is lifted out of the input
+  summary: The five digits appear verbatim in the context. Nothing is combined, counted, rewritten
+    or inferred.
+- task_id: random_label
+  value: labelling, with the label independent of what is labelled
+  summary: Nothing is extracted from the input and nothing is computed from it. A character
+    is attached to the instance without reference to its content.
+- task_id: relabeled_cyclic_row_completion
+  value: completion; the answer fills a hole in a partially shown structure
+  summary: Nothing is scored, ranked, or transformed. The output is the piece that was removed
+    from the input before it was written down.
+- task_id: reverse_sequence
+  value: transformation; the input is reproduced in a new arrangement
+  summary: Nothing is selected, labelled, scored or summarised. The whole input is carried
+    through and only its layout differs.
+- task_id: sat_dpll_trace
+  value: constructing the search record, with the verdict as its last item
+  summary: The bulk of the required output does not appear anywhere in the input; it is built
+    by carrying out the procedure. Only the individual numbers are drawn from the same alphabet
+    as the formula.
+- task_id: scan_command_to_actions
+  value: construction; the answer is built rather than found in the input
+  summary: No part of the answer appears in the command. Action names are in uppercase and
+    include turns that no single word names directly, so every emitted item is produced by
+    a rule.
+- task_id: tfidf_rank_documents
+  value: sorting; the answer is a permutation of the corpus identifiers
+  summary: Nothing is constructed and nothing is extracted beyond the identifiers, which are
+    all present in the input already. What the answer carries is the order they are placed
+    in.
+- task_id: tree_next_hop_search
+  value: selection; the answer is one of the labels already present, chosen by a reachability
+    property
+  summary: The emitted label appears in the listing, but nothing marks it out there. It is
+    singled out by a property, being the child of the start from which the goal can be reached,
+    that no local reading of the text exposes.
+- task_id: variable_tracing
+  value: extraction; the answer appears verbatim in one line of the input
+  summary: Nothing is computed, combined, or rewritten; the digit that must be emitted is
+    already present as the right-hand side of the chain's first line.
+- task_id: xor_parity
+  value: labeling; the answer is computed rather than located in the input
+  summary: Although the emitted character also occurs among the input bits, it is not copied
+    from any particular position; it is derived from all of them.
+- task_id: year_span_greater_than
+  value: labelling; a binary verdict about the input
+  summary: The answer is a judgement about the pair rather than a piece of the input or a
+    construction from it, and neither year appears in the output.

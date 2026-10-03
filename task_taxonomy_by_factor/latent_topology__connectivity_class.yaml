@@ -1,0 +1,138 @@
+axis: latent_topology
+factor: connectivity_class
+axis_frame: Latent topology describes the abstract structure that exists before an input is
+  rendered as text. The axis is about how entities, relations, events, states, and constraints
+  are arranged, connected, ordered, nested, shared, or evolved.
+factor_description: How parts of the latent object are linked. This includes isolated elements,
+  maps, chains, trees, acyclic graphs, cyclic graphs, dense graphs, hypergraphs, or other
+  connection patterns that determine reachability and dependency.
+tasks:
+- task_id: associative_recall
+  value: isolated entries; no pair refers to another
+  summary: Nothing links one pair to another, so there is no path, chain, or reachability
+    question anywhere in the instance.
+- task_id: babi_counting
+  value: isolated events all feeding one counter; no event refers to another
+  summary: Nothing links one sentence to the next. The structure is a bag of increments selected
+    by a pair of keys, with no path, chain, or reachability question anywhere.
+- task_id: babi_multi_hop
+  value: one two-edge chain from object to person to room, embedded among links that connect
+    to nothing
+  summary: The relevant structure is a path of length two. Every other link in the story touches
+    a person who never carries the asked object and is therefore a dead end.
+- task_id: babi_single_hop
+  value: independent chains, one per person; events about different people never interact
+  summary: The story splits cleanly into one chain of moves per person, and the answer depends
+    on exactly one chain. Nothing links the chains together.
+- task_id: bounded_tiny_python_execution
+  value: a directed dependency graph in which each assignment links back to the statements
+    that last wrote the variables it reads
+  summary: Statements are not isolated. Every read reaches back to the most recent write of
+    that name, producing chains that also converge, since one assignment can read two variables
+    written at different earlier points.
+- task_id: constant_label
+  value: isolated; the input character and the answer are not linked
+  summary: Nothing connects the two parts of the instance, so there is no path, reachability,
+    or dependency question anywhere in the family.
+- task_id: copy
+  value: isolated positions; no digit refers to or constrains another
+  summary: Nothing links one position to another, so no path, reachability, or dependency
+    question exists. Each slot was filled independently of the rest.
+- task_id: dyck_balanced_parentheses
+  value: nested matching; each closing bracket links to exactly one earlier opening one
+  summary: 'The links never cross: if one span begins inside another it must also end inside
+    it, which makes the whole row a forest of nested spans rather than a general graph.'
+- task_id: fictional_ontology_cot
+  value: a single chain of 2 to 5 links, plus 2 to 8 disconnected single links
+  summary: No unrelated sentence has a chain word as its subject and none has a chain category
+    as its object, so the unrelated sentences never join the chain and never join each other.
+    An unrelated sentence can end on the same property the chain ends on, but since no property
+    is ever the subject of a sentence, that extends no path.
+- task_id: gridworld_detour_planning
+  value: 'the open cells form a tree: one winding corridor with dead-end side corridors and
+    no loops'
+  summary: Because there are no cycles, there is exactly one route between any two open cells
+    that does not retrace itself, and every wrong turning ends in a dead end that has to be
+    backed out of. In the sampled instances about twelve, twenty-six and forty-three of the
+    cells were open across the three settings.
+- task_id: horn_forward_chaining
+  value: a directed acyclic graph in which each rule links two statements to a third
+  summary: The relevant part is a single path of such links from the starting statements to
+    the query. The irrelevant part hangs off that path as a fan of extra conclusions that
+    nothing else consumes.
+- task_id: iterated_string_replace
+  value: a chain of states, each produced from the one before it
+  summary: The states run in a single line from the start to the finish with no branching,
+    no alternatives, and no merging, so there is exactly one route from the starting string
+    to the answer.
+- task_id: label_anchor_feature_match
+  value: isolated lists joined only by one shared token
+  summary: The single repetition is the only link anywhere in the instance. Remove it and
+    the lists have nothing at all in common.
+- task_id: listops_nested_prefix
+  value: a rooted tree in which every group has exactly one parent
+  summary: Groups nest without ever overlapping or being shared, so there are no cycles, no
+    alternative routes to the root, and exactly one path from any group up to the answer.
+- task_id: majority
+  value: isolated elements; nothing links one symbol to another
+  summary: No symbol refers to, constrains or modifies any other, so there is no path, chain
+    or reachability question anywhere in the instance.
+- task_id: markov_first_rewrite
+  value: rules independent of one another except for their priority order; each linked to
+    the string only by whether its pattern occurs
+  summary: No rule refers to another and no replacement is a pattern of some other rule that
+    will then run, so there is no chain or reachability structure. The only relation in play
+    is substring containment.
+- task_id: passkey_retrieval
+  value: an isolated fact; nothing links to anything
+  summary: There is exactly one piece of information and it stands alone, so no path, chain
+    or reachability question exists anywhere in the instance.
+- task_id: random_label
+  value: isolated; the input character and the answer are independent draws
+  summary: Nothing links the two parts of the instance, so no path, reachability, or dependency
+    question exists anywhere in the family.
+- task_id: relabeled_cyclic_row_completion
+  value: a complete map from every ordered pair of symbols to a symbol, and with unrelated
+    equations present, two such maps sharing nothing
+  summary: Within a table every symbol combines with every other, so connectivity is total.
+    The second table is built over a separate set of names, so no equation ever links the
+    two and no chain of equations can cross between them.
+- task_id: reverse_sequence
+  value: isolated items, related only by their positions in a line
+  summary: No item refers to, constrains or modifies any other. The only structure is the
+    ordering the line imposes.
+- task_id: sat_dpll_trace
+  value: a dense structure in which each clause links three variables and each variable sits
+    in about thirteen clauses
+  summary: Three parts per clause times 17, 26, or 34 clauses, divided across 4, 6, or 8 variables,
+    gives close to 13 occurrences per variable at every setting. Constraints therefore overlap
+    heavily and assigning one variable touches many clauses at once.
+- task_id: scan_command_to_actions
+  value: a chain that nests to the right, each link joining one segment to the rest of the
+    command
+  summary: Every joining word connects the segment on its left to the whole remainder, producing
+    a right-leaning chain rather than a flat list or a branching structure.
+- task_id: tfidf_rank_documents
+  value: a bipartite link structure between documents and query tokens
+  summary: Each document is linked to each query token by a count. Documents are never linked
+    directly to one another; they meet only through the shared weights and the final comparison
+    of scores.
+- task_id: tree_next_hop_search
+  value: a complete rooted tree in which every internal node has exactly two children
+  summary: The tree holds seven, thirty-one, or sixty-three nodes across the three settings.
+    Because it is complete and every node has exactly one parent, any two nodes are connected
+    by exactly one route.
+- task_id: variable_tracing
+  value: one directed path from the asked name down to a digit, plus isolated single-node
+    assignments
+  summary: The chain is a simple path with no branches and no cycles. The unreferenced assignments
+    are never pointed at and never point anywhere, so they are disconnected from the path
+    and from each other.
+- task_id: xor_parity
+  value: isolated elements; no bit refers to or constrains another
+  summary: The bits are drawn independently and nothing links one to another, so there is
+    no path, reachability, or dependency structure to recover.
+- task_id: year_span_greater_than
+  value: a single comparison link between the two numbers
+  summary: Nothing else in the instance is connected to anything. There is no path, reachability
+    question, or second relation to consider.

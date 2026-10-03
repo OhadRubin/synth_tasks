@@ -1,0 +1,137 @@
+axis: input_realization
+factor: surface_genre
+axis_frame: Input realization describes the concrete textual form used to present an underlying
+  task instance to the model. The axis is about how the same latent task structure can be
+  rendered as text, including choices about format, serialization, boundaries, order, linguistic
+  style, and surface regularity.
+factor_description: The overall textual genre or artifact type used to expose the task instance.
+  This can range from compact symbolic notation to prose, records, tables, source code, formulas,
+  grid-like layouts, or mixed-document formats. The factor captures the kind of textual object
+  the model sees, with the requested computation handled by the target_operation axis.
+tasks:
+- task_id: associative_recall
+  value: a labelled block with a one-line symbolic listing and an English question
+  summary: 'Three labelled lines: a task tag, "Pairs:" followed by the listing, and "Question:"
+    followed by a key, then "Answer:".'
+- task_id: babi_counting
+  value: a short narrative of one-sentence events with an English question after it
+  summary: Four labelled parts appear in order - a task tag, "Story:" followed by the sentences,
+    "Question:" asking how many of one object a person is carrying, then "Answer:".
+- task_id: babi_multi_hop
+  value: a short narrative of one-sentence events with an English question after it
+  summary: Four labelled parts appear in order - a task tag, "Story:" followed by the sentences,
+    "Question:" followed by "Where is the" and an object, then "Answer:".
+- task_id: babi_single_hop
+  value: a short narrative of one-sentence events with an English question after it
+  summary: Four labelled parts appear in order - a task tag, "Story:" followed by the sentences,
+    "Question:" followed by "Where is" and a name, then "Answer:".
+- task_id: bounded_tiny_python_execution
+  value: program source code under one English instruction sentence
+  summary: The model sees a tag line, a sentence saying to predict what the program prints,
+    the program itself as ordinary source text, and an "Output:" label.
+- task_id: constant_label
+  value: a three-line labelled block holding one character
+  summary: A tag line naming the family, a line reading "Input:" followed by a single character,
+    and a line reading "Answer:" followed by the answer.
+- task_id: copy
+  value: a labelled block with one line of digits and its echo
+  summary: 'Three short lines: a task tag, "Input:" followed by the sequence, and "Answer:"
+    followed by the same sequence. There is no prose, table, or record structure.'
+- task_id: dyck_balanced_parentheses
+  value: a labelled block with one line of space-separated bracket characters
+  summary: 'Three lines: a tag naming the task family, a line beginning "Input:" carrying
+    the row, and an "Answer:" label. Nothing in the text states the rule in words.'
+- task_id: fictional_ontology_cot
+  value: short declarative English sentences of one fixed shape, inside labelled sections
+  summary: 'Four labelled parts: a task tag, the sentences on one line, a True-or-false question,
+    and an answer line that opens with a fixed invitation to reason step by step.'
+- task_id: gridworld_detour_planning
+  value: one plain-English rules sentence followed by a drawn map of characters
+  summary: The map is a picture made of characters rather than a list of facts, and the rules
+    sentence above it names what each character means and which four moves are allowed.
+- task_id: horn_forward_chaining
+  value: a labelled block with an explanatory sentence, a list of starting statements, a rule
+    listing, and an English question
+  summary: Four labelled parts. The explanation and the question are ordinary sentences, the
+    starting statements are one space-separated line, and the rules occupy one line each in
+    symbolic notation.
+- task_id: iterated_string_replace
+  value: a labelled block holding a starting string and a short program, one instruction per
+    line
+  summary: 'Four labelled sections separated by blank lines: a task tag, the starting string,
+    the list of instructions, and the heading under which the final string is written. The
+    instruction lines read like source code and everything else is a bare run of letters.'
+- task_id: label_anchor_feature_match
+  value: a run of labelled example records in a fixed two-line layout, closed by an unlabelled
+    one
+  summary: Each record is a line of tokens and a line holding its label. The final record
+    uses a different section word and its label line is left empty for the answer.
+- task_id: listops_nested_prefix
+  value: a labelled block holding one bracketed formula
+  summary: 'Three lines: a task tag, "Input:" followed by the whole expression on one line,
+    and "Answer:". The payload is formula notation with no prose, records, or tables.'
+- task_id: majority
+  value: a labelled block with a one-line symbolic sequence
+  summary: 'Three labelled lines: a task tag, "Input:" followed by the sequence, and "Answer:".
+    There is no prose anywhere except the labels themselves.'
+- task_id: markov_first_rewrite
+  value: a numbered instruction list followed by a labelled data line
+  summary: 'The prompt reads as a tiny program and its input: a heading, then one numbered
+    rule per line, then the string to work on under its own label and an empty label where
+    the result goes.'
+- task_id: passkey_retrieval
+  value: a labelled block whose context is digit noise with one plain English sentence embedded
+  summary: 'Four labelled parts: a task tag, "Context:" followed by the long run, "Question:"
+    followed by a fixed English question, and "Answer:". The embedded sentence is the only
+    English inside the context.'
+- task_id: random_label
+  value: a three-line labelled block holding one character
+  summary: A tag line naming the family, a line reading "Input:" followed by a single character,
+    and a line reading "Answer:" followed by the drawn character.
+- task_id: relabeled_cyclic_row_completion
+  value: a labelled block with one long line of equations and an unfinished equation as the
+    question
+  summary: Three labels and nothing else. The entire body of evidence sits on a single line
+    however long it grows, and the question is written as an equation with its right side
+    missing.
+- task_id: reverse_sequence
+  value: a labelled block with a one-line symbolic sequence and a one-line symbolic answer
+  summary: 'Three labelled lines: a task tag, "Input:" followed by the sequence, and "Answer:"
+    followed by the reversed sequence. Input and answer are written in exactly the same style.'
+- task_id: sat_dpll_trace
+  value: a labelled block holding a compact numeric formula and a bare token sequence
+  summary: 'Three labelled lines: a task tag, "Formula:" followed by whole numbers, and "Trace:"
+    followed by the search record. No prose, tables, or code appear.'
+- task_id: scan_command_to_actions
+  value: a labelled block holding one short imperative English command and a list of capitalised
+    action names
+  summary: 'Three labelled lines: a task tag, "Input:" followed by the command, and "Answer:"
+    followed by the action names. The command reads as an ordinary instruction; the answer
+    is symbolic.'
+- task_id: tfidf_rank_documents
+  value: a labelled block holding an identifier-prefixed document listing, a query line, and
+    a stated formula
+  summary: Three labelled sections separated by blank lines. The document listing is symbolic,
+    and the formula section mixes function-style notation with English phrases such as "number
+    of documents containing term".
+- task_id: tree_next_hop_search
+  value: a labelled block holding a one-line symbolic edge listing and a terse keyword question
+  summary: Three labelled parts appear in order - a task tag, "Edges:" followed by the whole
+    listing on one line, and "Question:" followed by the two keywords "start" and "goal" each
+    with a label, then "Answer:".
+- task_id: variable_tracing
+  value: a short straight-line program of assignment statements followed by an English question
+  summary: 'The body looks like source code: one statement per line, each a name, an equals
+    sign, and a value. A task tag opens the block and the labels "Question:" and "Answer:"
+    close it.'
+- task_id: xor_parity
+  value: a labelled block holding one line of space-separated bits
+  summary: 'Three lines: a tag naming the task family, a line beginning "Input:" carrying
+    the bits, and an "Answer:" label. The instance never states in words which function to
+    compute; the tag is the only cue.'
+- task_id: year_span_greater_than
+  value: one ordinary English sentence about an event, preceded by a one-sentence statement
+    of the rule
+  summary: 'The payload is prose rather than notation: a subject, a verb, and two dates in
+    a grammatical sentence ending in a full stop. A tag opens the block and the label "Answer:"
+    closes it.'

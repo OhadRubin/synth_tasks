@@ -1,0 +1,132 @@
+axis: solver_mechanism
+factor: resource_profile
+axis_frame: Solver mechanism describes the machinery an exact solution would use under the
+  task assumptions. The axis is about memory form, control flow, access pattern, update discipline,
+  primitive routines, search policy, optimization policy, and resource scaling.
+factor_description: How compute and memory requirements scale with instance size and structure.
+  This includes constant or linear memory, stack-bounded depth, table construction, sorting
+  cost, graph frontiers, branching search, and other scaling patterns tied to the solver.
+tasks:
+- task_id: associative_recall
+  value: memory and time both grow linearly with the number of pairs
+  summary: Every pair must be read, and under left-to-right reading every pair must be held
+    until the question is seen, so cost grows from 4 to 64 pairs across bins.
+- task_id: babi_counting
+  value: constant memory, time linear in the story
+  summary: One number is held whatever the setting, so cost grows only through the number
+    of sentences that have to be read and tested.
+- task_id: babi_multi_hop
+  value: time linear in the story, memory bounded by the fixed vocabularies
+  summary: Cost grows only through having to read more sentences. The number of things worth
+    remembering is capped by four people, four objects, and five rooms at both settings.
+- task_id: babi_single_hop
+  value: constant memory, time linear in the story
+  summary: Every sentence must be read, but only four values are ever held, so memory does
+    not grow between the five-sentence and twenty-sentence settings.
+- task_id: bounded_tiny_python_execution
+  value: constant memory; running time set by statements multiplied out by iteration counts
+  summary: 'Only a handful of numbers is ever stored, however long the program. Work grows
+    with the number of statements actually carried out, which nesting multiplies: a program
+    written in about twenty lines, with one loop inside another, can carry out thirty-six
+    assignments when it runs.'
+- task_id: constant_label
+  value: constant time and constant memory
+  summary: The cost of answering does not grow with anything, because the instances are all
+    the same size and the answer ignores them.
+- task_id: copy
+  value: time linear in the sequence length, memory constant
+  summary: The work per digit is fixed, so total work grows eightfold from the 16-digit bin
+    to the 128-digit bin, while the only thing that must be held is a position marker.
+- task_id: dyck_balanced_parentheses
+  value: memory bounded by the depth setting, time linear in the row length
+  summary: Storage grows only from two to eight items across the settings, while the number
+    of steps grows from nine to thirty-three.
+- task_id: fictional_ontology_cot
+  value: linear in the number of listed sentences to read, linear in the chain to walk
+  summary: Building the map costs one pass over 4 to 13 sentences, and the walk costs 2 to
+    5 lookups. Working memory beyond the map is a single word.
+- task_id: gridworld_detour_planning
+  value: work grows with the number of open cells, roughly twelve, twenty-six and forty-three
+    across the settings
+  summary: Both the search effort and the storage for the way back scale with how much of
+    the map is open, while the output grows with the route length.
+- task_id: horn_forward_chaining
+  value: memory linear in the number of statements; time up to the rule count times the chain
+    length
+  summary: At the largest setting twenty-two rules may be examined once per sweep and as many
+    as seven sweeps can be needed, because the shuffled order can place each chain rule just
+    above the one that enables it.
+- task_id: iterated_string_replace
+  value: time proportional to the number of instructions times the string length, memory proportional
+    to the longest state
+  summary: With up to eight instructions over strings that may grow to one hundred ninety-two
+    characters, the total work rises several-fold across the bins, while the space needed
+    tracks the longest string the program ever produces rather than the finished one.
+- task_id: label_anchor_feature_match
+  value: time and memory both linear in the number of tokens in the prompt, from 18 to 272
+  summary: Every labelled token must be read, and under strictly forward reading every one
+    must be retained until the final list arrives, so cost grows fifteenfold across the settings.
+- task_id: listops_nested_prefix
+  value: time linear in the number of tokens, memory proportional to nesting depth
+  summary: Each token is touched once, while the amount that must be held at once tracks the
+    depth setting rather than the expression's length, growing from two frames to six across
+    the bins.
+- task_id: majority
+  value: time linear in the length, memory only enough to hold a count
+  summary: Every symbol has to be read, so time grows from 16 to 128 steps across settings,
+    while storage grows only as fast as the number of digits needed to write the tally.
+- task_id: markov_first_rewrite
+  value: search time grows with the rule count times the string length; output size grows
+    with the string
+  summary: The worst case is checking every pattern over every position, which rises from
+    2 rules over 32 characters to 8 over 128, a sixteen-fold increase across settings. The
+    copy alone is linear in the string.
+- task_id: passkey_retrieval
+  value: time linear in the input, memory constant
+  summary: Every character has to be passed over, so cost grows from 127 to about 944 characters
+    across settings, while what must be held stays five characters throughout.
+- task_id: random_label
+  value: constant; accuracy stays at one half however much work is spent
+  summary: Cost does not grow with anything, and neither does accuracy. Extra computation
+    buys nothing, which is exactly the property the family is here to expose.
+- task_id: relabeled_cyclic_row_completion
+  value: time linear in the number of equations, memory linear in the size of the table
+  summary: The listing grows from three equations to thirty-five across the settings while
+    the state that has to be retained grows only from four names to twelve.
+- task_id: reverse_sequence
+  value: time and memory both linear in the length, with the whole input stored
+  summary: Unlike tasks that collapse their input into a small summary, this one needs storage
+    proportional to the input, growing from 16 to 128 items across settings, and emits just
+    as many items as it stored.
+- task_id: sat_dpll_trace
+  value: memory linear in the number of variables, depth bounded by it, worst-case time exponential
+  summary: In principle the search is exponential in the number of variables, but deduction
+    prunes it hard enough that records stay in the tens of items at all three settings, with
+    10 or fewer guesses in the middle of each setting's range.
+- task_id: scan_command_to_actions
+  value: time and memory both linear in the command, with the answer up to twice its length
+  summary: Parsing costs one pass. Storage is bounded by the produced action list, which stays
+    under twenty items in the longest setting and under a fifty item cap by construction.
+- task_id: tfidf_rank_documents
+  value: memory linear in corpus tokens, time linear in tokens plus the cost of sorting the
+    documents
+  summary: The token count grows from sixteen to thirty to forty-eight to eighty-four across
+    the settings, and the number of items to sort grows from four to twelve alongside it.
+- task_id: tree_next_hop_search
+  value: memory linear in the node count, time linear in the listing plus one lookup per level
+  summary: Reading the listing dominates and grows from six to sixty-two edges across the
+    settings, while the walk itself adds only two to five lookups. A downward search instead
+    risks visiting a large part of the tree before finding the goal.
+- task_id: variable_tracing
+  value: memory linear in the number of lines, time linear in lines plus chain length
+  summary: Every line must be read to build the map, and then one step is taken per reference.
+    Both stay small in absolute terms, since the largest setting has 9 lines and 4 references.
+- task_id: xor_parity
+  value: constant memory, time linear in the row length
+  summary: Storage does not grow at all between the 16-bit and 128-bit settings, while the
+    number of update steps grows in proportion to the length.
+- task_id: year_span_greater_than
+  value: constant; identical at every setting
+  summary: Every instance is the same short length with the same two numbers to compare, so
+    neither time nor memory grows as the setting gets harder. This is the one family where
+    difficulty is entirely unrelated to size.

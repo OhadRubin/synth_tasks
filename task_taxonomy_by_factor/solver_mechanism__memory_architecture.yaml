@@ -1,0 +1,135 @@
+axis: solver_mechanism
+factor: memory_architecture
+axis_frame: Solver mechanism describes the machinery an exact solution would use under the
+  task assumptions. The axis is about memory form, control flow, access pattern, update discipline,
+  primitive routines, search policy, optimization policy, and resource scaling.
+factor_description: The data structures and storage discipline needed by the solver. This
+  may involve registers, counters, buffers, stacks, queues, dictionaries, environments, tables,
+  graphs, priority queues, memo stores, or combinations chosen by the task's dependencies.
+tasks:
+- task_id: associative_recall
+  value: a table of N bindings, or one register if the listing can be re-read after the question
+  summary: Reading strictly left to right, the question arrives after the listing, so all
+    N pairs must be retained. A solver allowed to look back needs only to hold the asked key
+    and the digit it finds.
+- task_id: babi_counting
+  value: one number being accumulated, plus the two words used to test each sentence
+  summary: Nothing table-like is required if the question is known in advance. Reading forwards
+    without it, a grid of counters indexed by person and object kind suffices, bounded by
+    four people and four object kinds.
+- task_id: babi_multi_hop
+  value: two registers - the carrier's name and then the room - or one small map per relation
+  summary: Reading with the question already in hand needs almost nothing held. Reading forwards
+    without knowing the question needs a map from object to holder and a map from person to
+    room, both bounded by the fixed vocabularies.
+- task_id: babi_single_hop
+  value: one slot per person, so at most four slots
+  summary: A small map from name to current room suffices, and its size is bounded by the
+    fixed cast rather than by the length of the story.
+- task_id: bounded_tiny_python_execution
+  value: a small table of variable values plus one counter per loop currently running
+  summary: Three to five named slots holding single digits are enough, together with up to
+    two counters when loops are nested. Nothing else needs to be retained.
+- task_id: constant_label
+  value: one character held from one instance to the next
+  summary: A solver needs to remember only which character the family answers with. Nothing
+    about the instance itself has to be stored.
+- task_id: copy
+  value: a position pointer into the input; no store of the digits is needed
+  summary: 'Because the input stays visible while the answer is produced, a solver need not
+    memorise any digit. It needs one piece of state: how far it has already copied.'
+- task_id: dyck_balanced_parentheses
+  value: a pile of pending items, at most as deep as the depth setting
+  summary: The kind of each pending bracket must be stored, not just how many are pending,
+    because closing them requires reproducing their kinds in reverse.
+- task_id: fictional_ontology_cot
+  value: a map from subject word to object word, plus one register holding the current word
+  summary: The map is built once from the listed sentences; the register starts at the person's
+    name and advances one link at a time. Nothing else needs storing.
+- task_id: gridworld_detour_planning
+  value: a frontier of cells to expand, a record of cells already reached, and a link back
+    from each cell to the one before it
+  summary: The route is not known until the goal is reached, so the way back from goal to
+    start has to be stored while searching. Exploring by hand instead requires a pile of the
+    junctions still to be tried.
+- task_id: horn_forward_chaining
+  value: a set of true statements plus the rule listing, which must stay available for repeated
+    sweeps
+  summary: The set holds at most thirty-three names at the largest setting. The rules cannot
+    be discarded after one reading, because each of them may need to be re-examined after
+    every change to the set.
+- task_id: iterated_string_replace
+  value: one buffer holding the whole current string, plus the list of instructions
+  summary: 'Nothing smaller suffices: because an instruction can touch any part of the text,
+    the entire state has to be available when each step runs, and the buffer has to hold up
+    to one hundred ninety-two characters.'
+- task_id: label_anchor_feature_match
+  value: a map holding every token of the labelled lists together with its label
+  summary: The map must hold 12, 40, or 256 entries depending on the setting, since any token
+    could turn out to be the one that matters and nothing marks it in advance.
+- task_id: listops_nested_prefix
+  value: a stack of open groups, each holding its operator and the operands finished so far
+  summary: The number of frames alive at once equals the current nesting depth, so the bins
+    demand two, four, and six simultaneously suspended groups regardless of how long the expression
+    is.
+- task_id: majority
+  value: a single counter, or the running difference between the two counts
+  summary: No table, buffer or index is needed, and the sequence itself never has to be retained.
+    The counter's range grows with the sequence length, up to 128.
+- task_id: markov_first_rewrite
+  value: the rule list, a cursor into the string, and an output buffer as long as the string
+  summary: The whole string must be available to be reproduced, so memory is not constant.
+    Beyond that, only the index of the chosen rule and the position of its match need be held.
+- task_id: passkey_retrieval
+  value: one small register holding five characters
+  summary: No table, stack or index is required. Because the question is the same in every
+    instance it is effectively known before reading begins, so only the matched value has
+    to be retained.
+- task_id: random_label
+  value: none useful; nothing worth storing exists
+  summary: Neither the current instance nor any number of past instances holds information
+    about the next answer, so any store a solver builds is dead weight.
+- task_id: relabeled_cyclic_row_completion
+  value: two sets of names, or equivalently a small dictionary from right input to result
+  summary: Nothing larger is needed. Once the query's left symbol is known, every unrelated
+    equation can be dropped as it is read and the retained state never exceeds the size of
+    the table.
+- task_id: reverse_sequence
+  value: a buffer holding the entire sequence, read back from the end
+  summary: The store must hold every item, since the first one needed for output is the last
+    one read, and items are consumed in the opposite order to their arrival.
+- task_id: sat_dpll_trace
+  value: a map from variable to value, plus a stack of saved snapshots, one per open guess
+  summary: The map holds the values assigned so far; the stack holds what to restore on each
+    undo. Stack depth is bounded by the number of variables, so it reaches at most 4, 6, or
+    8.
+- task_id: scan_command_to_actions
+  value: a list of per-segment action lists plus one accumulator for the combined result
+  summary: Segments have to be held until the end of the command is reached, because combination
+    starts from the rightmost segment. The accumulator can reach the full answer length.
+- task_id: tfidf_rank_documents
+  value: a table of counts by document and query token, plus one score per document
+  summary: The counts must be retained until the weights are known, or the corpus must be
+    held so it can be re-read once they are. After the scores exist, only a list of identifier-score
+    pairs matters.
+- task_id: tree_next_hop_search
+  value: a map from each label to its parent, or from each label to its children, built from
+    one reading of the listing
+  summary: Either map suffices and both are bounded by the node count, seven to sixty-three.
+    A solver that could re-scan the listing on demand instead of storing it would need only
+    the label it has currently reached.
+- task_id: variable_tracing
+  value: a map from names to values, or one register holding the current name if the text
+    can be re-read
+  summary: Reading strictly forwards, the question arrives last, so every binding must be
+    retained. A solver allowed to look back needs only the name it is currently resolving
+    and can find that name's line by rescanning.
+- task_id: xor_parity
+  value: one bit of state
+  summary: A single register holding the parity so far is enough; no table, stack, queue,
+    or buffer of past positions is needed at any length.
+- task_id: year_span_greater_than
+  value: two small registers, or a single carried comparison across digits
+  summary: 'Holding both numbers is enough, and even that is more than needed: comparing the
+    digits left to right and stopping at the first that differs requires only the two characters
+    currently in hand.'

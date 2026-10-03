@@ -1,0 +1,122 @@
+axis: target_operation
+factor: determinacy_and_multiplicity
+axis_frame: Target operation describes the abstract relation from latent input to required
+  answer. The axis is about the kind of computation the task requests, the result orientation,
+  how suboperations compose, how state participates, which algebraic properties matter, and
+  how many valid outputs exist.
+factor_description: How many outputs count as valid and how they are selected. The operation
+  may define a unique answer, an equivalence class of acceptable answers, a tie-broken optimum,
+  nondeterministic traces, probabilistic labels, or human-judged targets.
+tasks:
+- task_id: associative_recall
+  value: one correct answer
+  summary: Keys are distinct, so exactly one digit satisfies the question.
+- task_id: babi_counting
+  value: one correct answer
+  summary: The set of contributing sentences is determined by the question and the sum of
+    their numbers is a single value, so exactly one number is correct.
+- task_id: babi_multi_hop
+  value: one correct answer
+  summary: The asked object is picked up exactly once in the story and its carrier moves exactly
+    once, so both lookups have a single hit and the answer is unique.
+- task_id: babi_single_hop
+  value: one correct answer
+  summary: Every sentence names exactly one room and the asked person has exactly one most
+    recent sentence, so the answer is unique.
+- task_id: bounded_tiny_python_execution
+  value: exactly one correct answer
+  summary: The program has no randomness, no input, and no external calls, so running it always
+    gives the same three digits.
+- task_id: constant_label
+  value: one correct answer, the same one in every instance
+  summary: The answer is decided once for the whole family, so it is fully determined before
+    the input is drawn and never varies.
+- task_id: copy
+  value: one correct answer
+  summary: Exactly one string satisfies the requirement, since the answer is fixed by the
+    input character for character with no choices anywhere.
+- task_id: dyck_balanced_parentheses
+  value: exactly one correct answer
+  summary: The pending items and their order are fully determined by the row, so only one
+    sequence of closing brackets is acceptable.
+- task_id: fictional_ontology_cot
+  value: one accepted derivation and one verdict
+  summary: Exactly one sentence has the person as its subject, and at each further step exactly
+    one sentence has the current word as its subject, so the walk never has a choice to make.
+- task_id: gridworld_detour_planning
+  value: exactly one correct plan
+  summary: 'Uniqueness is designed in and then checked: an instance is discarded unless exactly
+    one shortest walk from start to goal exists.'
+- task_id: horn_forward_chaining
+  value: one correct verdict, with the two verdicts drawn about equally often
+  summary: Each instance is built to be reachable or unreachable by a fair coin, so a solver
+    that always guesses the same way is right about half the time and any measured skill has
+    to be read against that baseline.
+- task_id: iterated_string_replace
+  value: one correct string
+  summary: The matching rule leaves no choice at any point, so a program has exactly one outcome
+    and there is no equivalence class of acceptable answers.
+- task_id: label_anchor_feature_match
+  value: one correct answer, guaranteed by the way the prompt is built
+  summary: Exactly one token of the final list occurs earlier, and where it occurs more than
+    once those occurrences all carry the same label, so no tie can arise.
+- task_id: listops_nested_prefix
+  value: one correct digit
+  summary: Each rule is a total function of its operand list, and the median's tie case is
+    settled toward the lower value, so evaluation leaves no choice open at any level.
+- task_id: majority
+  value: exactly one correct answer
+  summary: Equal counts are the only case that would admit two answers and such sequences
+    are never emitted, so one symbol is always strictly ahead.
+- task_id: markov_first_rewrite
+  value: one correct output
+  summary: Two tie-breaks, earliest rule and leftmost occurrence, together leave nothing undetermined,
+    so exactly one string is acceptable for any instance.
+- task_id: passkey_retrieval
+  value: exactly one correct answer
+  summary: The marker phrase occurs once, so a single five-digit string satisfies the question
+    and no tie-break or equivalence class arises.
+- task_id: random_label
+  value: not determined by the input; one recorded answer per instance, but it was a coin
+    flip
+  summary: Each instance has exactly one scored answer, so scoring is unambiguous, yet the
+    same input text appears with either answer across instances. There is no rule, equivalence
+    class, or tie-break that could pick correctly; both characters were equally valid until
+    one was drawn.
+- task_id: relabeled_cyclic_row_completion
+  value: exactly one valid symbol
+  summary: The withheld entry has a single correct value and the shown entries determine it
+    uniquely, so no tie-break, equivalence class, or accepted alternative arises.
+- task_id: reverse_sequence
+  value: exactly one correct answer
+  summary: A sequence has one reversal, so no equivalence class of acceptable answers and
+    no tie-break rule arises.
+- task_id: sat_dpll_trace
+  value: exactly one accepted output, although many correct searches exist
+  summary: The tie-breaking rules make the procedure deterministic, so a formula has one record.
+    A search that reached the same verdict by guessing a different variable first would be
+    logically sound and still count as wrong.
+- task_id: scan_command_to_actions
+  value: exactly one correct action sequence
+  summary: The rules assign every well-formed command a single meaning, with no ambiguity
+    to resolve and no set of equally acceptable answers.
+- task_id: tfidf_rank_documents
+  value: exactly one valid ranking, made unique by the tie-break
+  summary: Equal scores are permitted in every setting and occur in nearly every instance,
+    and the smaller-identifier rule reduces each tied group to one order.
+- task_id: tree_next_hop_search
+  value: one correct answer
+  summary: A tree has exactly one route between any two nodes, so exactly one child of the
+    start can reach the goal.
+- task_id: variable_tracing
+  value: one correct answer
+  summary: Names are distinct and each is bound once, so every name resolves along exactly
+    one path to exactly one digit.
+- task_id: xor_parity
+  value: one correct answer
+  summary: The row determines a single count of 1s, so exactly one of the two characters is
+    correct for any given instance.
+- task_id: year_span_greater_than
+  value: one correct label; equal years never occur
+  summary: Because the two years always differ, every instance has exactly one acceptable
+    answer and no tie or equivalence class arises.

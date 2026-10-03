@@ -1,0 +1,160 @@
+axis: diagnostic_capability
+factor: robustness_target
+axis_frame: Diagnostic capability describes the model ability or failure mode that a task
+  is meant to expose. The axis is about what kind of competence the instance probes, what
+  information that competence depends on, and what kind of pressure makes the competence succeed
+  or fail.
+factor_description: The stress condition under which the diagnosed behavior is expected to
+  hold. This describes what makes the instance harder while preserving the same underlying
+  capability diagnosis.
+tasks:
+- task_id: associative_recall
+  value: the answer must stay correct as the number of competing pairs grows from 4 to 16
+    to 64
+  summary: The question form never changes across bins; what changes is how many other bindings
+    must be held apart from the one asked about. At 64 pairs the keys also run past the 26
+    single letters into two-letter keys such as "bf", so keys become harder to tell apart.
+- task_id: babi_counting
+  value: correct as the story grows from five to twenty sentences and the number of contributions
+    grows with it
+  summary: The question form and the arithmetic per step never change; each step still adds
+    one, two, or three. What grows is how many steps there are and how much non-contributing
+    material sits between them.
+- task_id: babi_multi_hop
+  value: correct as distractors grow from three to eighteen sentences and the two supporting
+    sentences drift apart
+  summary: The chain being tested stays two long at both settings. What changes is how much
+    irrelevant material sits between the two links - about two sentences apart at the shorter
+    setting and about eight at the longer one, sometimes spanning the whole story.
+- task_id: babi_single_hop
+  value: correct as the story grows from five to twenty sentences
+  summary: The question form and the vocabulary never change. What grows is the number of
+    moves by other people and the number of the asked person's own earlier rooms that must
+    be discarded.
+- task_id: bounded_tiny_python_execution
+  value: exact execution as programs grow longer, gain conditionals, and nest loops
+  summary: Across the three settings the same competence is asked for under a program that
+    is straight-line, then one with a loop and a conditional, then one with loops inside loops.
+    The question and the answer format never change.
+- task_id: constant_label
+  value: the fixed answer must hold even though the input keeps changing
+  summary: The only pressure the family applies is that the visible part of the instance varies
+    from one to the next while the required answer does not. There is a single setting, so
+    nothing else is ever made harder.
+- task_id: copy
+  value: exactness must hold as the sequence grows from 16 to 64 to 128 digits
+  summary: The operation is the same in every bin and the ten possible digits never change.
+    What grows is the number of positions that have to be tracked without slipping and the
+    length of the answer that has to stay aligned with the input.
+- task_id: dyck_balanced_parentheses
+  value: correct as the deepest nesting rises from two to four to eight and the row lengthens
+    from nine symbols to thirty-three
+  summary: The rule and the alphabet never change; what grows is how many pending items must
+    be held apart at once and how many cancellations happen before the answer.
+- task_id: fictional_ontology_cot
+  value: the chain must hold as it lengthens from 2 to 5 links while unrelated sentences grow
+    from 2 to 8
+  summary: The sentence pattern, the vocabulary style, and the question wording never change
+    across settings. What changes is how far the chain runs and how much identically shaped
+    material surrounds it.
+- task_id: gridworld_detour_planning
+  value: correct as the map grows from six cells a side to ten, the route from eight moves
+    to twenty-eight, and the dead ends from two to eight
+  summary: The rules, the four moves, and the map characters are identical everywhere; what
+    grows is how far ahead the plan must reach and how many wrong turnings sit beside it.
+- task_id: horn_forward_chaining
+  value: the verdict must hold as the chain lengthens from one to six and the irrelevant rules
+    quadruple
+  summary: The question form, the rule shape, and the explanatory sentence are identical at
+    every setting. What grows is how many applications separate the starting statements from
+    the query and how many applicable but pointless rules sit between them.
+- task_id: iterated_string_replace
+  value: the exact final text must hold as the program grows from two instructions to eight
+    and the start from sixteen characters to sixty-four
+  summary: What an instruction means never changes across bins. What changes is program length,
+    string length, how many letters the strings are built from, how often a step deletes text,
+    and how often a step fires only because an earlier one prepared it.
+- task_id: label_anchor_feature_match
+  value: the binding must hold as lists grow from 6 to 16 tokens and labels from 2 to 8, with
+    the prompt growing from 18 tokens to 272
+  summary: The layout and the question never change; what changes is how many identical looking
+    tokens the one relevant occurrence must be found among and how far apart its occurrences
+    sit.
+- task_id: listops_nested_prefix
+  value: the value must stay correct as nesting deepens from two to four to six levels
+  summary: The four operator rules, the two-or-three operand count, and the digit range are
+    identical in every bin. What grows is the number of levels of partial results that must
+    be held open before the outermost operator can be applied.
+- task_id: majority
+  value: correctness as the sequence grows from 16 to 128 symbols and the margin narrows in
+    relative terms
+  summary: Longer sequences demand more updates without error, and the typical gap between
+    the two counts falls from about a quarter of the length at 16 symbols to about a thirteenth
+    at 128, so less and less slack is available for miscounting.
+- task_id: markov_first_rewrite
+  value: the answer must stay correct as the rule list grows from 2 to 8 and the string from
+    32 to 128 characters
+  summary: The rule format, the pattern length, and the answer form never change across settings.
+    What changes is how many patterns must be ruled out and how many characters must be reproduced
+    without error, and both change together.
+- task_id: passkey_retrieval
+  value: retrieval must hold as the filler grows from 127 to about 944 characters and wherever
+    the sentence sits
+  summary: Neither the sentence, the question nor the answer format changes across settings.
+    What changes is how much irrelevant material surrounds the sentence and, with it, how
+    far the sentence can be from the question.
+- task_id: random_label
+  value: none; the single setting fixes both the input alphabet and the answer set
+  summary: Nothing is ever made harder. The two-character answer set is held constant, so
+    the chance level stays at one half throughout.
+- task_id: relabeled_cyclic_row_completion
+  value: the answer must survive fresh symbol names every instance, a longer row, and a growing
+    pile of look-alike equations
+  summary: The settings run from four symbols with no unrelated equations to twelve symbols
+    with twenty-four of them, while the names themselves are redrawn for every instance so
+    that nothing memorised about a name can ever help.
+- task_id: reverse_sequence
+  value: exactness as the sequence grows from 16 to 128 items
+  summary: The rule and the alphabet never change across settings. What changes is how many
+    items have to be held intact at once and how many have to be emitted without a single
+    slip, since one wrong item makes the whole answer wrong.
+- task_id: sat_dpll_trace
+  value: exactness of the record as variables grow 4 to 6 to 8 and clauses 17 to 26 to 34
+  summary: The clause count is raised alongside the variable count so that there are about
+    4.3 clauses per variable at every setting, which is the ratio at which satisfiable and
+    unsatisfiable formulas are hardest to tell apart. Growth therefore lengthens the search
+    rather than making the verdict easier to guess.
+- task_id: scan_command_to_actions
+  value: correctness as the number of joined segments grows from one to five
+  summary: The vocabulary and the rules are identical in all three settings. What grows is
+    how many segments must be evaluated and combined, and therefore how many order decisions
+    have to come out right at once.
+- task_id: tfidf_rank_documents
+  value: the ranking must stay right as corpus size, document length, token pool, and query
+    width all grow
+  summary: Across the four settings the formula and the answer format are word for word identical;
+    what grows is that the corpus goes from four documents of four tokens to twelve documents
+    of seven, the pool from eight tokens to eighteen, and the query from two tokens to three.
+- task_id: tree_next_hop_search
+  value: correct as the route grows from two to five edges and the listing from six to sixty-two
+    edges
+  summary: The question form, the label alphabet, and the number of candidate answers all
+    stay fixed. What grows is how many edges must be chained and how much irrelevant material
+    they are buried in.
+- task_id: variable_tracing
+  value: the answer must stay correct as the chain lengthens from 1 to 2 to 4 references with
+    irrelevant assignments added alongside
+  summary: The line format, the question form, and the answer form never change across settings.
+    What changes is how many resolution steps separate the asked name from a digit, and how
+    many digit-carrying lines sit around the chain.
+- task_id: xor_parity
+  value: the answer must stay correct as the row grows from 16 to 64 to 128 bits
+  summary: The rule, the alphabet, and the answer format are identical in all three settings;
+    only the number of terms to combine changes, so longer rows demand the same computation
+    carried further without drift.
+- task_id: year_span_greater_than
+  value: the answer must stay correct as the two years close from 40 apart to as little as
+    1 apart
+  summary: The sentence, the rule, and the answer form never change across settings. What
+    changes is how much of the two numbers is identical, and therefore how fine the distinction
+    between them is.

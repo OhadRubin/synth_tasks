@@ -1,0 +1,130 @@
+axis: composition_and_interference_pattern
+factor: dependency_depth
+axis_frame: Composition and interference pattern describes how relevant pieces combine within
+  one instance and how competing pieces affect that combination. The axis is about dependency
+  shape, depth, distractor source, evidence placement, conflict resolution, coupling among
+  subproblems, and query structure.
+factor_description: The length or depth of the required dependent path. This can be measured
+  through hops, nesting, proof steps, action horizon, rewrite steps, state updates, search
+  trace depth, or another task-specific dependency measure.
+tasks:
+- task_id: associative_recall
+  value: one step
+  summary: From the asked key straight to its digit, with nothing in between.
+- task_id: babi_counting
+  value: as many addition steps as there are contributing sentences - two or three, or three
+    to six
+  summary: Depth here is the length of the sum rather than a path through the story, and it
+    is the one thing the difficulty setting genuinely lengthens.
+- task_id: babi_multi_hop
+  value: two hops, fixed at two at both settings
+  summary: Object to person is one hop and person to room is the second. This depth is held
+    constant while story length changes, which is unusual for a difficulty ladder.
+- task_id: babi_single_hop
+  value: one hop to the room, over a recency comparison across every mention
+  summary: Getting from the asked name to the room takes a single step, but choosing which
+    step requires ranking all mentions of that name by position.
+- task_id: bounded_tiny_python_execution
+  value: the number of assignments actually carried out — eight in the flat setting, several
+    dozen once loops unroll
+  summary: The chain from the initial values to the printed values is as long as the execution
+    itself. In the deepest setting an inner loop body can contribute more steps than the whole
+    written program has lines.
+- task_id: constant_label
+  value: zero steps
+  summary: No chain runs from the input to the answer, because the answer does not depend
+    on the input at any remove.
+- task_id: copy
+  value: one step per digit
+  summary: From a digit at some position to the same digit at the same position in the answer,
+    with nothing in between and no chain of intermediate values.
+- task_id: dyck_balanced_parentheses
+  value: one update per symbol, nine to thirty-three, over nesting two to eight deep
+  summary: 'There are two depth measures that both grow across settings: the length of the
+    chain of state updates and how many pending items sit on the pile at the deepest point.'
+- task_id: fictional_ontology_cot
+  value: 2, 3, or 5 links
+  summary: The chain length is exactly the depth, with no deduction possible in fewer steps
+    and none of the links skippable.
+- task_id: gridworld_detour_planning
+  value: eight, sixteen, or twenty-eight dependent moves
+  summary: The plan itself is the dependency chain, and a dead end can require exploring and
+    unwinding up to five further cells before the correct branch is found.
+- task_id: horn_forward_chaining
+  value: one, three, or six rule applications between the starting statements and the query
+  summary: This is the property that names each setting, and every positive instance is verified
+    to need precisely that many applications rather than merely at most that many.
+- task_id: iterated_string_replace
+  value: the number of instructions, at two, four, six, or eight, of which at least one to
+    four change the string
+  summary: The chain of states is exactly as long as the program, and the acceptance conditions
+    guarantee that a rising share of those steps actually take effect rather than passing
+    the string through unchanged.
+- task_id: label_anchor_feature_match
+  value: two steps
+  summary: From the final list to the token it shares with an earlier one, and from that token
+    to the label on the line below its list.
+- task_id: listops_nested_prefix
+  value: the longest chain of groups, at exactly 2, 4, or 6
+  summary: The value produced by the deepest group must pass through that many combining steps
+    before it reaches the answer, and the generator guarantees such a chain exists in every
+    instance.
+- task_id: majority
+  value: as many accumulation steps as there are symbols, all of one kind
+  summary: The dependent path runs the full length of the input, 16 to 128 steps, but no step
+    is qualitatively different from any other and none requires the result of a different
+    sort of operation.
+- task_id: markov_first_rewrite
+  value: two decisions and then one long copy; a shallow path but many steps that must each
+    be right
+  summary: The reasoning depth is fixed at every setting, which distinguishes this from tasks
+    whose difficulty is depth. What grows is the number of rules that must be checked and
+    the run of up to 128 characters that must be emitted without a mistake.
+- task_id: passkey_retrieval
+  value: one step
+  summary: From the question's wording straight to the sentence that repeats it, and from
+    there to the value, with no intermediate hop.
+- task_id: random_label
+  value: zero steps
+  summary: No chain runs from the input to the answer, because the answer does not depend
+    on the input at any remove.
+- task_id: relabeled_cyclic_row_completion
+  value: two steps deep, but as wide as the whole row
+  summary: The path from evidence to answer is short, while every one of the three to eleven
+    relevant equations has to be gathered before the final step becomes possible at all.
+- task_id: reverse_sequence
+  value: one hop per item, but the hop spans the whole input at the start
+  summary: 'No item requires reasoning through another. What is long is the reach rather than
+    the chain: the first item emitted comes from as far away as the input is long.'
+- task_id: sat_dpll_trace
+  value: 2 to 16 guesses per instance, nesting at most as deep as the variable count, with
+    runs of forced parts between them
+  summary: Across sampled instances the middle number of guesses was 6, 7, and 10 at the three
+    settings and the middle number of undo markers 3, 3, and 5. Every item depends on all
+    the items before it.
+- task_id: scan_command_to_actions
+  value: one to five segments, so up to four combination steps
+  summary: The short setting has one or two segments, the medium two or three, and the long
+    three to five, giving a dependent chain of at most four joining decisions.
+- task_id: tfidf_rank_documents
+  value: four dependent stages between reading the input and writing the answer
+  summary: Corpus-wide counting, then weighting, then within-document counting and summing,
+    then ordering. No stage can be skipped and none can be done before the one it depends
+    on.
+- task_id: tree_next_hop_search
+  value: two, four, or five edges, equal to the depth of the tree
+  summary: This is the factor the difficulty setting is built around, and it is the one quantity
+    that moves without any surface change to how a single edge looks.
+- task_id: variable_tracing
+  value: one, two, or four references, plus the final read of the digit
+  summary: Depth is exactly the setting that varies, and it is the only thing that grows about
+    the required reasoning path across the three settings.
+- task_id: xor_parity
+  value: one update per bit, so 16 to 128 steps in sequence
+  summary: Combined left to right the dependent chain is as long as the row; because the combining
+    rule is associative it could instead be combined pairwise, giving a depth of about four
+    to seven.
+- task_id: year_span_greater_than
+  value: one step
+  summary: From the two years straight to the label, with nothing in between and no intermediate
+    quantity that has to be formed first.

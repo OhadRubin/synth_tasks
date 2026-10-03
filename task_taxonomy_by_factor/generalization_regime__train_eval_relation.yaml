@@ -1,0 +1,120 @@
+axis: generalization_regime
+factor: train_eval_relation
+axis_frame: Generalization regime describes the relationship between training and evaluation
+  distributions. The axis is about which dimension shifts, how train and evaluation relate,
+  what is held out, how much support overlaps, how primitives recombine, how nuisance factors
+  are controlled, and how far evaluation moves from training.
+factor_description: The statistical relationship between the training and evaluation examples.
+  The relation may be identical-distribution sampling, stratified sampling, interpolation,
+  extrapolation, covariate shift, domain transfer, adversarial shift, or a combination of
+  these regimes.
+tasks:
+- task_id: associative_recall
+  value: training and evaluation instances are drawn the same way within a bin
+  summary: Nothing about the construction differs between the two; they differ only in which
+    random instances are drawn.
+- task_id: babi_counting
+  value: training and evaluation instances are drawn the same way within a setting
+  summary: Construction is identical on both sides; they differ only in which random stories
+    happen to be drawn.
+- task_id: babi_multi_hop
+  value: training and evaluation instances are drawn the same way within a setting
+  summary: Construction is identical on both sides; they differ only in which random stories
+    are drawn.
+- task_id: babi_single_hop
+  value: training and evaluation instances are drawn the same way within a setting
+  summary: Nothing about construction differs between the two sides; they differ only in which
+    random stories happen to be drawn.
+- task_id: bounded_tiny_python_execution
+  value: training and evaluation instances are drawn identically within a setting
+  summary: Nothing about the construction differs between the two sides; they differ only
+    in which random programs come out. The same program could in principle appear on either
+    side.
+- task_id: constant_label
+  value: identical-distribution sampling on both sides
+  summary: Training and evaluation instances are drawn in exactly the same way, differing
+    only in which random input characters come out.
+- task_id: copy
+  value: training and evaluation instances are drawn the same way within a bin
+  summary: The two sides differ only in which random sequences come up; the generator, the
+    length, and the alphabet are identical for both.
+- task_id: dyck_balanced_parentheses
+  value: training and evaluation instances are drawn identically within a setting
+  summary: The same walk process with the same ceiling and the same rejection rule produces
+    both sides; they differ only in which walks were drawn.
+- task_id: fictional_ontology_cot
+  value: identical construction on both sides within a setting
+  summary: The same generator with the same settings produces both, differing only in which
+    random words and links come up.
+- task_id: gridworld_detour_planning
+  value: training and evaluation instances are drawn identically within a setting
+  summary: The same construction with the same knobs and the same acceptance checks produces
+    both, so they differ only in which maps came out.
+- task_id: horn_forward_chaining
+  value: identical construction on both sides within a setting
+  summary: Training and evaluation instances come from the same procedure with the same parameters,
+    differing only in the random draws.
+- task_id: iterated_string_replace
+  value: training and evaluation instances are drawn the same way within a bin
+  summary: The generator, the settings, and the acceptance conditions are identical on both
+    sides; only which random starting strings and programs come up differs.
+- task_id: label_anchor_feature_match
+  value: identical construction on both sides within a setting
+  summary: Training and evaluation instances come from the same sampler with the same settings
+    and differ only in which random tokens and labels come up.
+- task_id: listops_nested_prefix
+  value: training and evaluation instances are drawn the same way within a bin
+  summary: The generator, the depth requirement, and the operator and digit pools are identical
+    on both sides; only which random trees come up differs.
+- task_id: majority
+  value: training and evaluation sequences are drawn identically within a setting
+  summary: Nothing about the construction differs between the two sides; they differ only
+    in which random sequences come out.
+- task_id: markov_first_rewrite
+  value: training and evaluation instances are drawn the same way within a setting
+  summary: The construction, the rejection rules, and the proportion of nothing-applies instances
+    are identical on both sides; only the particular random draws differ.
+- task_id: passkey_retrieval
+  value: training and evaluation instances are drawn identically within a setting
+  summary: Nothing about the construction differs between the two sides; they differ only
+    in which random filler, value and offset are drawn.
+- task_id: random_label
+  value: identical-distribution sampling on both sides, both of them pure noise
+  summary: Training and evaluation instances are drawn in exactly the same way. Since neither
+    side carries a signal, matching distributions does not make the evaluation any more answerable.
+- task_id: relabeled_cyclic_row_completion
+  value: identical construction on both sides within a setting
+  summary: Training and evaluation instances come from the same procedure with the same parameters,
+    differing only in the random draws.
+- task_id: reverse_sequence
+  value: training and evaluation sequences are drawn identically within a setting
+  summary: Nothing about the construction differs between the two sides; they differ only
+    in which random sequences come out.
+- task_id: sat_dpll_trace
+  value: identical construction on both sides within a setting
+  summary: Training and evaluation instances are drawn by the same sampler with the same settings,
+    differing only in which random formulas come up.
+- task_id: scan_command_to_actions
+  value: training and evaluation commands are drawn identically within a setting
+  summary: The two sides differ only in which random commands come out; no structural property
+    distinguishes an evaluation command from a training one.
+- task_id: tfidf_rank_documents
+  value: identical construction on both sides within a setting
+  summary: Training and evaluation instances come from the same sampler with the same parameters;
+    only the random draws differ between them.
+- task_id: tree_next_hop_search
+  value: training and evaluation instances are drawn the same way within a setting
+  summary: Construction is identical on both sides; they differ only in which random trees,
+    labellings, and goals happen to be drawn.
+- task_id: variable_tracing
+  value: training and evaluation instances are drawn the same way within a setting
+  summary: Nothing about the construction differs between the two sides; they differ only
+    in which random instances happen to be drawn.
+- task_id: xor_parity
+  value: training and evaluation instances are drawn identically within a setting
+  summary: Both sides come from the same independent coin flips at the same length, so they
+    differ only in which particular rows were drawn.
+- task_id: year_span_greater_than
+  value: training and evaluation instances are drawn the same way within a setting
+  summary: The template, the noun list, the century list, the difference range, and the balance
+    of the two answers are identical on both sides; only the particular random draws differ.

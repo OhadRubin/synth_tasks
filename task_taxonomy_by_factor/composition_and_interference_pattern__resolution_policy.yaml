@@ -1,0 +1,130 @@
+axis: composition_and_interference_pattern
+factor: resolution_policy
+axis_frame: Composition and interference pattern describes how relevant pieces combine within
+  one instance and how competing pieces affect that combination. The axis is about dependency
+  shape, depth, distractor source, evidence placement, conflict resolution, coupling among
+  subproblems, and query structure.
+factor_description: The rule that selects among competing facts, rules, candidates, or outputs.
+  Policies may use recency, precedence, score, distance, proof priority, lexical tie-breaks,
+  contradiction handling, or other deterministic or probabilistic selection rules.
+tasks:
+- task_id: associative_recall
+  value: exact equality of keys
+  summary: Because keys are unique, no competition arises and no recency, precedence, or scoring
+    rule is needed to break ties.
+- task_id: babi_counting
+  value: match on both the person and the object kind, though either alone selects the same
+    sentences
+  summary: Because a competing pick-up differs on both keys at once, filtering on the person
+    alone and filtering on the object kind alone each yield exactly the contributing set.
+    Nothing forces the two conditions to be combined.
+- task_id: babi_multi_hop
+  value: exact word match, with no competition to resolve
+  summary: Because the asked object appears once and its carrier appears twice and only twice,
+    each lookup has a single hit and no recency, precedence, or scoring rule is ever invoked.
+- task_id: babi_single_hop
+  value: recency; the latest sentence about the asked person wins
+  summary: Conflicts are guaranteed and are resolved purely by position. No score, distance,
+    or lexical tie-break is involved.
+- task_id: bounded_tiny_python_execution
+  value: the most recent write wins; the condition's truth value picks the branch
+  summary: Competing values for the same name are settled purely by recency in execution order.
+    Competing branches are settled by comparing two expressions under one of six relations.
+- task_id: constant_label
+  value: none; there is never more than one candidate
+  summary: No competition arises between facts, rules, or candidate answers, so no recency,
+    precedence, scoring, or tie-breaking rule is ever needed.
+- task_id: copy
+  value: position; the k-th answer digit is the k-th input digit
+  summary: Nothing competes for selection, because the index alone determines each output
+    and no recency, scoring, or precedence rule has anything to arbitrate.
+- task_id: dyck_balanced_parentheses
+  value: most recent first; the newest pending bracket is closed before older ones
+  summary: When several brackets are pending, the order is fixed by recency rather than by
+    kind, position, or any scoring, and reversing that order is always wrong.
+- task_id: fictional_ontology_cot
+  value: match the current word exactly as the subject of a sentence; nothing competes
+  summary: Because a subject appears at most once along the chain, no recency, precedence,
+    or scoring rule is ever needed to choose between candidate next steps.
+- task_id: gridworld_detour_planning
+  value: shortest wins, and only one branch reaches the goal at all, so reachability settles
+    it
+  summary: No tie-breaking rule is ever needed, because the competing branches are not worse
+    routes to the goal; they are not routes to the goal.
+- task_id: horn_forward_chaining
+  value: reachability alone; nothing competes and nothing is overridden
+  summary: There is no contradiction to resolve, no priority between rules, and no recency
+    effect, because the set of true statements only ever grows.
+- task_id: iterated_string_replace
+  value: leftmost match first, no overlaps, and text just substituted in is not searched again
+    within the same step
+  summary: When two occurrences of a pattern overlap, the earlier one wins and scanning resumes
+    past the text that was written in its place, which is the only rule needed to make each
+    step deterministic.
+- task_id: label_anchor_feature_match
+  value: exact token equality; nothing competes
+  summary: Because only one token of the final list occurs earlier, and its occurrences all
+    share one label, no recency, precedence, or scoring rule is needed.
+- task_id: listops_nested_prefix
+  value: bracket matching; an operand belongs to the innermost group enclosing it
+  summary: Membership is settled purely by structure, with no recency, distance, or scoring
+    rule involved. The one selection rule inside a group is the median's tie, which is broken
+    toward the lower value.
+- task_id: majority
+  value: strict comparison of the two counts, with ties excluded before the instance is emitted
+  summary: The larger tally wins outright. There is no recency rule, distance weighting or
+    lexical tie-break, because the one case that would need one never occurs.
+- task_id: markov_first_rewrite
+  value: position in the rule list first, then position within the string
+  summary: Competition is resolved by two layers of precedence with no scoring or recency
+    involved. When several rules match, the earliest listed wins outright, and when one pattern
+    occurs several times, the leftmost occurrence wins.
+- task_id: passkey_retrieval
+  value: the unique marker phrase; no competition to settle
+  summary: Because only one statement exists, no recency, precedence, distance or scoring
+    rule is needed, and there is nothing to override.
+- task_id: random_label
+  value: none; nothing selects between the two possible answers
+  summary: No recency, precedence, scoring, or tie-breaking rule can apply, because the selection
+    was made by a coin flip that left no trace in the text.
+- task_id: relabeled_cyclic_row_completion
+  value: exact equality of the left symbol, then elimination
+  summary: Nothing conflicts, so no recency, priority, or scoring rule is needed. An equation
+    either belongs to the row or is irrelevant, and among the row's symbols exactly one survives
+    elimination.
+- task_id: reverse_sequence
+  value: position decides everything; nothing is ever in competition
+  summary: Each output slot has exactly one source, so no recency, precedence, scoring or
+    tie-break rule is involved at any point.
+- task_id: sat_dpll_trace
+  value: first clause in printed order for a deduction; lowest-numbered variable, true first,
+    for a guess
+  summary: Both rules exist only to make the record unique, since several clauses may force
+    something and several variables may be eligible to guess at the same moment.
+- task_id: scan_command_to_actions
+  value: the grammar decides; grouping to the right and the joining word's own rule
+  summary: Nothing is ever in genuine competition. Where the command could look ambiguous,
+    grouping to the right settles it, and the joining word settles which operand's actions
+    come first.
+- task_id: tfidf_rank_documents
+  value: higher score first, then smaller identifier number
+  summary: Competition between documents is settled by a number, and exact ties, which arise
+    in nearly every instance, are settled by reading the identifier as a number rather than
+    as text.
+- task_id: tree_next_hop_search
+  value: exact label match, with the tree structure guaranteeing a single hit going upward
+  summary: No recency, precedence, distance, or scoring rule is involved. Each node has one
+    parent, so the upward walk never faces competing candidates and never needs a tie-break.
+- task_id: variable_tracing
+  value: exact equality of names at every step
+  summary: Each name is bound by exactly one line, so no competition arises and no recency,
+    precedence, or scoring rule is ever needed to choose between candidate lines.
+- task_id: xor_parity
+  value: none; nothing competes for selection
+  summary: No candidate answer has to be chosen over another, so no recency, precedence, scoring,
+    or tie-breaking rule is ever applied.
+- task_id: year_span_greater_than
+  value: the stated rule; a later end year gives 1 and anything else gives 0
+  summary: The selection rule is written out in the prompt rather than left to be inferred.
+    Because the two years are never equal, the "anything else" branch only ever covers the
+    case where the end year is earlier, and no tie-break is needed.

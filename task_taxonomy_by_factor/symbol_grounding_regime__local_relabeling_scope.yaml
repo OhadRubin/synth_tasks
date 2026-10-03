@@ -1,0 +1,137 @@
+axis: symbol_grounding_regime
+factor: local_relabeling_scope
+axis_frame: Symbol grounding regime describes how tokens, labels, and symbols in an instance
+  get their task-local meaning. The axis is about the relationship between external associations,
+  visible type cues, local remappings, semantic alignment, and the unit at which meaning attaches.
+factor_description: The scope over which token-to-meaning assignments remain stable. A mapping
+  may be fixed for a dataset, family, episode, instance, subquery, or local alias context;
+  this factor tracks where remapping happens and which uses must stay bound together.
+tasks:
+- task_id: associative_recall
+  value: per instance; every key-digit assignment is drawn fresh
+  summary: A key that carries 7 in one instance carries an unrelated digit in the next, so
+    nothing learned about a specific key transfers between instances.
+- task_id: babi_counting
+  value: none; no word or digit is given a new meaning anywhere
+  summary: What varies between instances is who picked up how many of what. The vocabulary,
+    the two templates, and the arithmetic meaning of the digits are constant across every
+    instance.
+- task_id: babi_multi_hop
+  value: none; no word is given a new meaning anywhere
+  summary: What varies between instances is who picked up what and who went where. The vocabulary
+    and the two templates are constant across every instance.
+- task_id: babi_single_hop
+  value: none; no word is given a new meaning anywhere
+  summary: What varies between instances is who went where, which is asserted afresh each
+    time. The vocabulary itself is fixed for every instance of the task.
+- task_id: bounded_tiny_python_execution
+  value: variable meanings change statement by statement; loop counters exist only inside
+    their loop
+  summary: What a variable name stands for is whatever value the most recent assignment gave
+    it, so the same name means different things at different points in one instance. A counter
+    name is bound when its loop starts and is gone once the loop finishes.
+- task_id: constant_label
+  value: the answer character is fixed for the whole family; the input character is redrawn
+    per instance
+  summary: Nothing is remapped from one instance to the next. The answer is decided once and
+    applies everywhere, and the input is a fresh draw that means nothing.
+- task_id: copy
+  value: none; no symbol is given a meaning by the instance
+  summary: Digits stand for themselves and nothing is bound, aliased, or redefined within
+    an instance or between instances. There is no mapping to keep consistent across uses.
+- task_id: dyck_balanced_parentheses
+  value: fixed for the whole family; no instance redefines a bracket
+  summary: The four characters mean the same thing in every instance, so nothing about their
+    meaning has to be re-learned from the row currently being read.
+- task_id: fictional_ontology_cot
+  value: per instance; which words appear and how they link is redrawn every time
+  summary: The word pools are fixed, but a given category word links to an unrelated word
+    in the next instance, so nothing learned about a specific invented word transfers.
+- task_id: gridworld_detour_planning
+  value: fixed for the whole family; no instance reassigns a character or a letter
+  summary: The wall marker, the open marker, the start, the goal, and the four move letters
+    mean the same thing in every instance, so nothing about the notation has to be re-read
+    per instance.
+- task_id: horn_forward_chaining
+  value: fixed across all instances; the same names carry the same roles every time
+  summary: The chain always runs through names built from one letter with indices ascending
+    from zero, the query is always the highest-indexed of those, and the starting statements
+    always include the lowest-indexed one. Nothing is remapped between instances.
+- task_id: iterated_string_replace
+  value: none; no letter or piece of text is given a task-local meaning
+  summary: A pattern denotes the literal characters it contains, in this instance and every
+    other. Nothing is bound, aliased, or redefined, so no mapping has to be kept consistent
+    across uses.
+- task_id: label_anchor_feature_match
+  value: per instance for everything, including which tokens carry labels, which labels are
+    used, and which token gets which label
+  summary: Both the tokens and the labels are drawn fresh each time, so the same token carries
+    different labels across instances and the same label attaches to different tokens. Nothing
+    about a specific token transfers.
+- task_id: listops_nested_prefix
+  value: none; no symbol is redefined by an instance
+  summary: The four operators mean the same thing in every instance and digits always denote
+    their numeric value, so nothing is bound locally and no mapping has to be kept consistent
+    across uses.
+- task_id: majority
+  value: none; the two symbols mean the same in every instance
+  summary: No mapping is introduced, redefined or shadowed anywhere. The symbols are fixed
+    across the whole task family.
+- task_id: markov_first_rewrite
+  value: per instance; each instance carries its own rule set
+  summary: A pattern that must be replaced in one instance does not appear as a rule in the
+    next, so no particular letter triple ever acquires a stable meaning across instances.
+- task_id: passkey_retrieval
+  value: per instance; the value bound to the named quantity is redrawn each time
+  summary: The word keeps its meaning across instances but the digits it names do not, so
+    nothing about a particular five-digit string transfers from one instance to the next.
+- task_id: random_label
+  value: the two-character answer set is fixed for the whole family; which of the two appears
+    is redrawn per instance
+  summary: 'The pool never changes, but nothing about it is stable at the instance level:
+    the same input text is paired with either character on different draws.'
+- task_id: relabeled_cyclic_row_completion
+  value: per instance, and within an instance per table; every use of a name stays bound to
+    one meaning throughout
+  summary: The pool is shuffled at the start of each instance, the first several names are
+    assigned to the queried table's symbols and the next several to the second table's, so
+    a name that completes the row in one instance has nothing to do with the query in the
+    next. The two assignments never share a name, so inside one instance a name belongs to
+    exactly one table and every equation containing it refers to the same thing.
+- task_id: reverse_sequence
+  value: none; no item is given a task-local meaning anywhere
+  summary: Nothing is defined, renamed or bound in the instance. An item's entire significance
+    is which position it occupies.
+- task_id: sat_dpll_trace
+  value: fixed across the whole family; only which formula appears changes
+  summary: The markers, the outcome words, the zero separator, and the sign convention mean
+    the same thing in every instance. What a given variable number refers to is of course
+    local to the formula it appears in, but its role never changes.
+- task_id: scan_command_to_actions
+  value: none; the word-to-meaning mapping is the same in every instance
+  summary: The mapping is a property of the task family, not of the instance. Nothing learned
+    about a word in one command is ever contradicted by another command.
+- task_id: tfidf_rank_documents
+  value: per instance; the token names are the same strings every time but what they mean
+    for the answer is redrawn
+  summary: The naming scheme is fixed, so the same token strings recur across instances. Which
+    of them the query names, how many documents hold them, and therefore what each weighs
+    are all resampled, so nothing learned about a particular token transfers.
+- task_id: tree_next_hop_search
+  value: per instance; every label is reassigned before each instance is written
+  summary: A label that names the root here names some unrelated node in the next instance,
+    so nothing learned about a particular label transfers, and the whole structure has to
+    be read out of the edges each time.
+- task_id: variable_tracing
+  value: per instance; which letters form the chain and the digit at its start are redrawn
+    each time
+  summary: A letter that begins the chain in one instance is an irrelevant assignment in the
+    next, so nothing learned about a particular letter carries over.
+- task_id: xor_parity
+  value: none; the two symbols mean the same thing in every instance
+  summary: No instance redefines 0 or 1, so there is no per-instance or per-episode mapping
+    to hold, and everything learned about the symbols transfers.
+- task_id: year_span_greater_than
+  value: none; no word or number is given a meaning local to the instance
+  summary: Every term keeps its ordinary meaning throughout, so there is no mapping to hold
+    in mind and nothing that would be redefined in the next instance.

@@ -1,0 +1,121 @@
+axis: target_operation
+factor: state_interaction
+axis_frame: Target operation describes the abstract relation from latent input to required
+  answer. The axis is about the kind of computation the task requests, the result orientation,
+  how suboperations compose, how state participates, which algebraic properties matter, and
+  how many valid outputs exist.
+factor_description: How the operation reads, maintains, mutates, or reverses state. This includes
+  accumulators, overwrite rules, mutable stores, scoped assignments, transactional updates,
+  reversible choices, and external state effects when they are part of the task definition.
+tasks:
+- task_id: associative_recall
+  value: read only
+  summary: Nothing is accumulated, overwritten, or undone while the answer is produced.
+- task_id: babi_counting
+  value: accumulator; add only, never reset and never decremented
+  summary: The single piece of state is a number that starts at zero and only rises. No overwrite,
+    rollback, or scoped binding is ever involved.
+- task_id: babi_multi_hop
+  value: read only over the two supporting sentences
+  summary: Nothing is accumulated, overwritten, or undone. The other people's changing rooms
+    are simply never consulted.
+- task_id: babi_single_hop
+  value: overwrite; each move destroys the previous value for that person
+  summary: The operation maintains one value per person under a last-write-wins rule. Nothing
+    accumulates and nothing is reversed.
+- task_id: bounded_tiny_python_execution
+  value: destructive overwriting of a small mutable store, with scoped loop counters
+  summary: Assignment replaces a variable's value with no record of what it held before. Counters
+    are scoped to their loop, and many assignments read the same variable they write, accumulating
+    into it.
+- task_id: constant_label
+  value: none; nothing is read, accumulated, or overwritten
+  summary: Producing the answer touches no store, no counter, and no binding, and leaves nothing
+    behind for a later instance.
+- task_id: copy
+  value: read only, apart from advancing the read position
+  summary: Nothing is accumulated, overwritten, or undone. The only quantity that moves during
+    solving is the pointer that says which position comes next.
+- task_id: dyck_balanced_parentheses
+  value: additions and removals on a mutable pile, with removals permanent
+  summary: Each symbol either pushes an item on or discards the most recent one, and a discarded
+    item never returns or influences the answer.
+- task_id: fictional_ontology_cot
+  value: accumulation only; nothing is undone or overwritten in a way that matters
+  summary: A single running word advances one link at a time, and there is no branch to abandon
+    and no earlier conclusion to retract.
+- task_id: gridworld_detour_planning
+  value: position is threaded through the plan from move to move
+  summary: Each move is only meaningful given the cell reached by the previous ones, so the
+    operation carries a position forward rather than treating moves separately.
+- task_id: horn_forward_chaining
+  value: accumulation into a set that is never reduced
+  summary: Statements are added and never removed, so no rollback, revision, or transactional
+    behaviour arises.
+- task_id: iterated_string_replace
+  value: destructive overwrite at every active step
+  summary: Each step replaces the whole string, and what a substitution removes cannot be
+    recovered later. Nothing is scoped, versioned, or rolled back.
+- task_id: label_anchor_feature_match
+  value: read only
+  summary: Nothing is accumulated across steps, overwritten, or undone; the mapping is consulted
+    once.
+- task_id: listops_nested_prefix
+  value: no state in the task; the solver accumulates finished values
+  summary: Nothing is assigned, mutated, or undone in the instance itself. Each group's value
+    is computed once from its operands and then consumed by its parent.
+- task_id: majority
+  value: an accumulator advanced once per symbol
+  summary: The tally is the only thing that changes, it changes at every position, and its
+    final value is what the answer is read from.
+- task_id: markov_first_rewrite
+  value: one substitution made in place on a copy of the string; nothing is accumulated and
+    no earlier result is overwritten
+  summary: The single edit replaces a stretch of characters with a stretch of a possibly different
+    length, which shifts everything after it. Outside that one window, every character is
+    carried across untouched.
+- task_id: passkey_retrieval
+  value: read only
+  summary: Nothing is accumulated, replaced or undone while the answer is produced, and the
+    input is not modified in any way.
+- task_id: random_label
+  value: none; nothing is read, accumulated, or overwritten
+  summary: Producing the answer touches no store, no counter, and no binding, and leaves nothing
+    behind that could influence a later instance.
+- task_id: relabeled_cyclic_row_completion
+  value: accumulation into two sets, one of symbols seen anywhere in the row and one of symbols
+    seen as results
+  summary: Both sets only grow while the listing is read and neither is overwritten or rolled
+    back; the answer is what one holds and the other does not.
+- task_id: reverse_sequence
+  value: read only, with the input held while the answer is emitted
+  summary: Nothing is accumulated, overwritten or undone. The only demand is that items stay
+    available long enough to be written out.
+- task_id: sat_dpll_trace
+  value: scoped assignment with rollback to a saved snapshot
+  summary: Values assigned inside a guess are discarded wholesale when that guess fails, and
+    the second guess at that level starts from the state that existed before the first one.
+- task_id: scan_command_to_actions
+  value: read only, with the answer accumulated by concatenation
+  summary: Nothing in the command is overwritten, retracted or undone. The only thing that
+    grows is the action list, and it grows by joining lists end to end.
+- task_id: tfidf_rank_documents
+  value: pure accumulation into counters and sums; nothing is overwritten
+  summary: Counts only rise while the corpus is read, scores are written once, and the sort
+    reads the scores without changing them.
+- task_id: tree_next_hop_search
+  value: read only
+  summary: Nothing is accumulated, mutated, overwritten, or undone. The edge listing is consulted
+    repeatedly and never changed.
+- task_id: variable_tracing
+  value: reads from a set of bindings that only ever accumulates; nothing is mutated or undone
+  summary: Producing the answer adds nothing and changes nothing. Each line contributes one
+    binding as it is read, and once contributed a binding is only ever consulted.
+- task_id: xor_parity
+  value: a single accumulator, overwritten at every step
+  summary: One value is carried forward and replaced as each bit is read; nothing is stored
+    per position and nothing is ever undone.
+- task_id: year_span_greater_than
+  value: read only
+  summary: Nothing is accumulated, overwritten, or undone while the answer is produced, and
+    the input is not modified in any way.

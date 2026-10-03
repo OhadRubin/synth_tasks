@@ -1,0 +1,121 @@
+axis: output_interface
+factor: structural_form
+axis_frame: 'Output interface describes the answer form the task requires. The axis is about
+  how the computed result becomes visible: cardinality, syntax, ordering, process detail,
+  normalization, length, and uncertainty or status channels.'
+factor_description: The syntax and container shape of the emitted answer. This includes scalar
+  values, lists, tables, records, trees, traces, nested objects, and other forms that determine
+  how the answer is parsed and compared.
+tasks:
+- task_id: associative_recall
+  value: one bare character after a space
+  summary: The answer is written as a space followed by the digit, with no brackets, quotes,
+    list, or field name.
+- task_id: babi_counting
+  value: one bare number written in digits after a space
+  summary: The answer is a space followed by the decimal numeral, with no unit, no object
+    word, no sentence, and no field name around it.
+- task_id: babi_multi_hop
+  value: one bare word after a space
+  summary: The answer is written as a space and then the room word, with no sentence, punctuation,
+    or field name around it.
+- task_id: babi_single_hop
+  value: one bare word after a space
+  summary: The answer is written as a space and then the room word, with no punctuation, sentence,
+    quoting, or field name around it.
+- task_id: bounded_tiny_python_execution
+  value: one line holding three digits separated by single spaces
+  summary: The answer is written as a space, then the three values in order, with a single
+    space between them and no brackets, commas, or labels.
+- task_id: constant_label
+  value: a space followed by one bare character
+  summary: The answer carries no brackets, quotes, list syntax, or field name; it is one character
+    written after a single space.
+- task_id: copy
+  value: one line of space-separated digits, identical in shape to the input line
+  summary: The answer is written with the same single-space separator and no brackets, quotes,
+    list markers, or field names of its own.
+- task_id: dyck_balanced_parentheses
+  value: a space-separated run of closing bracket characters
+  summary: The answer is a flat list of single characters with no brackets around it, no separators
+    other than spaces, and no field names or counts.
+- task_id: fictional_ontology_cot
+  value: a run of sentences in the same shape as the input, then a bare word
+  summary: Each derivation step is a sentence identical in form to the listed ones, and the
+    verdict follows as a single unquoted word with no punctuation after it.
+- task_id: gridworld_detour_planning
+  value: a space-separated run of single letters
+  summary: The plan is a flat list with no numbering, no cell names, no separators other than
+    spaces, and no surrounding syntax.
+- task_id: horn_forward_chaining
+  value: one character after a space, either the digit standing for yes or the one standing
+    for no
+  summary: There are no brackets, quotes, words, or explanations. The two possible answers
+    differ in a single character.
+- task_id: iterated_string_replace
+  value: a bare run of letters on its own line
+  summary: No quoting, spacing, brackets, or field name surrounds the answer, so its shape
+    is the same as the starting string's, and the whole line is the content.
+- task_id: label_anchor_feature_match
+  value: one bare capital letter after a space
+  summary: The answer is written with no quotes, brackets, list, or field name, in exactly
+    the form the earlier labels appear in.
+- task_id: listops_nested_prefix
+  value: one bare digit after a space
+  summary: The answer is written as a space followed by the digit, with no brackets, operator
+    name, list, or field name around it.
+- task_id: majority
+  value: one bare character after a space
+  summary: The answer is written as a space followed by the symbol, with no brackets, quotes,
+    list or field name around it.
+- task_id: markov_first_rewrite
+  value: a bare run of letters after a space
+  summary: The answer has no brackets, quotes, field names, or separators; it is written exactly
+    the way the input string is written.
+- task_id: passkey_retrieval
+  value: five bare digit characters after a space
+  summary: The digits are written with no spaces between them, and with no quotes, brackets,
+    field name or closing full stop, unlike the sentence they come from.
+- task_id: random_label
+  value: a space followed by one bare character
+  summary: The answer carries no brackets, quotes, list syntax, or field name; it is one character
+    written after a single space.
+- task_id: relabeled_cyclic_row_completion
+  value: a bare name after a space, in the same fixed-width form as every symbol in the listing
+  summary: No brackets, quotes, equation, or restatement of the question appears, and the
+    answer is written exactly as the name appears elsewhere in the prompt.
+- task_id: reverse_sequence
+  value: a flat space-separated list of digits on one line
+  summary: The answer is written exactly like the input, with no brackets, indices, separators
+    between groups, or field names to help mark position.
+- task_id: sat_dpll_trace
+  value: a flat space-separated sequence of numbers and markers ending in one of two words
+  summary: There are no brackets, indentation, line breaks, or field names inside the record;
+    it is one continuous line whose last item is the verdict.
+- task_id: scan_command_to_actions
+  value: a flat space-separated list of uppercase names on one line
+  summary: There are no brackets, numbers, separators between segments, or markers showing
+    which action came from which part of the command; the whole answer is one undifferentiated
+    run.
+- task_id: tfidf_rank_documents
+  value: a flat sequence of identifiers separated by a greater-than sign, begun immediately
+    after the label
+  summary: There are no brackets, quotes, spaces, line breaks, or scores in the answer, and
+    no space between the label and the first identifier. Only the identifiers and the separators
+    appear.
+- task_id: tree_next_hop_search
+  value: one bare two-character token after a space
+  summary: The answer is written as a space and then the label, with no marker, brackets,
+    quoting, or field name around it.
+- task_id: variable_tracing
+  value: one bare character after a space
+  summary: The answer is a space and then the digit, with no brackets, quotes, name, or field
+    label around it.
+- task_id: xor_parity
+  value: one bare character after a space
+  summary: The answer is written as a space followed by 0 or 1, with no brackets, quotes,
+    list syntax, units, or field name around it.
+- task_id: year_span_greater_than
+  value: a single character after a space
+  summary: The answer is written as a space and then 0 or 1, with no words, punctuation, brackets,
+    or restatement of the years around it.

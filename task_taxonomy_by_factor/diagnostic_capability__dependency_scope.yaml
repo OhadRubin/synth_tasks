@@ -1,0 +1,146 @@
+axis: diagnostic_capability
+factor: dependency_scope
+axis_frame: Diagnostic capability describes the model ability or failure mode that a task
+  is meant to expose. The axis is about what kind of competence the instance probes, what
+  information that competence depends on, and what kind of pressure makes the competence succeed
+  or fail.
+factor_description: The amount and arrangement of information the model must use for the diagnosed
+  behavior to appear. This can range from local evidence to evidence that must be combined
+  across distant, nested, or interacting parts of the instance.
+tasks:
+- task_id: associative_recall
+  value: one relevant pair, positioned anywhere among the others
+  summary: Exactly one of the listed pairs determines the answer, and the remaining pairs
+    are irrelevant. The pairs are listed in random order, so the relevant one may be first,
+    last, or anywhere between.
+- task_id: babi_counting
+  value: several sentences scattered through the story, all of which must be found
+  summary: Two or three sentences contribute at the shorter setting and three to six at the
+    longer one. Every one of them changes the answer, so unlike a lookup task no single sentence
+    is sufficient and none can be skipped.
+- task_id: babi_multi_hop
+  value: exactly two sentences, linked by a name, standing anywhere in the story
+  summary: Neither supporting sentence is enough on its own - one names no room and the other
+    names no object. Every other sentence in the story is irrelevant by construction.
+- task_id: babi_single_hop
+  value: one sentence, but only the whole story identifies which sentence it is
+  summary: The answer is the room in a single sentence, and that sentence is the last one
+    naming the asked person. Confirming it is the last one requires checking every sentence
+    after it, so no local window is sufficient.
+- task_id: bounded_tiny_python_execution
+  value: the entire program, every statement in sequence
+  summary: Each assignment reads variables that earlier assignments wrote, so no statement
+    can be skipped without risking the final values. The initial values at the top and the
+    last statement before the print are equally load-bearing.
+- task_id: constant_label
+  value: none; the answer depends on nothing in the input
+  summary: The character shown carries no information about the answer, so an answer produced
+    without reading the input at all is as good as any other.
+- task_id: copy
+  value: every digit of the input, each one used once at its own position
+  summary: The whole input is relevant and none of it is a distractor, but each output digit
+    depends on exactly one input digit and on no other. What the length changes is how many
+    such independent lookups have to be kept in register at once.
+- task_id: dyck_balanced_parentheses
+  value: the whole row; any opening bracket may still be unfinished at the end
+  summary: Which brackets matter is only known after the entire row has been processed, because
+    a bracket opened at the very first position can survive to the end while everything after
+    it cancels out.
+- task_id: fictional_ontology_cot
+  value: 2 to 5 sentences out of the 4 to 13 present, scattered at random positions
+  summary: Only the chain sentences matter, and they are shuffled among the rest, so they
+    may sit anywhere and are never adjacent by design. Every other sentence must be recognised
+    as off the chain and ignored.
+- task_id: gridworld_detour_planning
+  value: the whole map; a wall anywhere can decide the route
+  summary: Whether a side opening is a shortcut or a dead end can only be settled by tracing
+    it to its end, and the correct route often runs away from the goal before turning back,
+    so no local view of the map is sufficient.
+- task_id: horn_forward_chaining
+  value: a chain of one to six rules together with their conditions, scattered among four
+    to sixteen rules that cannot matter
+  summary: Each rule of the chain supplies a condition of the next, so all of them are needed
+    and no shorter route exists. The remaining rules may be applied freely without changing
+    the verdict.
+- task_id: iterated_string_replace
+  value: the entire starting string together with every instruction, in order
+  summary: Every character of the start and every one of the two to eight instructions can
+    affect the answer, and what an instruction does is determined by what earlier ones left
+    behind rather than by anything visible next to it.
+- task_id: label_anchor_feature_match
+  value: two or three token occurrences out of 18 to 272
+  summary: One token of the final list also occurs earlier, and the label attached to the
+    list it occurs in is the whole answer. Everything else in the prompt is irrelevant, and
+    the ratio of relevant to irrelevant material falls sharply across settings.
+- task_id: listops_nested_prefix
+  value: the whole expression, combined from the innermost brackets outward
+  summary: 'There is no filler: every operator and every digit belongs to some group whose
+    value feeds the one above it. Under the largest and smallest rules only the surviving
+    operand ends up mattering, but which operand survives can only be known by evaluating.'
+- task_id: majority
+  value: every symbol in the sequence contributes equally
+  summary: There is no relevant subset and no distractor to discard. Removing any single symbol
+    can flip the answer when the two counts are close, which they often are.
+- task_id: markov_first_rewrite
+  value: the entire instance; every rule and every character bears on the answer
+  summary: The answer depends on positive evidence, where the winning pattern occurs, and
+    on negative evidence, that no earlier pattern occurs anywhere in the string. The whole
+    string is also reproduced in the answer, so no part of it is irrelevant.
+- task_id: passkey_retrieval
+  value: a single 21-character sentence somewhere in 127 to 944 characters of input
+  summary: One sentence settles the answer completely and everything else in the input is
+    irrelevant to it. The proportion of the input that matters falls from about a sixth in
+    the smallest setting to about a forty-fifth in the largest.
+- task_id: random_label
+  value: none; the answer is drawn independently of the input
+  summary: The character shown and the character required are two separate draws. Reading
+    the input carefully gains exactly nothing.
+- task_id: relabeled_cyclic_row_completion
+  value: all but one entry of a single row, spread through the listing among equations belonging
+    to another table
+  summary: Every equation whose left symbol matches the query's left symbol is needed. Removing
+    even one of them leaves at least two symbols consistent with what is shown, so no subset
+    of the row suffices.
+- task_id: reverse_sequence
+  value: every position matters, and the first item emitted comes from the far end of the
+    input
+  summary: 'Each answer position depends on exactly one input position, so no aggregation
+    is involved, but the mapping reaches across the whole input: the very first digit that
+    must be emitted is the very last one read.'
+- task_id: sat_dpll_trace
+  value: the whole formula, re-read after every single step
+  summary: Deciding what comes next requires knowing, for each of the 17 to 34 clauses, whether
+    it already holds and how many of its three parts are still open under the values assigned
+    so far. Both of those change after every item written, so no fixed part of the formula
+    is enough.
+- task_id: scan_command_to_actions
+  value: the whole command; every word contributes and joining words act at a distance
+  summary: No part of the command is irrelevant. A joining word decides where the actions
+    of the segment on its left are placed relative to the actions of everything to its right,
+    so a word near the start can determine what is emitted last.
+- task_id: tfidf_rank_documents
+  value: every document contributes; each score needs a corpus-wide count and a within-document
+    count
+  summary: A token's weight is set by how many documents contain it, so no document can be
+    scored before all of them have been read. The final ordering then compares all the scores
+    against one another.
+- task_id: tree_next_hop_search
+  value: a connected run of two, four, or five edges, each found somewhere in the listing
+  summary: Every edge on the route from start to goal is needed, and each one is located only
+    by the label the previous one produced. The remaining edges, up to fifty-seven of them,
+    contribute nothing.
+- task_id: variable_tracing
+  value: two to five specific lines, spread through the listing, that must be combined in
+    a fixed order
+  summary: The number of lines that matter equals the number of references plus one for the
+    digit line, so it runs from 2 of 3 lines up to 5 of 9. Which lines those are is only discoverable
+    by following the references; they are not adjacent and not marked.
+- task_id: xor_parity
+  value: every bit in the row, all equally relevant
+  summary: No part of the input can be skipped and no part is more informative than another.
+    There is no window, region, or subset of the row from which the answer can be worked out.
+- task_id: year_span_greater_than
+  value: two numbers a few words apart in one sentence, plus the rule stated above them
+  summary: Only the two years matter and they sit close together in the same short line. The
+    noun naming the event, the century the years fall in, and everything else in the sentence
+    bear on nothing.

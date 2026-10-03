@@ -1,0 +1,129 @@
+axis: generator_mechanism
+factor: label_oracle
+axis_frame: Generator mechanism describes how benchmark inputs and labels are produced. The
+  axis is about source process, controllable structure, sampling, validity constraints, label
+  oracle, variation scope, and perturbation model.
+factor_description: The mechanism that computes ground-truth outputs. Oracles may be formulas,
+  lookup tables, simulators, reference interpreters, theorem provers, SAT solvers, scoring
+  engines, human annotations, or chained systems that define the target label.
+tasks:
+- task_id: associative_recall
+  value: the digit assigned to the asked key at construction time
+  summary: The answer is known by construction rather than computed by a separate solver,
+    simulator, or scorer.
+- task_id: babi_counting
+  value: the running sum kept while the story is built
+  summary: The total is accumulated as the contributing sentences are written rather than
+    recovered afterwards by a separate solver, so it is correct by construction.
+- task_id: babi_multi_hop
+  value: the room chosen when the chain was constructed
+  summary: The answer is fixed before any text is written rather than recovered by a separate
+    solver, so it is correct by construction.
+- task_id: babi_single_hop
+  value: the running person-to-room table maintained while the story is built
+  summary: The answer is read out of the table after the last event rather than recomputed
+    by a separate solver, so it is correct by construction.
+- task_id: bounded_tiny_python_execution
+  value: a reference run of the same program structure that produced the text
+  summary: The answer is obtained by executing the very structure that was rendered into source,
+    under the same arithmetic and scoping rules, and taking the values it ends with. The answer
+    is never guessed or written by hand.
+- task_id: constant_label
+  value: the family setting itself
+  summary: The answer is copied straight from the setting. It is not computed by a formula,
+    looked up in a table, produced by a simulator, or judged by a person.
+- task_id: copy
+  value: the input sequence itself
+  summary: The answer is known the moment the sequence is drawn; no solver, simulator, or
+    scoring engine has to be run to obtain it.
+- task_id: dyck_balanced_parentheses
+  value: the partners of the pending brackets, taken in reverse order
+  summary: The answer is read directly off the generator's own record of what is still open,
+    so it is known by construction rather than recomputed by a separate checker.
+- task_id: fictional_ontology_cot
+  value: known at construction; the verdict is decided first and the question built to match
+  summary: When the verdict is to be True the question names the property the chain reaches;
+    when it is to be False the question names a different property, and that property is planted
+    on an unrelated category so that it still appears in the list.
+- task_id: gridworld_detour_planning
+  value: an exhaustive shortest-route search over the finished map, which also counts how
+    many shortest routes there are
+  summary: The same search that produces the answer supplies the uniqueness check, so the
+    label and the validity condition come from one pass rather than from the construction
+    record.
+- task_id: horn_forward_chaining
+  value: the reachable set itself, computed together with a depth for every statement
+  summary: The verdict is not asserted by construction but obtained by running the rules on
+    the assembled instance and reading off whether the query is present and how many applications
+    it took.
+- task_id: iterated_string_replace
+  value: running the program
+  summary: The answer is produced by applying each instruction in turn under the one-pass
+    global substitution rule, so the label is whatever that execution yields rather than a
+    separately specified target.
+- task_id: label_anchor_feature_match
+  value: the label assigned to the chosen token at construction time
+  summary: The answer is known by construction rather than computed by a separate solver or
+    scorer.
+- task_id: listops_nested_prefix
+  value: evaluating the expression under the four operator rules
+  summary: The answer is computed by applying each rule to its operands from the innermost
+    groups outward, using the same tie convention the task defines.
+- task_id: majority
+  value: counting the symbols in the sequence as it is built
+  summary: The answer follows from a direct tally of the drawn sequence rather than from a
+    separate simulator, formula or judgement.
+- task_id: markov_first_rewrite
+  value: a reference procedure that walks the rules in order and replaces the leftmost occurrence
+    of the first one that matches
+  summary: The target is produced by running that procedure on the finished string rather
+    than being assumed from how the instance was constructed, and the construction is then
+    checked against its verdict, including whether the instance changes at all.
+- task_id: passkey_retrieval
+  value: the digits drawn when the sentence was built
+  summary: The answer is known by construction rather than recovered by searching the finished
+    text, so the label cannot disagree with the sentence.
+- task_id: random_label
+  value: a fresh fair draw from the answer pool
+  summary: No formula, table, interpreter, solver, or person maps the input to the answer.
+    The answer is created by the draw itself and could not have been predicted before it happened.
+- task_id: relabeled_cyclic_row_completion
+  value: the combination rule itself, read off before the names are attached
+  summary: The answer is known by construction rather than recovered by any solver, so the
+    label does not depend on the elimination argument a reader would use.
+- task_id: reverse_sequence
+  value: the drawn sequence written out backwards
+  summary: The answer is produced by applying the rule directly to the sampled items, with
+    no separate solver, simulator or scorer involved.
+- task_id: sat_dpll_trace
+  value: the prescribed search itself, cross-checked by trying every assignment
+  summary: The record and its final word are produced by running the procedure, and the final
+    word alone is independently verified by brute-force evaluation of the whole assignment
+    space.
+- task_id: scan_command_to_actions
+  value: a reference interpreter that applies the rules to the sampled command
+  summary: The answer is computed by evaluating the structure rather than recorded when the
+    command was built, so the label and the text are derived from the same source independently.
+- task_id: tfidf_rank_documents
+  value: the stated formula computed exactly, followed by the stated tie-break
+  summary: The answer comes from running the same rule the prompt shows, using exact fractions
+    rather than rounded arithmetic so that no two scores are ever mistaken for equal, and
+    then ordering by score and identifier number.
+- task_id: tree_next_hop_search
+  value: the first choice made when the goal was drawn
+  summary: The route to the goal is recorded as it is chosen, so the answer is known before
+    any text is written rather than recovered afterwards by running a search.
+- task_id: variable_tracing
+  value: the digit placed at the start of the chain when the instance was built
+  summary: The answer is known by construction rather than recovered by running a solver over
+    the finished text, because the chain is laid down from its digit outward.
+- task_id: xor_parity
+  value: the count of 1s taken modulo two, computed as the row is built
+  summary: The answer comes from a direct arithmetic pass over the drawn bits rather than
+    from a lookup table, a simulator, or human annotation.
+- task_id: year_span_greater_than
+  value: the answer is chosen first and the second year built to match it, then checked against
+    a direct comparison
+  summary: The construction runs backwards from the intended label, which is what makes the
+    two answers exactly balanced, and the finished pair of years is then compared numerically
+    to confirm the label it was built for.

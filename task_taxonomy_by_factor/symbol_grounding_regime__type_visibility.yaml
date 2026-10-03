@@ -1,0 +1,145 @@
+axis: symbol_grounding_regime
+factor: type_visibility
+axis_frame: Symbol grounding regime describes how tokens, labels, and symbols in an instance
+  get their task-local meaning. The axis is about the relationship between external associations,
+  visible type cues, local remappings, semantic alignment, and the unit at which meaning attaches.
+factor_description: How much category or role information is visible in the symbol itself.
+  Type cues may come from prefixes, schemas, field names, natural category names, role markers,
+  or other conventions that let the model infer permitted uses before applying task rules.
+tasks:
+- task_id: associative_recall
+  value: role shown by position and character class, not by any marker on the symbol
+  summary: No key announces itself as a key. Keys are recognisable because they are letters
+    standing left of an equals sign, and values because they are digits standing right of
+    one.
+- task_id: babi_counting
+  value: fully visible; people, objects, rooms, and numbers occupy separate word classes and
+    separate positions
+  summary: Each role is filled from its own fixed set and appears in one slot of one template,
+    so any word can be classified on sight without reading the rest of the sentence.
+- task_id: babi_multi_hop
+  value: fully visible; people, objects, and rooms come from separate word sets and separate
+    positions
+  summary: The three roles never share a word, and each is confined to one slot of one template,
+    so a reader can classify any word on sight.
+- task_id: babi_single_hop
+  value: fully visible; names and rooms come from separate word sets and separate sentence
+    positions
+  summary: A reader can tell a person from a room by the word itself, and also by where it
+    sits in the sentence, so the two roles can never be confused.
+- task_id: bounded_tiny_python_execution
+  value: no type markers; every value is an integer and roles are shown by position
+  summary: 'Nothing declares a type. What a name is used for is visible from where it stands:
+    left of an equals sign it is being written, elsewhere it is being read, and a name introduced
+    by a loop header is a counter.'
+- task_id: constant_label
+  value: the labels mark which position is the input and which is the answer; nothing else
+    is marked
+  summary: The two field names are the only role information available, and they say only
+    where each part sits, not what kind of thing it is or what values it may take.
+- task_id: copy
+  value: one role only; every payload symbol is a digit and all behave alike
+  summary: There are no categories to tell apart, so no prefix, field name, or marker is present
+    or needed. A symbol's only property that matters is which of the ten characters it is.
+- task_id: dyck_balanced_parentheses
+  value: fully visible; each character shows both its direction and its kind
+  summary: Reading a single character tells you whether it opens or closes and whether it
+    is round or square, so no separate role marker or schema is needed.
+- task_id: fictional_ontology_cot
+  value: high; word endings separate categories from properties, and capitalisation marks
+    the person
+  summary: Every property word ends in the English adjective ending "-ish", every category
+    word ends in one of eight fixed syllables, and the person's name is the only capitalised
+    word among the listed sentences. A reader can therefore tell that a word like "lorpish"
+    ends a chain and a word like "budax" continues one before applying any rule.
+- task_id: gridworld_detour_planning
+  value: fully visible; a cell's role is exactly its character
+  summary: Wall, open, start and goal are told apart by the single character in the cell,
+    with no ambiguity and no cell whose role has to be inferred from its surroundings.
+- task_id: horn_forward_chaining
+  value: high and unintended; the leading letter reveals what part of the construction a statement
+    belongs to
+  summary: Statements on the chain, always-given helper statements, irrelevant statements,
+    and the one statement that can never become true each use a distinct leading letter. A
+    reader can therefore separate the relevant rules from the rest before doing any reasoning
+    at all.
+- task_id: iterated_string_replace
+  value: roles marked by position in the line, where the first argument is what to find and
+    the second is what to put in its place
+  summary: Both arguments are runs of the same letters and look alike, so nothing but their
+    order inside the line distinguishes the text being searched for from the text being substituted.
+- task_id: label_anchor_feature_match
+  value: none inside the lists; the token carrying the label looks exactly like the rest
+  summary: No prefix, marker, position, or digit pattern distinguishes the token that determines
+    the answer from the fillers around it. Role is visible only for the labels, and only because
+    of which line they sit on.
+- task_id: listops_nested_prefix
+  value: fully visible; uppercase words are operators, single characters are operands
+  summary: 'Form and position both mark the role: the token immediately after an opening bracket
+    is always the operator, and every other token in a group is an operand. Nothing has to
+    be inferred about what a symbol may be used for.'
+- task_id: majority
+  value: none needed; both symbols play the same role
+  summary: There is only one kind of thing in the input. No symbol is a key, a value, a marker
+    or an operator, so no category cue is present or wanted.
+- task_id: markov_first_rewrite
+  value: role shown by side of the arrow only; the two halves are drawn from the same alphabet
+    and look alike
+  summary: A pattern is recognisable as the text left of the arrow and a replacement as the
+    text right of it, and nothing else distinguishes them. The one visible regularity is length,
+    since patterns are always three letters and replacements run from one to five.
+- task_id: passkey_retrieval
+  value: an explicit English marker phrase announces that what follows is the answer
+  summary: The role of the target span is stated in words rather than inferred from position
+    or punctuation, and the question repeats the same word, so the match between marker and
+    query is direct.
+- task_id: random_label
+  value: the labels mark which position is the input and which is the answer; the answer set
+    is never shown
+  summary: Nothing in an instance says which characters the answer could have been, so the
+    size of the answer set has to be inferred from many instances rather than read off one.
+- task_id: relabeled_cyclic_row_completion
+  value: none; every symbol looks identical and its role comes only from where it stands
+  summary: Nothing about a name says whether it belongs to the queried table or the other
+    one, or whether it is an input or a result. The same name appears in all of those positions
+    within a single instance.
+- task_id: reverse_sequence
+  value: none needed; every item plays the same role
+  summary: There is only one kind of thing in the input. No item is a key, a value, a marker
+    or an operator, so no category cue is present or wanted.
+- task_id: sat_dpll_trace
+  value: role shown by shape and position, not by any label
+  summary: A number standing on its own is a forced part, the same number after the guess
+    marker is a guess, and a zero closes a clause rather than naming a variable. Nothing in
+    a number announces which of these it is; only its position does.
+- task_id: scan_command_to_actions
+  value: the word itself reveals its role; the four classes never overlap
+  summary: Motion words, direction words, repetition words and joining words are four disjoint
+    closed sets, so seeing a word is enough to know what it may combine with and where it
+    may stand.
+- task_id: tfidf_rank_documents
+  value: a leading letter separates a document identifier from a corpus token; nothing marks
+    a token as a query token
+  summary: Identifiers and tokens use different leading letters, so those two roles never
+    look alike. A query token is indistinguishable from a padding token until the query line
+    is read, and that line comes after the entire corpus.
+- task_id: tree_next_hop_search
+  value: none in the symbol; a node's role is only recoverable from how its label is used
+  summary: Nothing marks a label as the root, an internal node, or a leaf. The root is identified
+    by the question naming it as the start, and a leaf is only knowable by its label never
+    appearing in the parent position of any edge.
+- task_id: variable_tracing
+  value: the role of a value is visible from its character class, and the role of a name only
+    from its position
+  summary: A digit on the right of an equals sign is a literal and a letter there is a reference,
+    which is the one distinction the surface makes. Nothing marks a name as belonging to the
+    chain rather than to the unreferenced lines.
+- task_id: xor_parity
+  value: one type only; every input symbol plays the same role
+  summary: There are no keys, fields, roles, or categories to tell apart, so no type cue is
+    needed and none is present.
+- task_id: year_span_greater_than
+  value: explicit; the word "year" precedes each number and the two roles are named in the
+    rule
+  summary: Nothing has to be inferred about what kind of thing each number is or which role
+    it plays, because the sentence labels both in words before either number appears.

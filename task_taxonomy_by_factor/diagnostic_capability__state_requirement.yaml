@@ -1,0 +1,143 @@
+axis: diagnostic_capability
+factor: state_requirement
+axis_frame: Diagnostic capability describes the model ability or failure mode that a task
+  is meant to expose. The axis is about what kind of competence the instance probes, what
+  information that competence depends on, and what kind of pressure makes the competence succeed
+  or fail.
+factor_description: The way the diagnosed behavior depends on retained or updated state. This
+  includes cases where the task can be solved from a fixed view of the input and cases where
+  the relevant entities, counters, bindings, or environments change over the course of the
+  instance.
+tasks:
+- task_id: associative_recall
+  value: static; no binding is ever updated
+  summary: Each key appears once and keeps the digit it was given. There is no reassignment,
+    no counter, and no ordering effect to track.
+- task_id: babi_counting
+  value: a running number that grows and is never reset, reduced, or overwritten
+  summary: The quantity being tracked exists nowhere in the text and only accumulates. Nobody
+    ever puts anything down, so no contribution is later cancelled and the total at the end
+    is the total that is asked about.
+- task_id: babi_multi_hop
+  value: static for the entities that matter; neither supporting statement is ever superseded
+  summary: The person holding the object moves exactly once and picks up exactly one object,
+    so nothing about them is overwritten. Other people move repeatedly, but their state never
+    bears on the answer.
+- task_id: babi_single_hop
+  value: mutable; a person's room is overwritten every time they move again
+  summary: In the twenty-sentence stories the asked person has moved about five times on average,
+    so roughly four earlier rooms are stated and then superseded. In the five-sentence stories
+    there is often no superseded room at all.
+- task_id: bounded_tiny_python_execution
+  value: fully stateful; a small set of variables is overwritten repeatedly
+  summary: A variable's value changes many times over the program, and only its last value
+    is printed. Loops add counters that take a new value on every pass and disappear when
+    the loop ends.
+- task_id: constant_label
+  value: none; there is nothing to retain or update
+  summary: Each instance is one line of input and one character of answer, with no entities,
+    counters, or bindings that could change over the course of it.
+- task_id: copy
+  value: a moving read position; no digit ever changes value
+  summary: Nothing in the input is updated, so the only thing that must be retained is how
+    far along the sequence the answer has got. Losing that position is the only way state
+    can go wrong.
+- task_id: dyck_balanced_parentheses
+  value: dynamic; a pile of pending brackets that grows and shrinks as the row is read
+  summary: Every symbol either adds to the pile or removes its most recent entry, and the
+    answer is read off whatever remains once the row ends.
+- task_id: fictional_ontology_cot
+  value: one running word, holding whatever the person has been shown to be so far
+  summary: Each step replaces the current word with the object of the sentence just used,
+    and the next lookup is performed with that new word. The listed sentences themselves never
+    change.
+- task_id: gridworld_detour_planning
+  value: the map is fixed, but the position moves with every emitted letter and must be tracked
+  summary: Each move is only legal relative to where the preceding moves left you, so the
+    current cell is a running piece of state that changes eight, sixteen, or twenty-eight
+    times.
+- task_id: horn_forward_chaining
+  value: dynamic; the set of true statements grows as rules are applied and the rules must
+    be revisited
+  summary: A rule that cannot be applied when it is first read may become applicable after
+    a rule printed later has been applied, so what counts as true changes while the listing
+    is worked through and one pass over the rules is not enough.
+- task_id: iterated_string_replace
+  value: one running string rewritten in place at every active instruction
+  summary: 'The state is the whole text, and it changes at each step that matches: pieces
+    are substituted, removed, or lengthened, and only the updated text is visible to later
+    instructions. Within a single instance the string can move between sixteen and one hundred
+    ninety-two characters.'
+- task_id: label_anchor_feature_match
+  value: static within an instance; every binding is discarded between instances
+  summary: The token-to-label mapping is complete once the labelled lists have been read and
+    is never updated or contradicted. A token that carries a label in one instance is filler
+    in the next, so nothing persists.
+- task_id: listops_nested_prefix
+  value: several groups held open at once while their inner groups are finished
+  summary: Nothing in the input changes, but a solver must suspend each operator together
+    with the operands it has already collected while it descends into an unfinished operand.
+    At the deepest bin six groups are open simultaneously.
+- task_id: majority
+  value: a running tally updated once per symbol
+  summary: The answer cannot be read off a fixed view of any part of the input; it depends
+    on a quantity that has to be maintained and adjusted the whole way through, then compared
+    at the end.
+- task_id: markov_first_rewrite
+  value: static rules and a string that is transformed exactly once; the only running state
+    is the position reached while copying
+  summary: No rule changes and no value is accumulated as the instance is read. The string
+    is edited a single time rather than repeatedly, so there is no trajectory of intermediate
+    strings, and nothing that would let a later rule act on the result of an earlier one.
+- task_id: passkey_retrieval
+  value: static; the fact is stated once and never revised
+  summary: There is no earlier value that gets replaced, no counter, and no update. A single
+    reading of the sentence is enough and rereading it would give the same answer.
+- task_id: random_label
+  value: none; there is nothing to retain, and nothing retained would help
+  summary: Instances are independent draws, so neither state within an instance nor memory
+    of earlier instances carries information about the next answer.
+- task_id: relabeled_cyclic_row_completion
+  value: static; the equations describe one fixed table and nothing is ever updated
+  summary: No equation supersedes or contradicts another and none is conditioned on those
+    before it, so reading them in any order builds exactly the same picture.
+- task_id: reverse_sequence
+  value: static input, but the whole sequence must be retained before output begins
+  summary: 'No item is redefined or updated as the input is read. The demand on state is one
+    of capacity rather than of change: nothing can be emitted until everything has been taken
+    in.'
+- task_id: sat_dpll_trace
+  value: a partial assignment that grows along a branch and is rolled back at each undo
+  summary: Each item written means something only relative to which variables currently hold
+    which values. An undo marker discards every value set since the guess it reverses, and
+    the search continues from the restored state.
+- task_id: scan_command_to_actions
+  value: static; nothing in the command is redefined as it is read
+  summary: Word meanings are fixed for the whole family, no name is reassigned, and no counter
+    is carried. The only thing that changes while solving is the solver's own partly built
+    list of actions.
+- task_id: tfidf_rank_documents
+  value: static input; the state that changes is the solver's own running tallies
+  summary: The corpus never changes and no document supersedes another. The only thing that
+    accumulates is the count of documents holding each query token and the count of occurrences
+    inside each document.
+- task_id: tree_next_hop_search
+  value: static structure; the state to carry is the partly built route
+  summary: Nothing in the graph changes and no edge is superseded. What must be retained while
+    reading is which label the route has reached so far, since that label is the key to the
+    next edge.
+- task_id: variable_tracing
+  value: a set of name-to-value bindings that grows as the lines are read, with every name
+    bound exactly once and never rebound
+  summary: A line can only be understood against the bindings made by earlier lines, since
+    a right-hand side may be a name defined above. The set of bindings only ever grows; no
+    line changes a value that an earlier line already gave, so reading order matters for what
+    is defined yet but never for what a name means.
+- task_id: xor_parity
+  value: dynamic; one bit of running state updated at every position
+  summary: Reading left to right, the only thing worth remembering is whether the number of
+    1s seen so far is odd or even, and every new bit can change it.
+- task_id: year_span_greater_than
+  value: none; a single fixed view of the sentence settles the answer
+  summary: No value is updated, no binding is made, and nothing accumulates as the instance
+    is read. Both quantities are present at once and neither changes.

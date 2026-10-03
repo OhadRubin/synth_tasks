@@ -1,0 +1,119 @@
+axis: output_interface
+factor: answer_cardinality
+axis_frame: 'Output interface describes the answer form the task requires. The axis is about
+  how the computed result becomes visible: cardinality, syntax, ordering, process detail,
+  normalization, length, and uncertainty or status channels.'
+factor_description: How many answer items the model must provide. The answer may be a single
+  label or value, a span, a fixed tuple, a variable-size set, a structured record, or another
+  form where the number of required items affects scoring and generation.
+tasks:
+- task_id: associative_recall
+  value: exactly one item
+  summary: A single digit is required, whatever the size of the listing.
+- task_id: babi_counting
+  value: exactly one item
+  summary: A single number is required, however many sentences contributed to it and however
+    long the story is.
+- task_id: babi_multi_hop
+  value: exactly one item
+  summary: A single room word is required, no matter how long the story is or how far apart
+    the two supporting sentences sit.
+- task_id: babi_single_hop
+  value: exactly one item
+  summary: A single room word is required, whatever the length of the story and however many
+    times the asked person moved.
+- task_id: bounded_tiny_python_execution
+  value: exactly three items, in every instance
+  summary: Three variables are always printed, so three numbers are always required, whether
+    the program has eight statements or nineteen.
+- task_id: constant_label
+  value: exactly one item
+  summary: A single character is required, and there is never more or less than that to produce.
+- task_id: copy
+  value: as many items as the input has, 16 to 128 digits
+  summary: The answer is not a single label but the full sequence, so the number of required
+    items rises with the bin and every one of them is scored.
+- task_id: dyck_balanced_parentheses
+  value: variable; between one closer and as many as the depth setting allows
+  summary: The number of items is not stated anywhere in the input and must be derived; in
+    the sampled instances it was one, three, and seven for the three settings.
+- task_id: fictional_ontology_cot
+  value: 3, 5, or 9 sentences followed by one word
+  summary: The derivation is one sentence for the first link plus two for every further link,
+    so its length is fixed by the chain length alone and does not depend on how many unrelated
+    sentences are present.
+- task_id: gridworld_detour_planning
+  value: one letter per move, so eight, sixteen, or twenty-eight items
+  summary: The setting fixes the count, but the input never states it; the number of moves
+    has to fall out of finding the route.
+- task_id: horn_forward_chaining
+  value: exactly one item
+  summary: A single verdict is required whatever the length of the chain or the size of the
+    listing.
+- task_id: iterated_string_replace
+  value: one item, the whole finished string
+  summary: The answer is not a label or a digit but the entire text left at the end, which
+    can run from one character to one hundred ninety-two depending on the bin.
+- task_id: label_anchor_feature_match
+  value: exactly one item
+  summary: A single capital letter is required, whatever the size of the prompt and however
+    many labels are in play.
+- task_id: listops_nested_prefix
+  value: exactly one item
+  summary: A single digit is required no matter how large the expression is, so all intermediate
+    values that were computed along the way are discarded.
+- task_id: majority
+  value: exactly one item
+  summary: A single symbol is required whether the sequence holds 16 entries or 128, and no
+    count, margin or tally is asked for alongside it.
+- task_id: markov_first_rewrite
+  value: one string, but 30 to 130 characters long, all of which are scored
+  summary: A single item is emitted, yet it is nearly as long as the input, so the number
+    of characters that must be individually correct grows with the setting even though the
+    count of answers does not.
+- task_id: passkey_retrieval
+  value: one item, a five-digit string
+  summary: A single value is required whatever the size of the input, and it is scored as
+    one string rather than as five separate digits.
+- task_id: random_label
+  value: exactly one item
+  summary: A single character is required, and there is never more or less than that to produce.
+- task_id: relabeled_cyclic_row_completion
+  value: exactly one item
+  summary: One symbol name completes the equation, whatever the size of the table or the length
+    of the listing.
+- task_id: reverse_sequence
+  value: as many items as the input holds, 16, 64 or 128
+  summary: The number of items to emit is fixed by the input and is known in advance, and
+    emitting too few or too many is itself a failure.
+- task_id: sat_dpll_trace
+  value: a variable-length sequence, typically 24 to 49 items and as many as 75
+  summary: Across sixty sampled instances per setting the middle record length was 24, 31,
+    and 49 items, the shortest was 7, and the longest was 75. The number of items is not fixed
+    by any setting.
+- task_id: scan_command_to_actions
+  value: a variable-length run of action names, from two items to eighteen in practice
+  summary: How many items are required is itself part of what has to be worked out. Observed
+    answers run from two actions in the shortest commands to eighteen in the longest, under
+    a hard cap of fifty that sampling never reaches.
+- task_id: tfidf_rank_documents
+  value: one item per document, so 4 to 12 identifiers, never fewer or more
+  summary: Every document is ranked, including the many that hold no query token at all and
+    score zero. The number of items is fixed by the corpus and known before any scoring is
+    done.
+- task_id: tree_next_hop_search
+  value: exactly one item
+  summary: A single label is required, whatever the length of the route or the size of the
+    listing.
+- task_id: variable_tracing
+  value: exactly one item
+  summary: One digit is required whatever the chain length, and no part of the chain is reported
+    alongside it.
+- task_id: xor_parity
+  value: exactly one item
+  summary: A single digit is required whatever the length of the row, and there is never a
+    second field, span, or item to emit.
+- task_id: year_span_greater_than
+  value: exactly one item, a choice between two characters
+  summary: One character is required and only two are ever correct across the whole family,
+    which makes half the answers obtainable by guessing.
