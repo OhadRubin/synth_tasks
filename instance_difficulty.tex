@@ -319,4 +319,137 @@ where $\gamma$ records the DAG, an evaluation order, and the component
 tasks. Its structure is explicit, while the relationship between that
 structure and minimum solving difficulty remains to be established.
 
+\paragraph{12. Budgeted machines.}
+In paragraph 3 the trace is chosen freely from $\Phi$ and $\theta$ enters
+only in the final readout, so $D_\epsilon$ counts steps written by
+someone other than the solver. A budgeted machine generates its own
+trace and has three separately bounded stores: its parameters, its
+initial context, and its working context. The context at step $t$ is
+\[
+c_t=c_0\oplus w_t,
+\qquad
+w_{t+1}\sim W_\theta(\cdot\mid x,c_t),
+\qquad
+y\sim M_\theta(\cdot\mid x,c_d),
+\]
+where $c_0$ is supplied and read-only, $w_0$ is empty, and the
+transition $W_\theta$ outputs the whole new working part, so it may keep,
+rewrite, or discard earlier content. The append-only machine of
+paragraph 2 is the case $w_{t+1}=w_t\oplus z_{t+1}$. With all sizes
+measured in bits, the budgets are
+\[
+|\theta|\leq B_\theta,
+\qquad
+|c_0|\leq B_0,
+\qquad
+|w_t|\leq B_c\ \text{for all }t.
+\]
+The three stores are paid for differently. The parameters are computed
+once per family, by training (paragraph 5), and reused on every
+instance. The initial context is filled per instance by a supplier, at
+no cost to the solver. The working context is written per instance by
+the solver, one transition per update. A combined budget would let
+content move to the cheapest store, so each store has its own.
+
+\paragraph{13. Budgeted depth.}
+Scaling is a statement about growing instances, so budgeted depth is
+defined on a sequence $(\mathcal D_n)_n$ of distributions over
+instances, where $n$ is a size such as the number of component nodes of
+a composed instance (paragraph 10). A supplier is a map
+$\sigma:x\mapsto c_0$. Context that is the same for every instance of
+$\mathcal D_n$, such as fixed in-context examples, is part of $\theta$,
+so $\sigma$ supplies only what depends on $x$. Budgeted depth is
+\[
+D_\epsilon(n;B_\theta,B_0,B_c)
+=
+\min\left\{
+d:
+\begin{array}{l}
+\exists\,\theta,\ |\theta|\leq B_\theta,\quad
+\exists\,\sigma,\ |\sigma(x)|\leq B_0,\\
+\Pr\big(y\in Y_x\big)\geq1-\epsilon
+\end{array}
+\right\},
+\]
+where $W_\theta$ outputs only strings of at most $B_c$ bits, and the
+probability is over $x\sim\mathcal D_n$, the trace $w_1,\ldots,w_d$
+generated from $c_0=\sigma(x)$, and the answer $y$. One $\theta$ serves
+every instance of $\mathcal D_n$. A scaling statement fixes the budgets,
+or lets them grow at a stated rate, and describes $D_\epsilon$ as $n$
+grows.
+
+\paragraph{14. What each budget excludes.}
+$B_\theta$ and $B_0$ each close a way of making $D_\epsilon$ trivial;
+$B_c$ adds working space as a second resource.
+
+Without $B_\theta$, $\theta$ can store a table from the instances of
+$\mathcal D_n$ to their answers and answer at depth $0$. The table grows
+with the support of $\mathcal D_n$, so with $B_\theta$ fixed it
+eventually stops fitting and the answers must be computed by
+transitions. Answers that are nearly constant across $\mathcal D_n$
+(paragraph 11) need no table and stay cheap under every $B_\theta$. When
+$\theta$ parameterizes a fixed architecture, $B_\theta$ also bounds the
+network that computes one transition, which takes the place of the
+class $\Phi$ of paragraph 3. A component that is the same across
+$\mathcal D_n$ and absent from $x$ must be stored in $\theta$ or supplied
+in $c_0$; this is the retrieval of rare knowledge in paragraph 8.
+
+Without $B_0$, $\sigma$ can place every intermediate value $z_v$ of a
+composed instance, or the answer itself, in $c_0$, and $D_\epsilon$
+drops to $0$. If each value takes $b$ bits, $c_0$ holds at most
+$\lfloor B_0/b\rfloor$ of them, and $B_0=0$ requires the solver to
+construct every intermediate result itself (paragraph 10).
+
+With the append-only transition of paragraph 2 and nonempty updates,
+$|w_t|\geq t$, so no trace runs longer than $B_c$ steps and $B_c$ acts
+as a cap on depth. When $W_\theta$ may discard, $B_c$ bounds the values
+held between components, which is the live space of paragraph 4, and
+depth and working space can trade off against each other.
+
+\paragraph{15. External memory.}
+A tool-calling agent can offload information to a file $F$ of unbounded
+capacity. The machine state at step $t$ is then $(w_t,F_t)$, and each
+transition is either an update of $w_t$ as in paragraph 12 or a tool
+call ($\kappa=\text{tool}$, paragraph 5). A tool call copies a string of
+at most $B_c$ bits between $w_t$ and $F_t$, at an address named in
+$w_t$, and counts as one transition. When $x$ itself exceeds what one
+transition can read, it starts in the file, $F_0=x$, and transitions see
+it only through reads. Anything else in the file at the start belongs to
+one of the existing budgets: content that depends on $x$ counts toward
+$B_0$, and content kept from earlier instances of $\mathcal D_n$ counts
+toward $B_\theta$. A file kept across instances without this accounting
+could hold the answer table excluded in paragraph 14.
+
+The file removes $B_c$ as a limit on instance size. To evaluate a
+composed instance, the agent visits the nodes in an evaluation order,
+reads the inputs of the current node from the file, computes its value,
+and writes it back. The working context then holds one component at a
+time: its inputs, its output, its internal working space, and an address
+of $O(\log n)$ bits. An append-only agent gains the same reach if it may
+clear its working context after writing to the file.
+
+Instance size is instead paid for in transitions. Without the file,
+every value still to be read must sit in the working context, so $B_c$
+decides which instances are solvable at all. With the file, a value that
+leaves the working context and is read back later costs tool
+transitions, and the depth of a trace counts these transfers alongside
+the component evaluations. When values cannot be obtained by a shortcut,
+for instance when components are random functions over large domains,
+the minimum number of transfers for evaluating $G$ is the cost of the
+red--blue pebble game of Hong and Kung.\footnote{Jia-Wei Hong and
+H.~T.~Kung. \emph{I/O Complexity: The Red-Blue Pebble Game}. Proceedings
+of STOC, 1981, pp.\ 326--333.} A red pebble marks a value in the working
+context and a blue pebble a value in the file; a node can be computed
+only when its inputs carry red pebbles, at most $\lfloor B_c/b\rfloor$
+red pebbles are available, and each change of color is one transfer. A
+chain needs no transfers for its intermediate values, since each value
+is read right after it is computed. Transfers arise when the values
+computed but still to be read (paragraph 11) outnumber the red pebbles,
+so their number grows with the width and sharing of $G$.
+
+This paragraph covers tools that store and retrieve. A tool that returns
+the result of a computation, such as an interpreter, is a transition
+whose power lies outside $\theta$; without a budget of its own, it plays
+the role of the unrestricted $\Phi$ of paragraph 3.
+
 \end{document}
