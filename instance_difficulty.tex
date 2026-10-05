@@ -586,4 +586,56 @@ that hold one component plus $O(\log n)$ bits then suffice for instances
 of every size. This is the agent that keeps notes in a file and compacts
 its context.
 
+\paragraph{18. Tools.}
+A tool is a program $p$, in a fixed programming language, stored in the
+file; its length $|p|$ is measured in bits. A call names a tool, $k$
+addresses, and arguments $\alpha$ taken from the working context, and
+runs
+\[
+F[a_{\mathrm{out}}]\leftarrow p\big(F[a_1],\ldots,F[a_k],\alpha\big),
+\qquad k=O(1),
+\]
+where $a_{\mathrm{out}}$ is named in $\alpha$, each address holds at most
+$B_c$ bits, and $k$ does not grow with $n$. The program reads only the
+named entries and writes only to the file, so a result reaches the
+working context only through a read (paragraph 15). A call counts as one
+transition whatever the running time of $p$. The writes of paragraph 15
+are the tool with $k=0$ that copies its argument.
+
+Two bounds limit what a tool can do. Its input is $O(B_c)$ bits plus
+$\alpha$, whatever $n$ is, so anything else a call needs must be written
+into $p$; and $p$ has a length, which is paid for. Tools in the file at
+the start follow the accounting of paragraph 15: a fixed toolset counts
+toward $B_\theta$, and tools chosen for $x$ count toward $B_0$. A tool
+the agent writes during the instance costs the $|p|$ bits of working
+context that produce its text, and it persists in the file across
+compactions. These two bounds are the budget that paragraph 15 asks for
+tools that compute.
+
+Tools reduce the number of compactions of paragraph 17. Let $\omega_v$
+be the number of bits appended to the working context when node $v$ is
+evaluated in context, covering its inputs, its work and its output, and
+let $|\mathrm{call}_v|$ be the number appended by a call that evaluates
+$v$ with a tool, $O(\log n)$ bits for the tool and its addresses plus
+$|\alpha|$. Each iteration appends at most $B_c$ bits, so evaluating
+every node in context takes at least $\sum_v\omega_v/B_c$ iterations,
+and a strategy that writes tools $p_1,\ldots,p_q$ takes at least
+\[
+\frac{1}{B_c}\Big(\sum_{i=1}^{q}|p_i|+\sum_v|\mathrm{call}_v|\Big).
+\]
+A tool pays for itself when its length is less than the context it
+saves, $\sum_v(\omega_v-|\mathrm{call}_v|)$ over the nodes it evaluates,
+so tools pay most when $G$ repeats components from few families
+(paragraph 9). A call can also evaluate a whole part of $G$ whose inputs
+fit in its entries and arguments, provided $p$ embeds the components of
+that part; the agent then trades program length for calls.
+
+Writing a tool is itself a task, whose acceptable outputs are programs
+that compute their component on every input that occurs. A correct
+deterministic tool is correct at every call, so the union bound of
+paragraph 16 charges its error once for all the nodes it evaluates,
+while a wrong tool fails at every call. What remains for each call is
+naming the right addresses, which is the retrieval task of
+paragraph 16.
+
 \end{document}
