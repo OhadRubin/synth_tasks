@@ -452,4 +452,138 @@ the result of a computation, such as an interpreter, is a transition
 whose power lies outside $\theta$; without a budget of its own, it plays
 the role of the unrestricted $\Phi$ of paragraph 3.
 
+\paragraph{16. Offloading as a task.}
+The tool calls of paragraph 15 copy strings exactly, but choosing what to
+write, under which key, and how to find it again is computation the
+agent performs. Offloading therefore adds two task families in the sense
+of paragraph 9. Let $\mathbb F$ be the set of file contents, $V$ the set
+of values, and $Q$ the set of queries, where a query is what the agent
+knows about a value it will need: an exact address, or a description
+from which the entry must be found. The two families have the signatures
+\[
+T_{\mathrm{store}}:\mathbb F\times Q\times V\longrightarrow 2^{\mathbb F},
+\qquad
+T_{\mathrm{ret}}:\mathbb F\times Q\longrightarrow 2^{V}.
+\]
+State maintenance, $T_{\mathrm{store}}(F,q,z)$, accepts every file from
+which $z$ can be recovered with the query $q$ and every entry still to
+be read can be recovered with its own query. Retrieval,
+$T_{\mathrm{ret}}(F,q)$, accepts the value recorded for $q$. The
+acceptable outputs of maintenance are thus defined through the
+retrievals that follow. The structural parameters of both families are
+the number of entries in the file, which act as distractors
+(paragraph 8); the number of stale entries, which hold values that later
+steps have replaced; and how directly $q$ identifies its entry, from an
+exact address, which makes retrieval a lookup, to a description, which
+makes it a search. The layout the agent chooses when storing sets these
+parameters for every later retrieval, so work at write time trades
+against work at read time.
+
+An offloading strategy, a red--blue pebbling of $G$ (paragraph 15),
+turns the main instance into a larger composed instance $G^F$. Each
+write of $z_u$ becomes a store node, and each later read of $z_u$ by a
+node $v$ becomes a retrieval node, so an edge that passes through the
+file becomes
+\[
+u\xrightarrow{\;z_u\;}T_{\mathrm{store}}
+\xrightarrow{\;F_s\;}\cdots\xrightarrow{\;F_r\;}
+T_{\mathrm{ret}}\xrightarrow{\;z_u\;}v,
+\]
+where $s$ and $r$ are the steps of the write and the read. The file
+contents pass through every store node in order, forming a chain that
+is the state the agent maintains. The components of $G^F$ are those of
+$G$ together with the induced store and retrieval instances, whose
+parameters the strategy fixes: how many entries are live at each read,
+how many have gone stale, and how long each entry waits between its
+write and its read. Lowering $B_c$ moves more values into the file and
+enlarges these instances, so the transfers of paragraph 15 are paid for
+twice, in transitions and in the difficulty of each read.
+
+The augmented instance gives a check on whether the agent can solve the
+main task with the file at a working budget $B_c$. If each node $v$ of
+$G^F$ is solved with error at most $\epsilon_v$, then by the union bound
+every node is correct with probability at least $1-\sum_v\epsilon_v$,
+and the sink then holds an acceptable answer. Store and retrieval can be
+measured as standalone tasks at the parameters a strategy induces. The
+main task is solvable at budget $B_c$ if some strategy induces store and
+retrieval instances that, together with the components of $G$, the
+agent solves reliably. An agent that fails retrieval at the parameters a
+strategy needs cannot rely on that strategy and must use one that keeps
+fewer entries live, at the cost of more working context or more
+recomputation.
+
+\paragraph{17. Compaction.}
+Agents in practice keep an append-only context and, when it fills,
+compact it: they summarize it into a short context and continue from
+there. This is the append-only machine of paragraph 2 with $B_0$ and
+$B_c$ bounding a single iteration and any number of iterations allowed.
+Iteration $\ell$ runs
+\[
+c^{(\ell)}_t=c^{(\ell)}_0\oplus w^{(\ell)}_t,
+\qquad
+w^{(\ell)}_{t+1}=w^{(\ell)}_t\oplus z^{(\ell)}_{t+1},
+\qquad
+z^{(\ell)}_{t+1}\sim U_\theta(\cdot\mid x,c^{(\ell)}_t)
+\]
+for $t_\ell$ steps, after which a compaction transition writes the next
+initial context:
+\[
+c^{(\ell+1)}_0\sim K_\theta\big(\cdot\mid x,c^{(\ell)}_{t_\ell}\big),
+\qquad
+|c^{(\ell)}_0|\leq B_0,
+\qquad
+|w^{(\ell)}_t|\leq B_c.
+\]
+The first initial context is supplied, $c^{(1)}_0=\sigma(x)$, and the
+answer is read from the last iteration $L$ as
+$y\sim M_\theta(\cdot\mid x,c^{(L)}_{t_L})$. The same $\theta$ runs every
+iteration. The earlier paragraphs read as follows in this setting.
+
+\emph{Stores (paragraph 12).} The initial context now has two sources:
+$\sigma$ fills it in the first iteration, and the solver fills it,
+through $K_\theta$, in every later one. $B_0$ therefore bounds the hint
+in the first iteration and the carried state afterwards. The argument of
+paragraph 14 about supplied content applies to the first iteration only,
+and setting $\sigma(x)$ empty removes hints while leaving compaction
+intact.
+
+\emph{Depth and space (paragraphs 4, 13, 14).} With nonempty updates,
+$t_\ell\leq B_c$, so the cap of paragraph 14 now limits one iteration,
+and depth, counted over all iterations with each compaction as one
+step, has no cap. Content is discarded only by compaction, so this is
+the discarding machine of paragraph 12 at the granularity of
+iterations: $B_0$ takes the role of the live space of paragraph 4,
+holding what crosses an iteration boundary, and $B_c$ bounds the work of
+one iteration. Budgeted depth (paragraph 13) is defined as before, with
+traces that span iterations. A scaling statement fixes the budgets of
+one iteration and describes how the depth and the number of iterations
+grow with $n$.
+
+\emph{Structure (paragraph 11).} A compaction schedule cuts an
+evaluation order of $G$ into segments that each fit in one iteration.
+Inside a segment every computed value stays in context. At a cut, the
+values computed but still to be read must fit in $c_0$ together with the
+position in the evaluation order, so at most $(B_0-O(\log n))/b$ values
+cross each cut. A value that does not fit can be recomputed later from
+the leaves, which stay readable in $x$, at the cost of more steps. A
+trace of $d$ steps needs at least $d/(B_c+1)$ iterations.
+
+\emph{Compaction as maintenance (paragraph 16).} $K_\theta$ is a state
+maintenance task whose store is $c_0$: bounded by $B_0$ and rewritten in
+full at every iteration, so anything $K_\theta$ omits is lost. A value
+that waits across $r$ cuts passes through $r$ maintenance instances, and
+the union bound of paragraph 16 charges each of them, so under
+compaction the cost of a value grows with how long it waits. A value
+written to the file of paragraph 15 is stored once, and its cost grows
+with the number of entries its retrieval must search.
+
+\emph{With a file (paragraph 15).} Compaction and the file combine: the
+file holds the values, and $c_0$ holds what is needed to find them. If
+the agent stores $z_v$ at an address computable from $v$, the queries of
+paragraph 16 can be derived from $x$, and $c_0$ needs only the position
+in the evaluation order, $O(\log n)$ bits. Budgets for one iteration
+that hold one component plus $O(\log n)$ bits then suffice for instances
+of every size. This is the agent that keeps notes in a file and compacts
+its context.
+
 \end{document}
