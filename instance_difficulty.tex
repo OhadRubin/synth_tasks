@@ -1,0 +1,414 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+\begin{document}
+\begin{center}
+    \textbf{Compositional Difficulty}
+\end{center}
+
+\paragraph{1. Task and machine.}
+Let $\Sigma$ be an alphabet. A task instance is
+\[
+\tau=(x,Y_x),\qquad x\in\Sigma^*,\qquad Y_x\subseteq\Sigma^*,
+\]
+where $x$ is the minimal immutable problem specification and $Y_x$
+is the family of acceptable answers. Correctness is relational:
+\[
+\operatorname{correct}(y,x)\iff y\in Y_x.
+\]
+The machine is parameterized by $\theta$ and produces answers according to
+$M_\theta(y\mid x,c)$, where $c$ contains all auxiliary context.
+The correspondence with a Turing machine is: $x$ is the read-only input
+tape, $c$ is the work tape, $\theta$ is the program, and $Y_x$ specifies
+accepting outputs.
+
+\paragraph{2. Context transformations.}
+Initially $c_0$ is empty unless auxiliary information is supplied.
+An append-only context update has the form
+\[
+c_i=c_{i-1}\oplus z_i,
+\]
+where $\oplus$ denotes concatenation. The update $z_i$ may contain an
+intermediate deduction, retrieved fact, tool result, partial calculation,
+subgoal, previous answer, or observation. Retrieval context and
+chain-of-thought steps therefore have the same formal status: both are
+information written into $c$.
+
+Fix a class $\Phi$ of admissible primitive transformations
+\[
+\phi:(x,c)\mapsto(x,c'),\qquad c'=\phi(x,c).
+\]
+A depth-$d$ computation is a trace
+\[
+\pi:\quad
+c_0\xrightarrow{\phi_1}c_1
+\xrightarrow{\phi_2}\cdots
+\xrightarrow{\phi_d}c_d,
+\qquad \phi_i\in\Phi,
+\]
+followed by an answer sampled or decoded from
+$M_\theta(\cdot\mid x,c_d)$.
+
+A machine realization uses a context-generating transition $U_\theta$
+and a halting/output operation $H_\theta$:
+\[
+c_{t+1}=c_t\oplus U_\theta(x,c_t),
+\qquad
+y=H_\theta(x,c_d).
+\]
+The computation is repeated composition of the context update.
+
+\paragraph{3. Compositional depth.}
+For error tolerance $\epsilon$, define
+\[
+D_\epsilon(x;\theta,\Phi)
+=
+\min\left\{
+d:
+\begin{array}{l}
+\exists\,\phi_1,\ldots,\phi_d\in\Phi,\quad
+c_i=\phi_i(x,c_{i-1}),\\
+M_\theta(Y_x\mid x,c_d)\geq 1-\epsilon
+\end{array}
+\right\}.
+\]
+Here $M_\theta(Y_x\mid x,c_d)$ is the total probability of an acceptable
+answer. Depth is the minimum number of primitive compositions needed
+to make an answer recoverable with the specified reliability.
+
+At the task level, let $T:x\mapsto Y_x$ and fix a primitive task class
+$\mathcal P$. A realization is a composition of smaller tasks:
+\[
+T=T_d\circ\cdots\circ T_1,\qquad T_i\in\mathcal P.
+\]
+Its minimum depth is
+\[
+D_{\mathcal P}(T)
+=
+\min\left\{
+d:T=T_d\circ\cdots\circ T_1,\quad T_i\in\mathcal P
+\right\}.
+\]
+This is depth relative to a basis, as in circuit complexity. If arbitrary
+functions are allowed as primitives, every task can be assigned depth one.
+The primitive class must therefore be fixed before comparing depths.
+
+Two scales should be distinguished:
+\[
+\begin{aligned}
+d_{\mathrm{machine}}
+&=\text{number of primitive machine transitions},\\
+d_{\mathrm{comp}}
+&=\text{number of dependent subtasks}.
+\end{aligned}
+\]
+A subtask may require many machine transitions. For an autoregressive
+model, machine transitions might correspond to token-generation steps;
+compositional depth instead counts stages such as
+$x\xrightarrow{T_1}z_1\xrightarrow{T_2}z_2\xrightarrow{T_3}y$.
+
+\paragraph{4. Work space.}
+For a trace $\pi$, the context-space usage is
+\[
+S(\pi)=\max_{0\leq i\leq d}|c_i|.
+\]
+Let $\Pi_\epsilon(x;\theta,\Phi)$ denote the admissible traces satisfying
+the success condition above. Minimum work-space requirement is
+\[
+S_\epsilon(x;\theta,\Phi)
+=
+\min_{\pi\in\Pi_\epsilon(x;\theta,\Phi)}
+\max_{0\leq i\leq|\pi|}|c_i|.
+\]
+If irrelevant context can be discarded, the corresponding live-space
+measure is
+\[
+S_{\epsilon,\mathrm{live}}(x;\theta,\Phi)
+=
+\min_{\pi\in\Pi_\epsilon(x;\theta,\Phi)}
+\max_i|\operatorname{live}(c_i)|,
+\]
+where $\operatorname{live}(c_i)$ is the information that must remain
+available for later steps. Depth and space measure, respectively,
+sequential composition and maintained working context.
+
+\paragraph{5. Retrieval and prior examples.}
+Retrieval is a context update $c_{i+1}=c_i\oplus r_i$.
+If the origin of an update matters, label each transition by
+\[
+\kappa_i\in
+\{\text{internal},\text{retrieval},\text{tool},\text{observation}\}.
+\]
+The resulting typed trace allows quantities such as
+\[
+D_R(\pi)=\#\{i:\kappa_i=\text{retrieval}\}
+\]
+without changing the underlying computation model.
+
+Previously seen examples $X$ enter in either of two places.
+Training examples are summarized by
+$\theta=\operatorname{Learn}(X)$.
+Examples available during inference are included in $c_0$.
+Thus prior experience is represented through $\theta$ or $c$.
+
+\paragraph{6. Noise and robust depth.}
+Let perturbation channels act on the input and work context:
+\[
+\widetilde{x}\sim N_{x,\eta}(x),
+\qquad
+\widetilde{c}_i\sim N_{c,\eta}(c_i),
+\]
+where $\eta$ specifies the noise magnitude or distribution.
+Define robust depth by applying the same success criterion to
+computations using the perturbed input and context:
+\[
+D_{\epsilon,\eta}(x;\theta,\Phi)
+=
+\min\left\{
+d:
+\begin{array}{l}
+\exists\text{ an admissible depth-}d\text{ computation},\\
+\Pr_{\theta,\eta}(\widehat y\in Y_x)\geq1-\epsilon
+\end{array}
+\right\}.
+\]
+Probability is over the perturbations and machine output; correctness
+is measured against the original answer family $Y_x$.
+Nominal depth is $D_{\epsilon,0}$, and
+\[
+D_{\epsilon,\eta}-D_{\epsilon,0}
+\]
+can be interpreted as fragility under the specified noise.
+
+\paragraph{7. Answer-family uncertainty.}
+Having $|Y_x|>1$ need not make a task difficult: several answers may
+be valid. Input perturbations can instead change which answers are valid,
+from $Y_x$ to $Y_{\widetilde{x}}$. For a distance $\operatorname{dist}$
+between answer sets, define
+\[
+U_\eta(x)
+=
+\mathbb E_{\widetilde{x}\sim N_{x,\eta}(x)}
+\left[
+\operatorname{dist}(Y_x,Y_{\widetilde{x}})
+\right].
+\]
+This measures sensitivity of the answer relation to perturbations,
+separately from computational depth and space.
+
+\paragraph{8. Interpretation.}
+Instance difficulty is the minimum depth and space of a successful
+context-generating computation, relative to $\theta$ and a fixed
+primitive basis $\Phi$; robustness describes its behavior under noise.
+Reasoning chains contribute composition depth. Interacting constraints
+can increase space and depth. Distractors can increase search, and
+lexical complexity can require transformations before useful state is
+constructed. Rare knowledge may require a retrieval transition.
+Context length bounds the live information available but does not by
+itself determine difficulty. Ambiguity concerns the answer relation
+and its sensitivity rather than an additional computational resource.
+
+\paragraph{9. Task families and composition.}
+A task sampler requires a sampler for each component family, a rule for
+composing compatible tasks, and a distribution over compositions.
+Let
+\[
+\mathcal F=\{\mathcal F_1,\ldots,\mathcal F_m\},
+\qquad
+T\sim\mu_j(\,\cdot\mid k),
+\]
+where $\mu_j$ samples tasks from family $\mathcal F_j$ with structural
+parameter $k$. Depending on the family, $k$ may specify the number of
+constraints, dependency depth, or amount of state.
+
+Represent a component task as a relation whose signature may depend on $k$:
+\[
+T:A_j(k)\longrightarrow 2^{B_j(k)},
+\]
+where $T(u)$ is the set of acceptable outputs for input $u$. Every $T$ in
+the support of $\mu_j(\cdot\mid k)$ is total:
+\[
+T(u)\neq\emptyset\quad\text{for all }u\in A_j(k).
+\]
+A family whose natural relation is partial restricts $A_j(k)$ to the
+inputs where it is defined.
+Composition is defined by
+\[
+(T_2\circ T_1)(u)
+=
+\bigcup_{z\in T_1(u)}T_2(z).
+\]
+An output is acceptable if it can be reached through an acceptable
+intermediate output. If $T_i$ is drawn from family $j_i$ with parameter
+$k_i$, then $T_2\circ T_1$ is defined when
+$B_{j_1}(k_1)\subseteq A_{j_2}(k_2)$, and a composition of total relations
+is total.
+
+\paragraph{10. Sampling an instance.}
+The sampler takes an answer type $C$, a budget $\beta$, a map
+$\lambda:C\to\Lambda$ that sorts answers into finitely many classes, and a
+distribution $\omega$ on $\Lambda$. Each pair $(j,k)$ has a positive
+integer cost $\delta_{jk}$, which bounds the depth in the primitive basis
+$\mathcal P$ of every task that $\mu_j(\cdot\mid k)$ produces, and a
+weight $w_{jk}>0$. Each family also has an input distribution
+$\nu_{j,k}$ on $A_j(k)$.
+
+The sampler generates the structure backward from the answer and computes
+the values forward from the input. Both halves condition a process on how
+it ends. The structure must end in type $C$ with total cost $\beta$. This
+condition involves only types and budgets, so a small table, defined
+below, enforces it exactly. The values must end in the answer class
+$\ell$. Enforcing this exactly would require a table indexed by
+intermediate values, so the sampler repeats forward runs until one ends in
+$\ell$. Values run forward because answers are computed from inputs; each
+family therefore needs only its forward sampler. For chains, the structure
+could equally be generated forward with an analogous table. Generating it
+from the answer also covers the trees of paragraph 11, whose root is the
+answer.
+
+A demand $(C,\beta)$ asks for a chain whose output type is contained in
+$C$ and whose costs sum to $\beta$. The weight of a chain is the product
+of the weights of its pairs, and the total weight of the chains meeting a
+demand is
+\[
+Z(C,\beta)
+=
+[\beta=0]
++
+\sum_{\substack{(j,k):\ B_j(k)\subseteq C\\ \delta_{jk}\leq\beta}}
+w_{jk}\,Z\big(A_j(k),\beta-\delta_{jk}\big),
+\]
+where $[\beta=0]$ is $1$ when $\beta=0$ and $0$ otherwise. $Z$ is computed
+by dynamic programming over types and budgets. Restricting the allowed
+pairs $(j,k)$, for example to prescribed families or parameter values,
+removes the corresponding terms.
+
+The answer class is controlled because components that map many inputs to
+one output concentrate the answers as chains grow, which makes guessing
+the most frequent answer easier for deeper tasks. Controlling the class of
+the answer suffices to prevent this. The sampler proceeds as follows.
+\begin{enumerate}
+\item Sample the structure. Starting from the demand $(C,\beta)$, choose a
+pair with probability
+\[
+P\big((j,k)\mid C',\beta'\big)
+=
+\frac{w_{jk}\,Z\big(A_j(k),\beta'-\delta_{jk}\big)}{Z(C',\beta')}
+\]
+for the current demand $(C',\beta')$, and replace the demand by
+$(A_j(k),\beta'-\delta_{jk})$, until the budget reaches zero. Numbering
+the choices from last to first gives
+\[
+s=((j_1,k_1),\ldots,(j_d,k_d)),\qquad
+B_{j_i}(k_i)\subseteq A_{j_{i+1}}(k_{i+1}),\qquad
+B_{j_d}(k_d)\subseteq C,\qquad
+\sum_{i=1}^d\delta_{j_ik_i}=\beta.
+\]
+The length $d$ is an outcome of sampling. When $Z(C,\beta)>0$, every such
+chain is drawn with probability proportional to $\prod_iw_{j_ik_i}$, and
+no demand along the way is impossible to meet.
+\item Sample an answer class $\ell\sim\omega$.
+\item Sample component tasks $T_i\sim\mu_{j_i}(\cdot\mid k_i)$
+independently and an input $u_0\sim\nu_{j_1,k_1}$ on $A_{j_1}(k_1)$, and
+run the computation forward:
+\[
+u_0\xrightarrow{T_1}u_1
+\xrightarrow{T_2}\cdots
+\xrightarrow{T_d}u_d,
+\qquad u_i\in T_i(u_{i-1}),
+\]
+where each $u_i$ is an acceptable output produced by the family. Repeat
+this step until $\lambda(u_d)=\ell$.
+\item Construct the instance:
+\[
+T=T_d\circ\cdots\circ T_1,\qquad
+x=\operatorname{Encode}(T,u_0),\qquad
+Y_x=T(u_0).
+\]
+\end{enumerate}
+Totality keeps the forward run from getting stuck, and $u_d\in Y_x$.
+Write $\rho=(T_1,\ldots,T_d,u_0,\ldots,u_d)$ for the run,
+$p_{\mathrm{fwd}}(\rho\mid s)$ for the distribution of a single run of
+step 3 with structure $s$, and $p_s$ for the distribution of
+$\lambda(u_d)$ under $p_{\mathrm{fwd}}$. Steps 2 and 3 draw
+\[
+p(\rho\mid s)
+=
+p_{\mathrm{fwd}}(\rho\mid s)\,
+\frac{\omega(\lambda(u_d))}{p_s(\lambda(u_d))},
+\]
+which is forward sampling with the distribution of answer classes replaced
+by $\omega$. Within each class, runs follow the forward distribution
+exactly. The expected number of forward runs is
+$\sum_\ell\omega(\ell)/p_s(\ell)$; it is large when forward runs with
+structure $s$ rarely reach a class that $\omega$ asks for.
+
+Here $\operatorname{Encode}$ produces a problem statement containing
+the information needed to specify the task. Generating labeled examples
+also requires a way to produce acceptable outputs or check them.
+
+The computation from step 3 provides intermediate results that can be
+recorded in $c$. Some or all of
+this context may be supplied to the solver, or the solver may be required
+to construct it.
+
+\paragraph{11. Recursive composition.}
+The structure sampler of paragraph 10 is a probabilistic grammar. Its
+nonterminals are demands $(C,\beta)$, the rule
+$(C,\beta)\to(A_j(k),\beta-\delta_{jk})\,T_{jk}$ has weight $w_{jk}$, the
+rule $(C,0)\to u_0$ ends a derivation, and $Z$ is the total weight of the
+derivations from each nonterminal. The budget is the stopping rule.
+Because composition is associative, a component that is itself a chain
+flattens into the outer chain. Recursion adds structure when a component
+takes several inputs, $T:A^1\times\cdots\times A^m\to 2^B$. Its rule
+splits the remaining budget among the inputs,
+\[
+(C,\beta)\to T_{jk}\big((A^1,\beta_1),\ldots,(A^m,\beta_m)\big),
+\qquad
+\sum_{i=1}^m\beta_i=\beta-\delta_{jk},
+\]
+derivations become trees rooted at the answer, and $Z$ sums over the
+budget splits.
+Grammar-based generation has precedent
+in compositional benchmarks: COGS generates examples using a probabilistic
+context-free grammar.\footnote{Najoung Kim and Tal Linzen.
+\emph{COGS: A Compositional Generalization Challenge Based on Semantic
+Interpretation}. Proceedings of EMNLP, 2020, pp.\ 9087--9105.}
+
+\paragraph{12. Construction structure and solving difficulty.}
+The sampler controls the structure used to generate a task. This structure
+need not be the shortest way to solve it. For example, for an invertible
+function $f$,
+\[
+T=f^{-1}\circ f
+\]
+contains two components but reduces to the identity.
+
+Each component has a realization of depth at most $\delta_{j_ik_i}$ in the
+fixed primitive basis $\mathcal P$, so sequential composition establishes
+\[
+D_{\mathcal P}(T)\leq\sum_{i=1}^d\delta_{j_ik_i}=\beta.
+\]
+The budget is an upper bound on depth. Equality requires an argument
+excluding shortcuts. Components that are difficult individually may
+simplify when composed. Work space composes differently: once component
+$i$ outputs $u_i$, its internal work can be discarded, so the live space of
+a chain is bounded by the largest live space among its components. It is
+controlled by restricting the allowed pairs $(j,k)$.
+
+The sampler therefore returns the instance together with its construction:
+\[
+\boxed{
+\mathsf{Sample}(C,\beta,\lambda,\omega)
+\longrightarrow (x,Y_x,\gamma),
+}
+\]
+where $\gamma$ records the structure $s$, the component tasks, and their
+dependencies. This permits sampling under a controlled budget and
+distribution of answer classes while leaving the relationship between
+construction structure and minimum solving difficulty to be established.
+
+\end{document}
