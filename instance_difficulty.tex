@@ -226,119 +226,146 @@ constraints, dependency depth, or amount of state.
 
 Represent a component task as a relation whose signature may depend on $k$:
 \[
-T:A_j(k)\longrightarrow 2^{B_j(k)},
+T:A_j^1(k)\times\cdots\times A_j^{m_j}(k)\longrightarrow 2^{B_j(k)},
 \]
-where $T(u)$ is the set of acceptable outputs for input $u$. Every $T$ in
-the support of $\mu_j(\cdot\mid k)$ is total:
+where $T(u)$ is the set of acceptable outputs for the input tuple $u$.
+Every $T$ in the support of $\mu_j(\cdot\mid k)$ is total:
+$T(u)\neq\emptyset$ for every input tuple $u$. A family whose natural
+relation is partial restricts its input types to the inputs where it is
+defined.
+
+Components are composed along a directed acyclic graph (DAG) $G$. Each
+node $v$ is either a leaf, which holds an input value of some type, or a
+component node, which holds a task $T_v$ drawn from family $j_v$ with
+parameter $k_v$ and has type $B_{j_v}(k_v)$. The $i$-th input of a
+component node is an edge from another node whose type is contained in
+$A_{j_v}^i(k_v)$, and the edges form no cycle. A value may be read by
+several nodes. One node, the sink, holds the answer. An assignment gives
+every node $v$ a value $z_v$ such that each component node satisfies
 \[
-T(u)\neq\emptyset\quad\text{for all }u\in A_j(k).
+z_v\in T_v(z_{v_1},\ldots,z_{v_m}),
 \]
-A family whose natural relation is partial restricts $A_j(k)$ to the
-inputs where it is defined.
-Composition is defined by
+where $v_1,\ldots,v_m$ are its inputs. With the leaf values fixed, the
+acceptable answers are the sink values of all assignments, and totality
+guarantees that at least one assignment exists. A chain is the special
+case in which every component has one input and every value has one
+reader. There the definition reduces to
 \[
 (T_2\circ T_1)(u)
 =
-\bigcup_{z\in T_1(u)}T_2(z).
+\bigcup_{z\in T_1(u)}T_2(z):
 \]
-An output is acceptable if it can be reached through an acceptable
-intermediate output. If $T_i$ is drawn from family $j_i$ with parameter
-$k_i$, then $T_2\circ T_1$ is defined when
-$B_{j_1}(k_1)\subseteq A_{j_2}(k_2)$, and a composition of total relations
-is total.
+an output is acceptable if it can be reached through an acceptable
+intermediate output.
 
 \paragraph{10. Sampling an instance.}
-The sampler takes an answer type $C$, a budget $\beta$, a map
-$\lambda:C\to\Lambda$ that sorts answers into finitely many classes, and a
-distribution $\omega$ on $\Lambda$. Each pair $(j,k)$ has a positive
-integer cost $\delta_{jk}$, which bounds the depth in the primitive basis
-$\mathcal P$ of every task that $\mu_j(\cdot\mid k)$ produces, and a
-weight $w_{jk}>0$. Each family also has an input distribution
-$\nu_{j,k}$ on $A_j(k)$.
+The sampler takes an answer type $C$, a budget $\beta$, a live-space cap
+$\sigma$, a map $\lambda:C\to\Lambda$ that sorts answers into finitely many
+classes, and a distribution $\omega$ on $\Lambda$. Each pair $(j,k)$ has a
+positive integer cost $\delta_{jk}$, which bounds the depth in the
+primitive basis $\mathcal P$ of every task that $\mu_j(\cdot\mid k)$
+produces, and a weight $w_{jk}>0$. Each type $A$ that may appear at a leaf
+has an input distribution $\nu_A$ and a weight $w_A>0$.
 
 The sampler generates the structure backward from the answer and computes
-the values forward from the input. Both halves condition a process on how
-it ends. The structure must end in type $C$ with total cost $\beta$. This
-condition involves only types and budgets, so a small table, defined
-below, enforces it exactly. The values must end in the answer class
-$\ell$. Enforcing this exactly would require a table indexed by
-intermediate values, so the sampler repeats forward runs until one ends in
-$\ell$. Values run forward because answers are computed from inputs; each
-family therefore needs only its forward sampler. For chains, the structure
-could equally be generated forward with an analogous table. Generating it
-from the answer also covers the trees of paragraph 11, whose root is the
-answer.
+the values forward from the inputs. Both halves condition a process on
+how it ends.
 
-A demand $(C,\beta)$ asks for a chain whose output type is contained in
-$C$ and whose costs sum to $\beta$. The weight of a chain is the product
-of the weights of its pairs, and the total weight of the chains meeting a
-demand is
+The structure is built one node at a time, from the sink toward the
+leaves, so every node is placed after all the nodes that read it. The
+state is the pending set $Q$: the multiset of required types of the
+values that placed nodes will read but whose producers have not been
+placed. Initially $Q=\{C\}$, the answer. Each step takes one of two
+actions:
+\begin{itemize}
+\item close a pending value of required type $A$ with a leaf: $Q$ loses
+$A$; cost $0$, weight $w_A$;
+\item produce a pending value of required type $A$ with a component node
+for a pair $(j,k)$ with $B_j(k)\subseteq A$: $Q$ loses $A$, and each
+input $i$ either opens a new pending value of required type $A_j^i(k)$
+or attaches to a value already in $Q$, whose required type becomes its
+intersection with $A_j^i(k)$; cost $\delta_{jk}$, weight $w_{jk}$.
+\end{itemize}
+An input that attaches to a pending value shares that value with its
+other readers. Choosing different pending values counts as different
+actions. A step may not make $|Q|$ exceed $\sigma$. The structure is
+complete when $Q$ is empty and the budget is spent. Every node is placed
+to produce a value that an already placed node reads, so every node feeds
+the answer.
+
+Reversing the order of placement gives an evaluation order. The pending
+set at each point of the construction is the set of values live at the
+same point of the evaluation: computed, and still to be read. So
+$\sigma$ caps the live context of paragraph 4, measured in values. The
+same structures could be built forward, with the live set as the state,
+using the same states and an equivalent table. Building from the answer
+starts at the one fixed type, $C$, and makes the tree case of paragraph
+11 a grammar.
+
+The structure must end complete. This condition involves only the
+pending set and the remaining budget, so a table enforces it exactly.
+The weight of a sequence of actions is the product of their weights, and
+the total weight of the ways to complete the structure from state
+$(Q,\beta')$ is
 \[
-Z(C,\beta)
+Z(Q,\beta')
 =
-[\beta=0]
+[\,Q=\emptyset,\ \beta'=0\,]
 +
-\sum_{\substack{(j,k):\ B_j(k)\subseteq C\\ \delta_{jk}\leq\beta}}
-w_{jk}\,Z\big(A_j(k),\beta-\delta_{jk}\big),
+\sum_{a}w_a\,Z\big(Q_a,\beta'-\delta_a\big),
 \]
-where $[\beta=0]$ is $1$ when $\beta=0$ and $0$ otherwise. $Z$ is computed
-by dynamic programming over types and budgets. Restricting the allowed
-pairs $(j,k)$, for example to prescribed families or parameter values,
-removes the corresponding terms.
+where $a$ ranges over the actions allowed in state $Q$ with
+$\delta_a\leq\beta'$, $Q_a$ is the resulting pending set, and $[\cdot]$
+is $1$ when its condition holds and $0$ otherwise. Leaves cost nothing
+and shrink $Q$, and required types range over intersections of input
+types, a finite set; with the cap $\sigma$, the table has one entry per
+multiset of at most $\sigma$ required types and remaining budget.
+Restricting the allowed pairs $(j,k)$ or leaf types removes the
+corresponding actions.
 
-The answer class is controlled because components that map many inputs to
-one output concentrate the answers as chains grow, which makes guessing
-the most frequent answer easier for deeper tasks. Controlling the class of
-the answer suffices to prevent this. The sampler proceeds as follows.
+The values must end in an answer class $\ell$. Enforcing this exactly
+would require a table indexed by intermediate values, so the sampler
+repeats forward runs until one ends in $\ell$. Values run forward because
+answers are computed from inputs; each family therefore needs only its
+forward sampler. The answer class is controlled
+because components that map many inputs to one output concentrate the
+answers as the DAG grows, which makes guessing the most frequent answer
+easier for larger tasks. Controlling the class of the answer suffices to
+prevent this. The sampler proceeds as follows.
 \begin{enumerate}
-\item Sample the structure. Starting from the demand $(C,\beta)$, choose a
-pair with probability
+\item Sample the structure. Starting from $Q=\{C\}$ with budget
+$\beta$, choose each action with probability
 \[
-P\big((j,k)\mid C',\beta'\big)
+\Pr\big(a\mid Q,\beta'\big)
 =
-\frac{w_{jk}\,Z\big(A_j(k),\beta'-\delta_{jk}\big)}{Z(C',\beta')}
+\frac{w_a\,Z\big(Q_a,\beta'-\delta_a\big)}{Z(Q,\beta')}
 \]
-for the current demand $(C',\beta')$, and replace the demand by
-$(A_j(k),\beta'-\delta_{jk})$, until the budget reaches zero. Numbering
-the choices from last to first gives
-\[
-s=((j_1,k_1),\ldots,(j_d,k_d)),\qquad
-B_{j_i}(k_i)\subseteq A_{j_{i+1}}(k_{i+1}),\qquad
-B_{j_d}(k_d)\subseteq C,\qquad
-\sum_{i=1}^d\delta_{j_ik_i}=\beta.
-\]
-The length $d$ is an outcome of sampling. When $Z(C,\beta)>0$, every such
-chain is drawn with probability proportional to $\prod_iw_{j_ik_i}$, and
-no demand along the way is impossible to meet.
+until the structure is complete. The result $s$ is a DAG with an
+evaluation order whose component costs sum to $\beta$ and whose live set
+never exceeds $\sigma$ values. When $Z(\{C\},\beta)>0$, every such
+structure is drawn with probability proportional to the product of its
+action weights, and no state along the way is a dead end.
 \item Sample an answer class $\ell\sim\omega$.
-\item Sample component tasks $T_i\sim\mu_{j_i}(\cdot\mid k_i)$
-independently and an input $u_0\sim\nu_{j_1,k_1}$ on $A_{j_1}(k_1)$, and
-run the computation forward:
-\[
-u_0\xrightarrow{T_1}u_1
-\xrightarrow{T_2}\cdots
-\xrightarrow{T_d}u_d,
-\qquad u_i\in T_i(u_{i-1}),
-\]
-where each $u_i$ is an acceptable output produced by the family. Repeat
-this step until $\lambda(u_d)=\ell$.
+\item Sample $T_v\sim\mu_{j_v}(\cdot\mid k_v)$ independently for every
+component node and $z_v\sim\nu_A$ for every leaf of type $A$, and compute
+the remaining values in evaluation order,
+$z_v\in T_v(z_{v_1},\ldots,z_{v_m})$, where each $z_v$ is an acceptable
+output produced by the family. Repeat this step until
+$\lambda(z_\star)=\ell$, where $z_\star$ is the sink value.
 \item Construct the instance:
-\[
-T=T_d\circ\cdots\circ T_1,\qquad
-x=\operatorname{Encode}(T,u_0),\qquad
-Y_x=T(u_0).
-\]
+$x=\operatorname{Encode}\big(s,(T_v)_v,(z_v)_{v\ \mathrm{leaf}}\big)$, and
+$Y_x$ is the set of acceptable answers defined in paragraph 9.
 \end{enumerate}
-Totality keeps the forward run from getting stuck, and $u_d\in Y_x$.
-Write $\rho=(T_1,\ldots,T_d,u_0,\ldots,u_d)$ for the run,
+Totality keeps the forward run from getting stuck, and $z_\star\in Y_x$.
+Write $\rho$ for the run, consisting of all $T_v$ and $z_v$,
 $p_{\mathrm{fwd}}(\rho\mid s)$ for the distribution of a single run of
 step 3 with structure $s$, and $p_s$ for the distribution of
-$\lambda(u_d)$ under $p_{\mathrm{fwd}}$. Steps 2 and 3 draw
+$\lambda(z_\star)$ under $p_{\mathrm{fwd}}$. Steps 2 and 3 draw
 \[
 p(\rho\mid s)
 =
 p_{\mathrm{fwd}}(\rho\mid s)\,
-\frac{\omega(\lambda(u_d))}{p_s(\lambda(u_d))},
+\frac{\omega(\lambda(z_\star))}{p_s(\lambda(z_\star))},
 \]
 which is forward sampling with the distribution of answer classes replaced
 by $\omega$. Within each class, runs follow the forward distribution
@@ -346,37 +373,35 @@ exactly. The expected number of forward runs is
 $\sum_\ell\omega(\ell)/p_s(\ell)$; it is large when forward runs with
 structure $s$ rarely reach a class that $\omega$ asks for.
 
-Here $\operatorname{Encode}$ produces a problem statement containing
-the information needed to specify the task. Generating labeled examples
-also requires a way to produce acceptable outputs or check them.
+The structure includes its evaluation order, which determines the live
+sets. A DAG with several evaluation orders is therefore drawn once per
+order, and $\operatorname{Encode}$ can present the nodes in that order, as
+a program presents its statements. Here $\operatorname{Encode}$ produces a
+problem statement containing the information needed to specify the task.
+Generating labeled examples also requires a way to produce acceptable
+outputs or check them.
 
 The computation from step 3 provides intermediate results that can be
-recorded in $c$. Some or all of
-this context may be supplied to the solver, or the solver may be required
-to construct it.
+recorded in $c$. Some or all of this context may be supplied to the
+solver, or the solver may be required to construct it.
 
 \paragraph{11. Recursive composition.}
-The structure sampler of paragraph 10 is a probabilistic grammar. Its
-nonterminals are demands $(C,\beta)$, the rule
-$(C,\beta)\to(A_j(k),\beta-\delta_{jk})\,T_{jk}$ has weight $w_{jk}$, the
-rule $(C,0)\to u_0$ ends a derivation, and $Z$ is the total weight of the
-derivations from each nonterminal. The budget is the stopping rule.
-Because composition is associative, a component that is itself a chain
-flattens into the outer chain. Recursion adds structure when a component
-takes several inputs, $T:A^1\times\cdots\times A^m\to 2^B$. Its rule
-splits the remaining budget among the inputs,
-\[
-(C,\beta)\to T_{jk}\big((A^1,\beta_1),\ldots,(A^m,\beta_m)\big),
-\qquad
-\sum_{i=1}^m\beta_i=\beta-\delta_{jk},
-\]
-derivations become trees rooted at the answer, and $Z$ sums over the
-budget splits.
+A component that is itself a DAG can be inlined into the outer DAG, so
+recursive composition stays within DAGs. Two special cases recover simpler
+forms. When every component has one input, the DAG is a chain. When every
+value has exactly one reader, no input attaches to a pending value, the
+DAG is a tree rooted at the answer, and the structure sampler is a
+probabilistic grammar: a request for a value of type $A$ is replaced by a
+component and requests for its inputs, which share the remaining budget.
+Attaching is the one action the DAG sampler adds to the grammar.
 Grammar-based generation has precedent
 in compositional benchmarks: COGS generates examples using a probabilistic
 context-free grammar.\footnote{Najoung Kim and Tal Linzen.
 \emph{COGS: A Compositional Generalization Challenge Based on Semantic
 Interpretation}. Proceedings of EMNLP, 2020, pp.\ 9087--9105.}
+Values with several readers are what trees cannot express. They let live
+space vary separately from the budget: the same $\beta$ can be spent on a
+chain that keeps one value live or on a wide DAG that keeps many.
 
 \paragraph{12. Construction structure and solving difficulty.}
 The sampler controls the structure used to generate a task. This structure
@@ -387,28 +412,32 @@ T=f^{-1}\circ f
 \]
 contains two components but reduces to the identity.
 
-Each component has a realization of depth at most $\delta_{j_ik_i}$ in the
-fixed primitive basis $\mathcal P$, so sequential composition establishes
+Let $T$ be the task computed by the DAG. Each component node has a
+realization of depth at most $\delta_{j_vk_v}$ in the fixed primitive
+basis $\mathcal P$, so evaluating the nodes in the sampled order
+establishes
 \[
-D_{\mathcal P}(T)\leq\sum_{i=1}^d\delta_{j_ik_i}=\beta.
+D_{\mathcal P}(T)\leq\sum_{v}\delta_{j_vk_v}=\beta.
 \]
 The budget is an upper bound on depth. Equality requires an argument
 excluding shortcuts. Components that are difficult individually may
-simplify when composed. Work space composes differently: once component
-$i$ outputs $u_i$, its internal work can be discarded, so the live space of
-a chain is bounded by the largest live space among its components. It is
-controlled by restricting the allowed pairs $(j,k)$.
+simplify when composed. The structure bounds the other quantities of
+paragraphs 3 and 4 in the same way. The number of component nodes on the
+longest path from a leaf to the sink bounds the number of dependent
+subtasks $d_{\mathrm{comp}}$, and the largest live set along the sampled
+order, at most $\sigma$, bounds the number of values that must be held
+between components.
 
 The sampler therefore returns the instance together with its construction:
 \[
 \boxed{
-\mathsf{Sample}(C,\beta,\lambda,\omega)
+\mathsf{Sample}(C,\beta,\sigma,\lambda,\omega)
 \longrightarrow (x,Y_x,\gamma),
 }
 \]
-where $\gamma$ records the structure $s$, the component tasks, and their
-dependencies. This permits sampling under a controlled budget and
-distribution of answer classes while leaving the relationship between
-construction structure and minimum solving difficulty to be established.
+where $\gamma$ records the structure $s$ and the component tasks. This
+permits sampling under a controlled budget, live space, and distribution
+of answer classes while leaving the relationship between construction
+structure and minimum solving difficulty to be established.
 
 \end{document}
